@@ -198,7 +198,7 @@ Makanan serve(ListMakanan *pesanan, ListMakanan *ready) {
     Makanan served = getFood(*ready, target);
     removeMakanan(ready, target);
     removeMakanan(pesanan, target);
-    printf("\nBerhasil mengantar M%d", served.ID);
+    printf("\nBerhasil mengantar M%d\n", served.ID);
     return served;
 }
 
