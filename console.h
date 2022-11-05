@@ -2,6 +2,7 @@
 #define BNMO_CONSOLE_H
 
 #include <stdio.h>
+#include <unistd.h>
 #include "./src/adt/array.h"
 #include "./src/adt/circular_queue.h"
 #include "./src/adt/mesinkata.h"
