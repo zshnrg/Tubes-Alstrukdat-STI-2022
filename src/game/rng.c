@@ -8,10 +8,11 @@ void rngPlay() {
     srand(time(NULL));
     int n;
 
-    int X = rand() % rand();
+    int X = rand();
     printf("RNG Telah dimulai. Uji keberuntungan Anda dengan menebak X.\n");
     do {
         n = 0;
+        printf("Tebakan >");
         GetCommand();
         for (int i = 0; i < currentWord.Length; i++) {
             n = n * 10;
