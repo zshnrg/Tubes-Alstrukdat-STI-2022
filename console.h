@@ -8,6 +8,16 @@
 #include "./src/adt/mesinkata.h"
 
 #include "./src/start.h"
+#include "./src/save.h"
+#include "./src/load.h"
+#include "./src/createGame.h"
+#include "./src/listGame.h"
+#include "./src/deleteGame.h"
+#include "./src/queueGame.h"
+#include "./src/playGame.h"
+#include "./src/skipGame.h"
+#include "./src/quit.h"
+#include "./src/help.h"
 
 void menuList(TabKata *listGame, Queue *queueGame);
 /* Memilih menu BNMO

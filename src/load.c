@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h>
 #include "load.h"
 
 void load(TabKata *listGame, Word fileName) {
@@ -20,7 +21,9 @@ void load(TabKata *listGame, Word fileName) {
     }
     if(!IsEmpty(addedGame)) {
         printf("Save file berhasil dibaca. BNMO berhasil dijalankan.\n\n");
+        stateBNMO = true;
     } else {
         printf("Save file gagal dibaca.\n\n");
     }
+    sleep(2);
 }

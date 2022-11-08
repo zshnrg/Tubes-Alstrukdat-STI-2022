@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "./driver/readTxt.h"
+#include "start.h"
 
 void load(TabKata *listGame, Word filename);
 /*  Membaca file konfigurasi yang berisi list game yang dapat dimainkan.

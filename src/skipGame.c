@@ -20,30 +20,34 @@ void skipGame (Queue* queueGame, Word command) {
     printf("Berikut adalah daftar Game-mu\n");
         displayQueue(*queueGame);
         printf("\n\n");
-    
-    for (i = 0; i < n; i++) {
-        Pop(queueGame);
-    }
 
-    if(!IsEmptyQ(*queueGame)) {
-        Word play = (*queueGame).Tab[(*queueGame).HEAD];
-        Pop(queueGame);
+    if (!IsEmptyQ(*queueGame)) { 
+        for (i = 0; i < n; i++) {
+            Pop(queueGame);
+        }
 
-        if (IsWordEq(play, toKata("RNG"))) {
-            printLoading(play);
-            rngPlay();
-            sleep(3);
-        } else if (IsWordEq(play, toKata("Diner DASH"))) {
-            printLoading(play);
-            dinerDashPlay();
-            sleep(3);
-        } else if (IsWordEq(play, toKata("DINOSAUR IN EARTH")) || IsWordEq(play, toKata("RISEWOMAN")) || IsWordEq(play, toKata("EIFFEL TOWER"))) {
-            printf("Game "); TulisWord(play); printf(" masih dalam maintenance, belum dapat dimainkan. Silahkan pilih game lain.\n\n");
+        if(!IsEmptyQ(*queueGame)) {
+            Word play = (*queueGame).Tab[(*queueGame).HEAD];
+            Pop(queueGame);
+
+            if (IsWordEq(play, toKata("RNG"))) {
+                printLoading(play);
+                rngPlay();
+                sleep(3);
+            } else if (IsWordEq(play, toKata("Diner DASH"))) {
+                printLoading(play);
+                dinerDashPlay();
+                sleep(3);
+            } else if (IsWordEq(play, toKata("DINOSAUR IN EARTH")) || IsWordEq(play, toKata("RISEWOMAN")) || IsWordEq(play, toKata("EIFFEL TOWER"))) {
+                printf("Game "); TulisWord(play); printf(" masih dalam maintenance, belum dapat dimainkan. Silahkan pilih game lain.\n\n");
+            } else {
+                printLoading(play);
+                printf("Game over! Skor akhir: %d\n\n", rand());
+            }
         } else {
-            printLoading(play);
-            printf("Game over! Skor akhir: %d\n\n", rand());
+            printf("Tidak ada permainan lagi dalam daftar Game-mu.\n\n");
         }
     } else {
-        printf("Tidak ada permainan lagi dalam daftar game-mu.\n\n");
+            printf("Tidak ada permainan lagi dalam daftar Game-mu.\n\n");
     }
 }
