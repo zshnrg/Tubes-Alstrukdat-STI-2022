@@ -9,3 +9,5 @@ Repository ini mungkin akan diupdate secara berkala untuk menambahkan game buata
 2. Buka file **command.txt** dan salin pada powershell untuk meng-*compile* program.
 3. Buka file BNMO.exe untuk mulai game.
 4. Selamat menikmati 🥂
+
+P.S. Tubes ini dibuat public setelah deadline tubes, jadi seharusnya aman dari plagiarisme :D
