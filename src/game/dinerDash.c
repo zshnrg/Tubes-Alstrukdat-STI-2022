@@ -25,7 +25,7 @@ void dinerDashPlay () {
         printf("."); sleep(1);
     }
 
-    while (served < 15 && pesanan.NEff <= 7) {
+    while (served < 15 && pesanan.NEff <= 6) {
         if (m > 2) {
             if (IsWordEq(AccessCommand(currentWord, 0), toKata("COOK"))) {
                 cook(&dimasak, getFood(pesanan, getFoodId(AccessCommand(currentWord, 1))));
@@ -144,6 +144,8 @@ boolean isCommandValid(Word comm, ListMakanan pesanan, ListMakanan dimasak, List
             printf("\n"); TulisWord(AccessCommand(currentWord, 1)); printf(" tidak ada dalam daftar Makanan yang bisa disajikan.\n");
             return false;
         }
+    } else if (IsWordEq(currentWord, toKata("SKIP"))) {
+        return true;
     } else {
         printf("Command tidak valid. Silakan coba lagi.\n");
         return false;
