@@ -2,7 +2,7 @@
 #include "help.h"
 
 void help() {
-    printf("=====================================[ HELP ]=====================================\n");
+    printf("=====================================[ HELP ]=====================================\n\n");
     printf("1.  LOAD <filename>\t Membaca file yang berisikan list game.\n");
     printf("2.  SAVE <filename>\t Menyimpan list game yang dimiliki ke dalam file.\n");
     printf("3.  CREATE GAME\t\t Membuat game baru.\n");
@@ -13,4 +13,5 @@ void help() {
     printf("8.  SKIPGAME <n>\t Membuang sebangak n game pada antrean.\n");
     printf("9.  QUIT \t\t Keluar dari BNMO.\n");
     printf("10. HELP \t\t Menambilkan list command yang tersedia.\n\n");
+    printf("==================================================================================\n\n");
 }

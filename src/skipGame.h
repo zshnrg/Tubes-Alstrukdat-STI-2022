@@ -2,7 +2,7 @@
 #define SKIP_GAME_H
 
 #include <stdio.h>
-#include "./adt/circular_queue.h"
+#include "./adt/queue.h"
 #include "./adt/mesinkata.h"
 
 void skipGame (Queue* queueGame, Word command);

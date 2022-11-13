@@ -1,7 +1,7 @@
 #ifndef QUEUE_GAME_H
 #define CREATE_GAME_H
 
-#include "./adt/circular_queue.h"
+#include "./adt/queue.h"
 #include "./adt/array.h"
 
 void queueGameList(TabKata listGame, Queue *queueGame);

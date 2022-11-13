@@ -23,9 +23,9 @@ void queueGameList(TabKata listGame, Queue *queueGame) {
         if (comm < 1 || comm > listGame.Neff) {
             printf("Nomor permainan tidak valid, silahkan masukkan nomor game pada list.\n");
         }
-    } while (comm <= 0 || comm > listGame.Neff);
+    } while (comm < 1 || comm > listGame.Neff);
 
-    Push(queueGame, GetElmt(listGame, comm - 1));
+    enqueue(queueGame, GetElmt(listGame, comm - 1));
     printf("Game berhasil ditambahkan ke dalam daftar antrian.\n\n");
 
 }

@@ -2,7 +2,7 @@
 #define PLAY_GAME_H
 
 #include <stdio.h>
-#include "./adt/circular_queue.h"
+#include "./adt/queue.h"
 
 /* List game buatan */
 #include "./game/rng.h"

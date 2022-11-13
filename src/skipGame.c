@@ -9,7 +9,7 @@
 
 void skipGame (Queue* queueGame, Word command) {
     int n = 0, i;
-    ElType val;
+    ElType dump;
     srand(time(NULL));
 
     for (i = 0; i < command.Length; i++) {
@@ -23,12 +23,12 @@ void skipGame (Queue* queueGame, Word command) {
 
     if (!IsEmptyQ(*queueGame)) { 
         for (i = 0; i < n; i++) {
-            Pop(queueGame);
+            dequeue(queueGame, &dump);
         }
 
         if(!IsEmptyQ(*queueGame)) {
-            Word play = (*queueGame).Tab[(*queueGame).HEAD];
-            Pop(queueGame);
+            Word play;
+            dequeue(queueGame, &play);
 
             if (IsWordEq(play, toKata("RNG"))) {
                 printLoading(play);
@@ -40,6 +40,10 @@ void skipGame (Queue* queueGame, Word command) {
                 sleep(3);
             } else if (IsWordEq(play, toKata("DINOSAUR IN EARTH")) || IsWordEq(play, toKata("RISEWOMAN")) || IsWordEq(play, toKata("EIFFEL TOWER"))) {
                 printf("Game "); TulisWord(play); printf(" masih dalam maintenance, belum dapat dimainkan. Silahkan pilih game lain.\n\n");
+            } else if (IsWordEq(play, toKata("ATC GAME"))) {
+                printLoading(play);
+
+                sleep(3);
             } else {
                 printLoading(play);
                 printf("Game over! Skor akhir: %d\n\n", rand());
