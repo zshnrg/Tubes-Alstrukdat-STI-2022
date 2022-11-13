@@ -3,15 +3,13 @@
 #include "./console.h"
 
 void menuList(TabKata *listGame, Queue *queueGame) {
-    printf("ENTER COMMAND: ");
+    printf("> ENTER COMMAND: ");
     GetCommand();
     system("cls");
 
 
-    if (IsWordEq(toKata("START"), currentWord)) {
+    if (IsWordEq(toKata("START"), currentWord) || IsWordEq(toKata("LOAD"), currentWord)) {
         printf("BNMO sudah dijalankan. Masukkan command HELP untuk bantuan\n\n");
-    } else if (IsWordEq(toKata("LOAD"), AccessCommand(currentWord, 0))) {
-        load(listGame, AccessCommand(currentWord, 1));
     } else if (IsWordEq(toKata("SAVE"), AccessCommand(currentWord, 0))) {
         save(*listGame, AccessCommand(currentWord, 1));
     } else if (IsWordEq(toKata("CREATE GAME"), currentWord)) {
