@@ -2,7 +2,7 @@
 #define DELETE_GAME_H
 
 #include "./adt/array.h"
-#include "./adt/circular_queue.h"
+#include "./adt/queue.h"
 
 void deleteGame(TabKata *listGame, Queue queueGame);
 /* Menghapus game yang ada pada listGame

@@ -97,3 +97,36 @@ void displayQueue(Queue q)
     }
     printf("]\n");
 }
+
+void displayQueue(Queue Q)
+/* Menampilkan queue pada layar
+   I.S. Q sembarang, mungkin kosong
+   F.S. Isi Q ditampilkan ke layar */
+{
+    if (!isEmpty(Q)) {
+        ElType temp;
+        for (int i = 1; i <= length(Q); i++) {
+            dequeue(&Q, &temp);
+            printf("  %d.", i);
+            TulisWord(temp);
+            printf("\n");
+            enqueue(&Q, temp);
+        }
+    } else {
+        printf("  -\n");
+    }
+}
+
+boolean IsMemberQ (Queue Q, ElType v)
+/* Mengembalikan nilai true apabila elemen v ada pada Queue */
+{
+    if (!isEmpty(Q)) {
+        ElType temp;
+        for (int i = 0; i < length(Q); i++) {
+            dequeue(&Q, &temp);
+            if (IsWordEq(temp, v)) return true;
+            enqueue(&Q, temp);
+        }
+    }
+    return false;
+}
