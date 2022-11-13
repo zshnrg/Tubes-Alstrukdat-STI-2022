@@ -21,12 +21,12 @@ void skipGame (Queue* queueGame, Word command) {
         displayQueue(*queueGame);
         printf("\n\n");
 
-    if (!IsEmptyQ(*queueGame)) { 
+    if (!isEmpty(*queueGame)) { 
         for (i = 0; i < n; i++) {
             dequeue(queueGame, &dump);
         }
 
-        if(!IsEmptyQ(*queueGame)) {
+        if(!isEmpty(*queueGame)) {
             Word play;
             dequeue(queueGame, &play);
 

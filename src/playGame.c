@@ -18,7 +18,7 @@ void playGame(Queue *queueGame) {
     srand(time(NULL));
 
     // ALGORITMA
-    if(!IsEmptyQ(*queueGame)) {
+    if(!isEmpty(*queueGame)) {
         printf("Berikut adalah daftar Game-mu\n");
         displayQueue(*queueGame);
         printf("\n");

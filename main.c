@@ -7,7 +7,7 @@ int main() {
     stateBNMO = false;
 
     MakeEmpty(&listGame);
-    queueGame = CreateQueue(50);
+    CreateQueue(&queueGame);
     system("cls");
     
     while (!stateBNMO) {

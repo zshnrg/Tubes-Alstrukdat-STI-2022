@@ -86,46 +86,29 @@ void displayQueue(Queue q)
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika Queue kosong : menulis [] */
 {
-    printf("[");
     if (!isEmpty(q)) {
-        int i = IDX_HEAD(q);
-        do {
-            printf("%d,", q.buffer[i]);
-            i = (i + 1) % CAPACITY;
-        } while (i != IDX_TAIL(q));
-        printf("%d", q.buffer[i]);
-    }
-    printf("]\n");
-}
-
-void displayQueue(Queue Q)
-/* Menampilkan queue pada layar
-   I.S. Q sembarang, mungkin kosong
-   F.S. Isi Q ditampilkan ke layar */
-{
-    if (!isEmpty(Q)) {
         ElType temp;
-        for (int i = 1; i <= length(Q); i++) {
-            dequeue(&Q, &temp);
+        for (int i = 1; i <= length(q); i++) {
+            dequeue(&q, &temp);
             printf("  %d.", i);
             TulisWord(temp);
             printf("\n");
-            enqueue(&Q, temp);
+            enqueue(&q, temp);
         }
     } else {
         printf("  -\n");
     }
 }
 
-boolean IsMemberQ (Queue Q, ElType v)
+boolean IsMemberQ (Queue q, ElType v)
 /* Mengembalikan nilai true apabila elemen v ada pada Queue */
 {
-    if (!isEmpty(Q)) {
+    if (!isEmpty(q)) {
         ElType temp;
-        for (int i = 0; i < length(Q); i++) {
-            dequeue(&Q, &temp);
+        for (int i = 0; i < length(q); i++) {
+            dequeue(&q, &temp);
             if (IsWordEq(temp, v)) return true;
-            enqueue(&Q, temp);
+            enqueue(&q, temp);
         }
     }
     return false;
