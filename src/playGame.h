@@ -7,6 +7,7 @@
 /* List game buatan */
 #include "./game/rng.h"
 #include "./game/dinerDash.h"
+#include "./game/atcGame.h"
 
 void printLoading(Word gameName);
 /* Menampilkan ke layar proses loading game */

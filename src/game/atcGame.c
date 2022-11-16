@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <time.h>
 #include "atcGame.h"
 
-boolean isEnd;
+boolean isOver;
 
-
-int main() {
-    playAtc();
-}
+// int main() {
+//     playAtc();
+// }
 
 void playAtc() {
+    boolean isOver = false;
     srand(time(NULL));
-    boolean isEnd = false;
 
     Queue BandaraM, BandaraB;
     createBandara(&BandaraB);
@@ -21,6 +21,8 @@ void playAtc() {
     TabKata LandingM, LandingB;
     MakeEmpty(&LandingM);
     MakeEmpty(&LandingB);
+
+    printGuide();   
 
     Langit L; L.NEff = 0;
 
@@ -38,7 +40,7 @@ void playAtc() {
     }
     insertPesawat(&L, Pesawat);
 
-    while (!isEnd) {
+    while (!isOver) {
         system("cls");
         printf("SCORE: %d\n\n", score);
         printStatus(BandaraM, BandaraB, L);
@@ -58,19 +60,19 @@ void playAtc() {
 
         do {
             printf("MASUKKAN COMMAND: ");
-            GetCommand();
+            STARTINPUT();
             if (!isCommVal(currentWord, L)) {
                 printf("\nCommand tidak valid.\n");
             }
         } while (!isCommVal(currentWord, L));
 
-        if (!IsWordEq(currentWord, toKata("SKIP"))) {
+        if (!WordCompare(currentWord, toKata("SKIP"))) {
             accPesawat(&L, currentWord);
         }
         updateStatus(&BandaraM, &BandaraB, &L, &LandingM, &LandingB); 
 
         if (NbElmt(LandingM) > 1 || NbElmt(LandingB) > 1) {
-            isEnd = true;
+            isOver = true;
         } else {
             if (NbElmt(LandingM) > 0) {
                 insertLanding(&BandaraM, &LandingM);
@@ -81,9 +83,27 @@ void playAtc() {
             }
         }
 
-        diff = diff * 1.1;
+        if (L.NEff < 30) diff = diff * 1.2;
+        else diff = diff * 1.05;
     }
-
+    printf("\n\n============================================================");
+    printf("\nGame over! Skor akhir %d\n", score);
+    printf("Terjadi kecelakaan pada pesawat ");
+    if (LandingM.Neff > 1) {
+        for (int i = 0; i < LandingM.Neff; i++) {
+            PrintWord(LandingM.TI[i]);
+            printf(" ");
+        }
+        if (LandingB.Neff > 1) printf("dan ");
+    }
+    if (LandingB.Neff > 1) {
+        for (int i = 0; i < LandingB.Neff; i++) {
+            PrintWord(LandingB.TI[i]);
+            printf(" ");
+        }
+    }
+    sleep(5);
+    system("cls");
 }
 
 void createPesawat (Queue *Pesawat, int ID, char color) {
@@ -96,18 +116,19 @@ void createPesawat (Queue *Pesawat, int ID, char color) {
     num.Length++;
     num.TabWord[0] = color;
 
+    CreateQueue(Pesawat);
+
     int len = rand() % 9 + 6;
-    *Pesawat = CreateQueue(len);
     for (int i = 1; i < len; i++) {
-        Push(Pesawat, toKata("-"));
+        enqueue(Pesawat, toKata("-"));
     }
-    Push(Pesawat, num);
+    enqueue(Pesawat, num);
 }
 
 void createBandara(Queue *Bandara) {
-    *Bandara = CreateQueue(10);
+    CreateQueue(Bandara);
     for (int i = 0; i < 10; i++) {
-        Push(Bandara, toKata("  -  "));
+        enqueue(Bandara, toKata("  -  "));
     }
 }
 
@@ -115,9 +136,9 @@ void printLangit(Langit L) {
     ElType temp;
     for (int i = 0; i < L.NEff; i++) {
         printf("o- ");
-        for (int j = 0; j < Length(L.Pesawat[i]); j++) {
-            temp = Pop(&L.Pesawat[i]);
-            if (IsWordEq(temp, toKata("-"))) {
+        for (int j = 0; j < length(L.Pesawat[i]); j++) {
+            dequeue(&L.Pesawat[i], &temp);
+            if (WordCompare(temp, toKata("-"))) {
                 printf("  -  ");
             } else {
                 if (temp.TabWord[0] == 'M') {
@@ -128,10 +149,10 @@ void printLangit(Langit L) {
                 printf("=[|=<");
                 printf("\033[0m");
             }
-            Push(&L.Pesawat[i], temp);
+            enqueue(&L.Pesawat[i], temp);
         }
         printf(" -o ");
-        TulisWord(L.ID[i]);
+        PrintWord(L.ID[i]);
         printf("\n\n");
     }
 }
@@ -143,22 +164,30 @@ void printBandara(Queue B, char warna) {
         printf("\033[1;35m");
     }
     printf("+------------------------------------------------------+\n|                                                      |\n|  ");
-    for (int i = 0; i < Length(B); i++) {
+    for (int i = 0; i < length(B); i++) {
         ElType dump;
-        dump = Pop(&B);
-        if (IsWordEq(dump, toKata("  -  "))) {
-            TulisWord(dump);
+        dequeue(&B, &dump);
+        if (WordCompare(dump, toKata("  -  "))) {
+            PrintWord(dump);
         } else {
             printf("=[|=<");
         }
-        Push(&B, dump);
+        enqueue(&B, dump);
     }
     printf("  |\n|                                                      |\n+------------------------------------------------------+\n\n");
     printf("\033[0m");
 }
 
 void printGuide() {
-    
+    for (int i = 8; i >= 1; i--) {
+        system("cls");
+        printf("==================================================================\n");
+        printf("                       Petunjuk Permainan\n");
+        printf("==================================================================\n");
+        printf("1. Permainan ini merupakan simulasi dari Air Traffic Control.\n2. Tugasmu adalah menjaga agar pesawat tidak bertubrukan saat ingin mendarat.\n3. Setiap satu putaran, setiap pesawat akan semakin dekat ke Bandara masing-masing\n4. Gunakan command <ID Pesawat> untuk mempercepat pesawat mendarat\n5. Gunakan command SKIP untuk melewati satu putaran\n6. Pastikan agar pesawat dengan warna sama tidak mendarat bersamaan.\n7. Selamat bermain!\n\n");
+        printf("Game akan dimulai dalam %d ...", i);
+        sleep(1);
+    }
 }
 
 void printStatus(Queue M, Queue B, Langit L) {
@@ -174,12 +203,12 @@ void printStatus(Queue M, Queue B, Langit L) {
 void insertPesawat(Langit *L, Queue Pesawat) {
     ElType temp;
     (*L).Pesawat[(*L).NEff] = Pesawat;
-    for (int i = 0; i < Length(Pesawat); i++) {
-        temp = Pop(&Pesawat);
-        if (!IsWordEq(temp, toKata("-"))) {
+    for (int i = 0; i < length(Pesawat); i++) {
+        dequeue(&Pesawat, &temp);
+        if (!WordCompare(temp, toKata("-"))) {
             (*L).ID[(*L).NEff] = temp;
         } 
-        Push(&Pesawat, temp);
+        enqueue(&Pesawat, temp);
     }
     (*L).NEff++;
 }
@@ -187,8 +216,8 @@ void insertPesawat(Langit *L, Queue Pesawat) {
 void insertLanding(Queue *Bandara, TabKata *Landing) {
     if (!IsEmpty(*Landing)) {
         ElType dump;
-        dump = Pop(Bandara);
-        Push(Bandara, (*Landing).TK[0]);
+        dequeue(Bandara, &dump);
+        enqueue(Bandara, (*Landing).TI[0]);
         MakeEmpty(Landing);
     }
 }
@@ -197,7 +226,7 @@ void deletePesawat(Langit *L, Queue *Bandara, Word ID) {
     ElType dump;
     boolean found = false; 
     for (int i = 0; i < (*L).NEff - 1; i++) {
-        if (IsWordEq((*L).ID[i], ID)) {
+        if (WordCompare((*L).ID[i], ID)) {
             found = true;
         }
         if (found) {
@@ -206,20 +235,20 @@ void deletePesawat(Langit *L, Queue *Bandara, Word ID) {
         }
     }
     (*L).NEff--;
-    dump = Pop(Bandara);
-    Push(Bandara, toKata("P"));
+    dequeue(Bandara, &dump);
+    enqueue(Bandara, toKata("P"));
 }
 
 void updateStatus(Queue *M, Queue *B, Langit *L, TabKata *LandingM, TabKata *LandingB) {
     ElType dump;
-    dump = Pop(M);
-    dump = Pop(B);
-    Push(M, toKata("  -  "));
-    Push(B, toKata("  -  "));
+    dequeue(M, &dump);
+    dequeue(B, &dump);
+    enqueue(M, toKata("  -  "));
+    enqueue(B, toKata("  -  "));
 
     for (int i = 0; i < (*L).NEff; i++) {
-        if (!IsWordEq((*L).Pesawat[i].Tab[(*L).Pesawat[i].HEAD], toKata("-"))) {
-            if ((*L).Pesawat[i].Tab[0].TabWord[0] == 'M') {
+        if (!WordCompare(HEAD((*L).Pesawat[i]), toKata("-"))) {
+            if (HEAD((*L).Pesawat[i]).TabWord[0] == 'M') {
                 SetEl(LandingM, (*LandingM).Neff, (*L).ID[i]);
             } else {
                 SetEl(LandingB, (*LandingB).Neff, (*L).ID[i]);
@@ -230,7 +259,7 @@ void updateStatus(Queue *M, Queue *B, Langit *L, TabKata *LandingM, TabKata *Lan
             }
             (*L).NEff--;
         } else {
-            dump = Pop(&L->Pesawat[i]);
+            dequeue(&L->Pesawat[i], &dump);
         }
     }
 }
@@ -238,40 +267,23 @@ void updateStatus(Queue *M, Queue *B, Langit *L, TabKata *LandingM, TabKata *Lan
 void accPesawat(Langit *L, Word comm) {
     ElType dump;
     for (int i = 0; i < (*L).NEff; i++) {
-        if (IsWordEq((*L).ID[i], comm)) {
-            while (IsWordEq((*L).Pesawat[i].Tab[(*L).Pesawat[i].HEAD], toKata("-"))) {
-                dump = Pop(&L->Pesawat[i]);
+        if (WordCompare((*L).ID[i], comm)) {
+            while (WordCompare(HEAD((*L).Pesawat[i]), toKata("-"))) {
+                dequeue(&L->Pesawat[i], &dump);
             }
         }
     }
 }
 
 boolean isCommVal(Word comm, Langit L) {
-    if (IsWordEq(currentWord, toKata("SKIP"))) {
+    if (WordCompare(currentWord, toKata("SKIP"))) {
         return true;
     } else {
         for (int i = 0; i < L.NEff; i++) {
-            if (IsWordEq(currentWord, L.ID[i])) {
+            if (WordCompare(currentWord, L.ID[i])) {
                 return true;
             }
         }
         return false;
     }
-}
-
-Word intToWord(int n) {
-    Word num; num.Length = 0;
-    if (n == 0) {
-        num.TabWord[num.Length] = '0'; num.Length++;
-    } else {
-        while (n != 0) {
-            for (int i = num.Length; i > 0; i--) {
-                num.TabWord[i] = num.TabWord[i-1];
-            }
-            num.Length++;
-            num.TabWord[0] = (n % 10) + '0';
-            n = n / 10;
-        }
-    }
-    return num;
 }

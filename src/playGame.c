@@ -38,7 +38,7 @@ void playGame(Queue *queueGame) {
             printf("Game "); TulisWord(play); printf(" masih dalam maintenance, belum dapat dimainkan. Silahkan pilih game lain.\n\n");
         } else if (IsWordEq(play, toKata("ATC GAME"))) {
             printLoading(play);
-            // Insert new game
+            playAtc();
             sleep(3);
         } else {
             printLoading(play);

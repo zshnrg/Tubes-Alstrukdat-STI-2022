@@ -2,17 +2,17 @@
 #define AIR_TRAFFIC_CONTROL_H
 
 #include <stdio.h>
-#include "../adt/circular_queue.h"
-#include "../adt/mesinkata.h"
-#include "../adt/array.h"
+#include "../ADT/queue.h"
+#include "../ADT/mesinkata.h"
+#include "../ADT/array.h"
 
 typedef struct {
-    Queue Pesawat[50];
-    Word ID[50];
+    Queue Pesawat[100];
+    Word ID[100];
     int NEff;
 } Langit;
 
-extern boolean isEnd;
+extern boolean isOver;
 
 void playAtc();
 /* Menjalankan game Air Traffic Control 
@@ -73,7 +73,5 @@ void accPesawat(Langit *L, Word comm);
 boolean isCommVal(Word comm, Langit L);
 /* Mengembalikan nilai true jika command valid */
 
-Word intToWord(int n);
-/* Mengubah integer menjadi tipe data Word */
 
 #endif
