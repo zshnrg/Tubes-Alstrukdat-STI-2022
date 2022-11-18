@@ -59,7 +59,13 @@ void TulisWord(Word kata);
 boolean IsWordEq (Word kata1, Word kata2);
 
 Word toKata(char *str); 
+/*  Fungsi yang menerima sebuah paramater str bertipe string
+    Kemudian mengembalikan elemen bertipe Word yang merupakan hasil transformasi string str */
+
+Word intToWord(int n);
 
 int stringLength(char *str);
+/*  Fungsi yang menerima sebuah parameter str bertipe string
+    Kemudian mengembalikan panjang dari string tersebut */
 
 #endif

@@ -60,13 +60,13 @@ void playAtc() {
 
         do {
             printf("MASUKKAN COMMAND: ");
-            STARTINPUT();
+            GetCommand();
             if (!isCommVal(currentWord, L)) {
                 printf("\nCommand tidak valid.\n");
             }
         } while (!isCommVal(currentWord, L));
 
-        if (!WordCompare(currentWord, toKata("SKIP"))) {
+        if (!IsWordEq(currentWord, toKata("SKIP"))) {
             accPesawat(&L, currentWord);
         }
         updateStatus(&BandaraM, &BandaraB, &L, &LandingM, &LandingB); 
@@ -91,14 +91,14 @@ void playAtc() {
     printf("Terjadi kecelakaan pada pesawat ");
     if (LandingM.Neff > 1) {
         for (int i = 0; i < LandingM.Neff; i++) {
-            PrintWord(LandingM.TI[i]);
+            TulisWord(LandingM.TK[i]);
             printf(" ");
         }
         if (LandingB.Neff > 1) printf("dan ");
     }
     if (LandingB.Neff > 1) {
         for (int i = 0; i < LandingB.Neff; i++) {
-            PrintWord(LandingB.TI[i]);
+            TulisWord(LandingB.TK[i]);
             printf(" ");
         }
     }
@@ -138,7 +138,7 @@ void printLangit(Langit L) {
         printf("o- ");
         for (int j = 0; j < length(L.Pesawat[i]); j++) {
             dequeue(&L.Pesawat[i], &temp);
-            if (WordCompare(temp, toKata("-"))) {
+            if (IsWordEq(temp, toKata("-"))) {
                 printf("  -  ");
             } else {
                 if (temp.TabWord[0] == 'M') {
@@ -152,7 +152,7 @@ void printLangit(Langit L) {
             enqueue(&L.Pesawat[i], temp);
         }
         printf(" -o ");
-        PrintWord(L.ID[i]);
+        TulisWord(L.ID[i]);
         printf("\n\n");
     }
 }
@@ -167,8 +167,8 @@ void printBandara(Queue B, char warna) {
     for (int i = 0; i < length(B); i++) {
         ElType dump;
         dequeue(&B, &dump);
-        if (WordCompare(dump, toKata("  -  "))) {
-            PrintWord(dump);
+        if (IsWordEq(dump, toKata("  -  "))) {
+            TulisWord(dump);
         } else {
             printf("=[|=<");
         }
@@ -205,7 +205,7 @@ void insertPesawat(Langit *L, Queue Pesawat) {
     (*L).Pesawat[(*L).NEff] = Pesawat;
     for (int i = 0; i < length(Pesawat); i++) {
         dequeue(&Pesawat, &temp);
-        if (!WordCompare(temp, toKata("-"))) {
+        if (!IsWordEq(temp, toKata("-"))) {
             (*L).ID[(*L).NEff] = temp;
         } 
         enqueue(&Pesawat, temp);
@@ -217,7 +217,7 @@ void insertLanding(Queue *Bandara, TabKata *Landing) {
     if (!IsEmpty(*Landing)) {
         ElType dump;
         dequeue(Bandara, &dump);
-        enqueue(Bandara, (*Landing).TI[0]);
+        enqueue(Bandara, (*Landing).TK[0]);
         MakeEmpty(Landing);
     }
 }
@@ -226,7 +226,7 @@ void deletePesawat(Langit *L, Queue *Bandara, Word ID) {
     ElType dump;
     boolean found = false; 
     for (int i = 0; i < (*L).NEff - 1; i++) {
-        if (WordCompare((*L).ID[i], ID)) {
+        if (IsWordEq((*L).ID[i], ID)) {
             found = true;
         }
         if (found) {
@@ -247,7 +247,7 @@ void updateStatus(Queue *M, Queue *B, Langit *L, TabKata *LandingM, TabKata *Lan
     enqueue(B, toKata("  -  "));
 
     for (int i = 0; i < (*L).NEff; i++) {
-        if (!WordCompare(HEAD((*L).Pesawat[i]), toKata("-"))) {
+        if (!IsWordEq(HEAD((*L).Pesawat[i]), toKata("-"))) {
             if (HEAD((*L).Pesawat[i]).TabWord[0] == 'M') {
                 SetEl(LandingM, (*LandingM).Neff, (*L).ID[i]);
             } else {
@@ -267,8 +267,8 @@ void updateStatus(Queue *M, Queue *B, Langit *L, TabKata *LandingM, TabKata *Lan
 void accPesawat(Langit *L, Word comm) {
     ElType dump;
     for (int i = 0; i < (*L).NEff; i++) {
-        if (WordCompare((*L).ID[i], comm)) {
-            while (WordCompare(HEAD((*L).Pesawat[i]), toKata("-"))) {
+        if (IsWordEq((*L).ID[i], comm)) {
+            while (IsWordEq(HEAD((*L).Pesawat[i]), toKata("-"))) {
                 dequeue(&L->Pesawat[i], &dump);
             }
         }
@@ -276,11 +276,11 @@ void accPesawat(Langit *L, Word comm) {
 }
 
 boolean isCommVal(Word comm, Langit L) {
-    if (WordCompare(currentWord, toKata("SKIP"))) {
+    if (IsWordEq(currentWord, toKata("SKIP"))) {
         return true;
     } else {
         for (int i = 0; i < L.NEff; i++) {
-            if (WordCompare(currentWord, L.ID[i])) {
+            if (IsWordEq(currentWord, L.ID[i])) {
                 return true;
             }
         }

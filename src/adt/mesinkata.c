@@ -135,6 +135,23 @@ Word toKata(char *str) {
     return kata;
 }
 
+Word intToWord(int n) {
+    Word num; num.Length = 0;
+    if (n == 0) {
+        num.TabWord[num.Length] = '0'; num.Length++;
+    } else {
+        while (n != 0) {
+            for (int i = num.Length; i > 0; i--) {
+                num.TabWord[i] = num.TabWord[i-1];
+            }
+            num.Length++;
+            num.TabWord[0] = (n % 10) + '0';
+            n = n / 10;
+        }
+    }
+    return num;
+}
+
 int stringLength(char *str) {
 /*  Fungsi yang menerima sebuah parameter str bertipe string
     Kemudian mengembalikan panjang dari string tersebut */
