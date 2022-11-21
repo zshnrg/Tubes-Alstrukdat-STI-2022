@@ -13,7 +13,7 @@ void printLoading(Word gameName) {
 }
 
 // Game yang diload dan game yang dibuat akan dipisah karena perlu ada penanganan game yang sedang maintenance (game yang bukan game RNG, Dine Dash, atau game buatan)
-void playGame(Queue *queueGame) {
+void playGame(Queue *queueGame, List* historyGame) {
     ElType val;
     srand(time(NULL));
 
@@ -25,6 +25,7 @@ void playGame(Queue *queueGame) {
 
         Word play;
         dequeue(queueGame, &play);
+        InsVLast(historyGame, play);
 
         if (IsWordEq(play, toKata("RNG"))) {
             printLoading(play);

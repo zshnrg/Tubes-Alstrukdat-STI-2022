@@ -8,7 +8,7 @@ char currentChar;
 boolean EOP;
 
 static FILE *pita;
-int retval;
+static int retval;
 
 void START(FILE *input)
 {
@@ -34,7 +34,7 @@ void ADV()
 
        /* Algoritma */
        retval = fscanf(pita, "%c", &currentChar);
-       EOP = (retval < 0);
+       EOP = (currentChar == MARK);
        if (EOP)
        {
               fclose(pita);

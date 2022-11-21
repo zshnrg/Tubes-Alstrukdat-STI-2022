@@ -22,8 +22,9 @@
 #include "./src/skipGame.h"
 #include "./src/quit.h"
 #include "./src/help.h"
+#include "./src/history.h"
 
-void menuList(TabKata *listGame, Queue *queueGame);
+void menuList(TabKata *listGame, Queue *queueGame, List *historyGame);
 /* Memilih menu BNMO
     I.S. listGame dan queueGame terdefinisi mungkin kosong
     F.S. Menu dijalankan sesuai dengan input user

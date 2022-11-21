@@ -4,7 +4,7 @@
 
 /* Implementasi save.h */
 
-void save(TabKata listGame, Word fileName) {
+void save(TabKata listGame, List historyGame, Word fileName) {
     FILE* target;
     char dir[50] = "./data/";
     
@@ -13,7 +13,7 @@ void save(TabKata listGame, Word fileName) {
     }
     dir[7 + fileName.Length] = '\0';
     
-    writeTxt(dir, listGame);
+    writeTxt(dir, listGame, historyGame);
     
     target = fopen(dir, "r");
     if (target != NULL) {

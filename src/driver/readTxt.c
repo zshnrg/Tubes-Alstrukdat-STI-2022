@@ -30,7 +30,18 @@ void readTxt(char* filesrc, TabKata* listGame, List* historyGame) {
         }
 
         // History game
-        
+        ADVWORD();
+        if (currentChar != ' ') {
+            int lines = 0;
+            for (int i = 0; i < currentWord.Length; i++) {
+                lines *= 10;
+                lines += currentWord.TabWord[i] - '0';
+            }
+            for (int i = 0; i < lines; i++) {
+                ADVWORD();
+                InsVLast(historyGame, currentWord);
+            }
+        }
     }
     fclose(input);
 }

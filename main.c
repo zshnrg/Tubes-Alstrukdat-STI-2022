@@ -40,7 +40,7 @@ int main() {
 
     if (stateBNMO) {
         while (stateBNMO) {
-            menuList(&listGame, &queueGame);
+            menuList(&listGame, &queueGame, &historyGame);
         }
     } else {
         printf("BNMO gagal dijalankan.\n");
