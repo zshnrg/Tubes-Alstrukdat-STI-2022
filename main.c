@@ -4,10 +4,13 @@
 int main() {
     TabKata listGame;
     Queue queueGame;
+    List historyGame;
+
     stateBNMO = false;
 
     MakeEmpty(&listGame);
     CreateQueue(&queueGame);
+    CreateEmptyList(&historyGame);
     system("cls");
     
     for (int i = 0; i < 9; i++) {
@@ -30,8 +33,8 @@ int main() {
             }
         } while (!IsWordEq(toKata("START"), currentWord) && !IsWordEq(toKata("LOAD"), AccessCommand(currentWord, 0)));
 
-        if (IsWordEq(toKata("START"), currentWord)) start(&listGame);
-        else load(&listGame, AccessCommand(currentWord, 1));
+        if (IsWordEq(toKata("START"), currentWord)) start(&listGame, &historyGame);
+        else load(&listGame, &historyGame, AccessCommand(currentWord, 1));
     }
     sleep(1);
 

@@ -1,11 +1,3 @@
-/*
-Nama        : Rozan Ghosani
-NIM         : 18221121
-Tanggal     : 21 Oktober 2022
-Topik       : Stack
-Deskripsi   : Implementasi stack.h
-*/
-
 #include <stdio.h>
 #include "stack.h"
 
@@ -13,16 +5,16 @@ void CreateEmptyStack(Stack *S)
 /* I.S. sembarang; */
 /* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
 /* jadi indeksnya antara 0.. MaxEl */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* Ciri stack kosong : TOP bernilai Undef */
 {
-    Top(*S) = Nil;
+    Top(*S) = Undef;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
 boolean IsEmptyStack(Stack S)
 /* Mengirim true jika Stack kosong: lihat definisi di atas */
 {
-    return Top(S) == Nil;
+    return Top(S) == Undef;
 }
 boolean IsFullStack(Stack S)
 /* Mengirim true jika tabel penampung nilai elemen stack penuh */

@@ -1,18 +1,10 @@
-/*
-Nama		: Rozan Ghosani
-NIM			: 18221121	
-Tanggal		: 31 Oktober 2022
-Topik		: Set, Map, dan Hash
-Deskripsi	: Implementasi union_map.h
-*/
-
 #include <stdio.h>
 #include "set.h"
 
 /* *** Konstruktor/Kreator *** */
 void CreateEmptySet(Set *S)
 /* I.S. Sembarang */
-/* F.S. Membuat sebuah Set S kosong berkapasitas MaxEl */
+/* F.S. Membuat sebuah Set S kosong berkapasitas MaxElSet */
 /* Ciri Set kosong : count bernilai Nil */
 {
     S->Count = Nil;
@@ -28,13 +20,13 @@ boolean IsEmptySet(Set S)
 
 boolean IsFullSet(Set S)
 /* Mengirim true jika Set S penuh */
-/* Ciri Set penuh : count bernilai MaxEl */
+/* Ciri Set penuh : count bernilai MaxElSet */
 {
-    return S.Count == MaxEl;
+    return S.Count == MaxElSet;
 }
 
 /* ********** Operator Dasar Set ********* */
-void InsertSet(Set *S, infotype Elmt)
+void InsertSet(Set *S, infotypeSet Elmt)
 /* Menambahkan Elmt sebagai elemen Set S. */
 /* I.S. S mungkin kosong, S tidak penuh
         S mungkin sudah beranggotakan Elmt */
@@ -48,21 +40,21 @@ void InsertSet(Set *S, infotype Elmt)
     S->Count++;
 }
 
-void DeleteSet(Set *S, infotype Elmt)
+void DeleteSet(Set *S, infotypeSet Elmt)
 /* Menghapus Elmt dari Set S. */
 /* I.S. S tidak kosong
         Elmt mungkin anggota / bukan anggota dari S */
 /* F.S. Elmt bukan anggota dari S */
 {
     boolean found = false;
-    address idx = 0, iterator;
+    addrSer idx = 0, iterator;
     if (!IsMemberSet(*S, Elmt))
     {
         return;
     }
     while (!found && idx < S->Count)
     {
-        if (WordCompare(S->Elements[idx], Elmt))
+        if (IsWordEq(S->Elements[idx], Elmt))
         {
             found = true;
         }
@@ -78,14 +70,14 @@ void DeleteSet(Set *S, infotype Elmt)
     S->Count--;
 }
 
-boolean IsMemberSet(Set S, infotype Elmt)
+boolean IsMemberSet(Set S, infotypeSet Elmt)
 /* Mengembalikan true jika Elmt adalah member dari S */
 {
     boolean found = false;
-    address idx = 0;
+    addrSer idx = 0;
     while (!found && idx < S.Count)
     {
-        if (WordCompare(S.Elements[idx], Elmt))
+        if (IsWordEq(S.Elements[idx], Elmt))
         {
             found = true;
         }

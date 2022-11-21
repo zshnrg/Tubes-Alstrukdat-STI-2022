@@ -22,8 +22,8 @@ void menuList(TabKata *listGame, Queue *queueGame) {
         queueGameList(*listGame, queueGame);
     } else if (IsWordEq(toKata("PLAY GAME"), currentWord)) {
         playGame(queueGame);
-    } else if (IsWordEq(toKata("SKIPGAME"), AccessCommand(currentWord, 0))) {
-        skipGame(queueGame, AccessCommand(currentWord, 1));
+    } else if (IsWordEq(toKata("SKIP GAME"), AccessCommand(currentWord, 0))) {
+        skipGame(queueGame, AccessCommand(currentWord, 2));
     } else if (IsWordEq(toKata("QUIT"), currentWord)) {
         quit(*listGame);
     } else if (IsWordEq(toKata("HELP"), currentWord)) {

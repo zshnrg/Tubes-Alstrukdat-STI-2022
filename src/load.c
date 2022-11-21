@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include "load.h"
 
-void load(TabKata *listGame, Word fileName) {
+void load(TabKata *listGame, List* historyGame, Word fileName) {
     TabKata addedGame;
     MakeEmpty(&addedGame);
 
@@ -12,7 +12,7 @@ void load(TabKata *listGame, Word fileName) {
     }
     file[fileName.Length] = '\0';
 
-    readTxt(file, &addedGame);
+    readTxt(file, &addedGame, historyGame);
 
     for (int i = 0; i < addedGame.Neff; i++) {
         if (!IsMember(*listGame, addedGame.TK[i])) {

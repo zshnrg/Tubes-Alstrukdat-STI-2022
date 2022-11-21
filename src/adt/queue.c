@@ -1,11 +1,3 @@
-/*
-Nama        : Rozan Ghosani
-NIM         : 18221121
-Tanggal     : 16 Oktober 2022
-Topik       : Queue
-Deskripsi   : Implementasi queue.h
-*/
-
 #include <stdio.h>
 #include "queue.h"
 #include "boolean.h"

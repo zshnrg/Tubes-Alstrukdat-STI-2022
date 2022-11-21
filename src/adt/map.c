@@ -3,25 +3,25 @@
 /* *** Konstruktor/Kreator *** */
 void CreateEmptyMap(Map *M)
 /* I.S. Sembarang */
-/* F.S. Membuat sebuah Map M kosong berkapasitas MaxEl */
-/* Ciri Map kosong : count bernilai Nil */
+/* F.S. Membuat sebuah Map M kosong berkapasitas MaxElMap */
+/* Ciri Map kosong : count bernilai 0 */
 {
-    M->Count = Nil;
+    M->Count = 0;
 }
 
 /* ********* Predikat Untuk test keadaan KOLEKSI ********* */
 boolean IsEmptyMap(Map M)
 /* Mengirim true jika Map M kosong*/
-/* Ciri Map kosong : count bernilai Nil */
+/* Ciri Map kosong : count bernilai 0 */
 {
-    return M.Count == Nil;
+    return M.Count == 0;
 }
 
 boolean IsFullMap(Map M)
 /* Mengirim true jika Map M penuh */
-/* Ciri Map penuh : count bernilai MaxEl */
+/* Ciri Map penuh : count bernilai MaxElMap */
 {
-    return M.Count == MaxEl;
+    return M.Count == MaxElMap;
 }
 
 /* ********** Operator Dasar Map ********* */
@@ -29,7 +29,7 @@ valuetype Value(Map M, keytype k)
 /* Mengembalikan nilai value dengan key k dari M */
 {
     boolean found = false;
-    address idx = 0, iterator;
+    addr idx = 0, iterator;
 
     while (!found && idx < M.Count) {
         if (M.Elements[idx].Key == k) {
@@ -65,7 +65,7 @@ void DeleteMap(Map *M, keytype k)
 /* F.S. element dengan key k bukan anggota dari M */
 {
     boolean found = false;
-    address idx = 0, iterator;
+    addr idx = 0, iterator;
 
     if (!IsMemberMap(*M, k)) {
         return;
@@ -92,7 +92,7 @@ boolean IsMemberMap(Map M, keytype k)
 /* Mengembalikan true jika k adalah member dari M */
 {
     boolean found = false;
-    address idx = 0, iterator;
+    addr idx = 0, iterator;
 
     while (!found && idx < M.Count) {
         if (M.Elements[idx].Key == k) {

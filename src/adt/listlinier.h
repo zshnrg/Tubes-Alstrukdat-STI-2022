@@ -6,12 +6,10 @@
 #ifndef listlinier_H
 #define listlinier_H
 
-#include "../boolean.h"
-#include "stdio.h"
-#include "stdlib.h"
+#include "boolean.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include "mesinkata.h"
-
-#define Nil NULL
 
 typedef Word infotype;
 typedef struct tElmtlist *address;
@@ -24,12 +22,6 @@ typedef struct
 {
     address First;
 } List;
-
-typedef struct
-{
-    List Game[100];
-    int Neff;
-} GameScoreList;
 
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
@@ -45,13 +37,9 @@ boolean IsEmptyList(List L);
 /* Mengirim true jika list kosong */
 
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty(List *L);
+void CreateEmptyList(List *L);
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
-
-void CreateGameScore(GameScoreList *GL);
-/* I.S. sembarang                       */
-/* F.S. Terbentuk list skor game kosong */
 
 /****************** Manajemen Memori ******************/
 address Alokasi(infotype X);

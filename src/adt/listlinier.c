@@ -12,39 +12,33 @@
 boolean IsEmptyList(List L)
 /* Mengirim true jika list kosong */
 {
-    return First(L) == Nil;
+    return First(L) == NULL;
 }
 
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateEmpty(List *L)
+void CreateEmptyList(List *L)
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
 {
-    First(*L) = Nil;
+    First(*L) = NULL;
 }
 
-void CreateGameScore(GameScoreList *GL)
-/* I.S. sembarang                       */
-/* F.S. Terbentuk list skor game kosong */
-{
-    (*GL).Neff = 0;
-}
 /****************** Manajemen Memori ******************/
 address Alokasi(infotype X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
-/* Jika alokasi berhasil, maka address tidak nil, dan misalnya */
-/* menghasilkan P, maka Info(P)=X, Next(P)=Nil */
-/* Jika alokasi gagal, mengirimkan Nil */
+/* Jika alokasi berhasil, maka address tidak NULL, dan misalnya */
+/* menghasilkan P, maka Info(P)=X, Next(P)=NULL */
+/* Jika alokasi gagal, mengirimkan NULL */
 {
     address P = (address)malloc(1 * sizeof(ElmtList));
-    if (P != Nil)
+    if (P != NULL)
     {
         Info(P) = X;
-        Next(P) = Nil;
+        Next(P) = NULL;
         return P;
     }
     {
-        return Nil;
+        return NULL;
     }
 }
 
@@ -60,7 +54,7 @@ void Dealokasi(address *P)
 address Search(List L, infotype X)
 /* Mencari apakah ada elemen list dengan Info(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
-/* Jika tidak ada, mengirimkan Nil */
+/* Jika tidak ada, mengirimkan NULL */
 {
     address P;
     boolean bFound = false;
@@ -68,9 +62,9 @@ address Search(List L, infotype X)
     if (!IsEmptyList(L))
     {
         P = First(L);
-        while (!bFound && P != Nil)
+        while (!bFound && P != NULL)
         {
-            if (WordCompare(X,Info(P)))
+            if (IsWordEq(X,Info(P)))
             {
                 bFound = true;
             }
@@ -86,12 +80,12 @@ address Search(List L, infotype X)
         }
         else
         {
-            return Nil;
+            return NULL;
         }
     }
     else
     {
-        return Nil;
+        return NULL;
     }
 }
 
@@ -103,7 +97,7 @@ void InsVFirst(List *L, infotype X)
 /* menambahkan elemen pertama dengan nilai X jika alokasi berhasil */
 {
     address P = Alokasi(X);
-    if (P != Nil)
+    if (P != NULL)
     {
         InsertFirst(L, P);
     }
@@ -116,7 +110,7 @@ void InsVLast(List *L, infotype X)
 /* bernilai X jika alokasi berhasil. Jika alokasi gagal: I.S.= F.S. */
 {
     address P = Alokasi(X);
-    if (P != Nil)
+    if (P != NULL)
     {
         InsertLast(L, P);
     }
@@ -140,22 +134,22 @@ void DelVLast(List *L, infotype *X)
 /*      dan alamat elemen terakhir di-dealokasi */
 {
     address P = First(*L);
-    address Prec = Nil;
+    address Prec = NULL;
 
-    while (Next(P) != Nil)
+    while (Next(P) != NULL)
     {
         Prec = P;
         P = Next(P);
     }
 
     *X = Info(P);
-    if (Prec != Nil)
+    if (Prec != NULL)
     {
-        Next(Prec) = Nil;
+        Next(Prec) = NULL;
     }
     else
     {
-        First(*L) = Nil;
+        First(*L) = NULL;
     }
     Dealokasi(&P);
 }
@@ -192,7 +186,7 @@ void InsertLast(List *L, address P)
     else
     {
         Last = First(*L);
-        while (Next(Last) != Nil)
+        while (Next(Last) != NULL)
         {
             Last = Next(Last);
         }
@@ -209,7 +203,7 @@ void DelFirst(List *L, address *P)
 {
     *P = First(*L);
     First(*L) = Next(First(*L));
-    Next(*P) = Nil;
+    Next(*P) = NULL;
 }
 
 void DelP(List *L, infotype X)
@@ -225,7 +219,7 @@ void DelP(List *L, infotype X)
 
     if (!IsEmptyList(*L))
     {
-        if (WordCompare(X, Info(First(*L))))
+        if (IsWordEq(X, Info(First(*L))))
         {
             DelFirst(L, &P);
             Dealokasi(&P);
@@ -233,9 +227,9 @@ void DelP(List *L, infotype X)
         else
         {
             P = First(*L);
-            while (!bFound && P != Nil)
+            while (!bFound && P != NULL)
             {
-                if (WordCompare(Info(P), X))
+                if (IsWordEq(Info(P), X))
                 {
                     bFound = true;
                 }
@@ -263,22 +257,22 @@ void DelLast(List *L, address *P)
 /* jika ada */
 {
     address Last = First(*L);
-    address PrecLast = Nil;
+    address PrecLast = NULL;
 
-    while (Next(Last) != Nil)
+    while (Next(Last) != NULL)
     {
         PrecLast = Last;
         Last = Next(Last);
     }
 
     *P = Last;
-    if (PrecLast == Nil)
+    if (PrecLast == NULL)
     {
-        First(*L) = Nil;
+        First(*L) = NULL;
     }
     else
     {
-        Next(PrecLast) = Nil;
+        Next(PrecLast) = NULL;
     }
 }
 
@@ -289,7 +283,7 @@ void DelAfter(List *L, address *Pdel, address Prec)
 {
     *Pdel = Next(Prec);
     Next(Prec) = Next(Next(Prec));
-    Next(*Pdel) = Nil;
+    Next(*Pdel) = NULL;
 }
 
 /****************** PROSES SEMUA ELEMEN LIST ******************/
@@ -307,13 +301,13 @@ void PrintInfo(List L)
     if (!IsEmptyList(L))
     {
         P = First(L);
-        while (P != Nil)
+        while (P != NULL)
         {
             if (!isFirst)
             {
                 printf(",");
             }
-            PrintWord(Info(P));
+            TulisWord(Info(P));
             isFirst = false;
 
             P = Next(P);
@@ -330,7 +324,7 @@ int NumberElmt(List L)
     if (!IsEmptyList(L))
     {
         P = First(L);
-        while (P != Nil)
+        while (P != NULL)
         {
             cnt++;
             P = Next(P);
@@ -348,13 +342,13 @@ void InversList(List *L)
 /* Membalik elemen list, tanpa melakukan alokasi/dealokasi. */
 {
     address P;
-    address Prec = Nil;
+    address Prec = NULL;
     address Succ;
 
     if (!IsEmptyList(*L))
     {
         P = First(*L);
-        while (P != Nil)
+        while (P != NULL)
         {
             Succ = Next(P);
             Next(P) = Prec;
@@ -375,7 +369,7 @@ void Konkat1(List *L1, List *L2, List *L3)
 {
     address Last1;
 
-    CreateEmpty(L3);
+    CreateEmptyList(L3);
     if (IsEmptyList(*L1))
     {
         First(*L3) = First(*L2);
@@ -384,13 +378,13 @@ void Konkat1(List *L1, List *L2, List *L3)
     {
         First(*L3) = First(*L1);
         Last1 = First(*L1);
-        while (Next(Last1) != Nil)
+        while (Next(Last1) != NULL)
         {
             Last1 = Next(Last1);
         }
         Next(Last1) = First(*L2);
     }
 
-    First(*L1) = Nil;
-    First(*L2) = Nil;
+    First(*L1) = NULL;
+    First(*L2) = NULL;
 }

@@ -9,6 +9,7 @@
 #include "./src/adt/listlinier.h"
 #include "./src/adt/map.h"
 #include "./src/adt/set.h"
+#include "./src/adt/stack.h"
 
 #include "./src/start.h"
 #include "./src/save.h"

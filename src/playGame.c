@@ -34,8 +34,18 @@ void playGame(Queue *queueGame) {
             printLoading(play);
             dinerDashPlay();
             sleep(3);
-        } else if (IsWordEq(play, toKata("DINOSAUR IN EARTH")) || IsWordEq(play, toKata("RISEWOMAN")) || IsWordEq(play, toKata("EIFFEL TOWER"))) {
-            printf("Game "); TulisWord(play); printf(" masih dalam maintenance, belum dapat dimainkan. Silahkan pilih game lain.\n\n");
+        } else if (IsWordEq(play, toKata("HANGMAN"))) {
+            printLoading(play);
+
+            sleep(3);
+        } else if (IsWordEq(play, toKata("TOWER OF HANOI"))) {
+            printLoading(play);
+            playTowerOfHanoi();
+            sleep(3);
+        } else if (IsWordEq(play, toKata("SNAKE ON METEOR"))) {
+            printLoading(play);
+
+            sleep(3);
         } else if (IsWordEq(play, toKata("ATC GAME"))) {
             printLoading(play);
             playAtc();

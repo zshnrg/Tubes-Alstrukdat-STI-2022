@@ -3,7 +3,7 @@
 
 /* Implementasi readTxtFile.h */
 
-void readTxt(char* filesrc, TabKata* listGame, List ,boolean isStart) {
+void readTxt(char* filesrc, TabKata* listGame, List* historyGame) {
     char dir[50] = "./data/";
 
     int i = 0;
@@ -29,19 +29,8 @@ void readTxt(char* filesrc, TabKata* listGame, List ,boolean isStart) {
             SetEl(listGame, i, currentWord);
         }
 
-        // Saved file
-        int n;
-        if (!isStart) {
-            // Game history
-            for (int i = 0; i < currentWord.Length; i++) {
-                n *= 10;
-                n += currentWord.TabWord[i] - '0';
-            }
-            for (int i = 0; i < n; i++) {
-                ADVWORD();
-                SetEl(listGame, i, currentWord);
-            }
-        }
+        // History game
+        
     }
     fclose(input);
 }
