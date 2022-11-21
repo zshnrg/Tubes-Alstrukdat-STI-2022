@@ -161,7 +161,7 @@ void printBandara(Queue B, char warna) {
     if (warna == 'M') {
         printf("\033[1;31m"); 
     } else{
-        printf("\033[1;35m");
+        printf("\033[1;34m");
     }
     printf("+------------------------------------------------------+\n|                                                      |\n|  ");
     for (int i = 0; i < length(B); i++) {

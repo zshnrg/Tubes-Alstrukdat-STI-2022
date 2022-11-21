@@ -9,7 +9,7 @@
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmpty(List L)
+boolean IsEmptyList(List L)
 /* Mengirim true jika list kosong */
 {
     return First(L) == Nil;
@@ -23,6 +23,12 @@ void CreateEmpty(List *L)
     First(*L) = Nil;
 }
 
+void CreateGameScore(GameScoreList *GL)
+/* I.S. sembarang                       */
+/* F.S. Terbentuk list skor game kosong */
+{
+    (*GL).Neff = 0;
+}
 /****************** Manajemen Memori ******************/
 address Alokasi(infotype X)
 /* Mengirimkan address hasil alokasi sebuah elemen */
@@ -59,12 +65,12 @@ address Search(List L, infotype X)
     address P;
     boolean bFound = false;
 
-    if (!IsEmpty(L))
+    if (!IsEmptyList(L))
     {
         P = First(L);
         while (!bFound && P != Nil)
         {
-            if (X == Info(P))
+            if (WordCompare(X,Info(P)))
             {
                 bFound = true;
             }
@@ -179,7 +185,7 @@ void InsertLast(List *L, address P)
 {
     address Last;
 
-    if (IsEmpty(*L))
+    if (IsEmptyList(*L))
     {
         InsertFirst(L, P);
     }
@@ -217,9 +223,9 @@ void DelP(List *L, infotype X)
     address P;
     boolean bFound = false;
 
-    if (!IsEmpty(*L))
+    if (!IsEmptyList(*L))
     {
-        if (X == Info(First(*L)))
+        if (WordCompare(X, Info(First(*L))))
         {
             DelFirst(L, &P);
             Dealokasi(&P);
@@ -229,7 +235,7 @@ void DelP(List *L, infotype X)
             P = First(*L);
             while (!bFound && P != Nil)
             {
-                if (Info(P) == X)
+                if (WordCompare(Info(P), X))
                 {
                     bFound = true;
                 }
@@ -298,7 +304,7 @@ void PrintInfo(List L)
     boolean isFirst = true;
 
     printf("[");
-    if (!IsEmpty(L))
+    if (!IsEmptyList(L))
     {
         P = First(L);
         while (P != Nil)
@@ -307,7 +313,7 @@ void PrintInfo(List L)
             {
                 printf(",");
             }
-            printf("%d", Info(P));
+            PrintWord(Info(P));
             isFirst = false;
 
             P = Next(P);
@@ -315,13 +321,13 @@ void PrintInfo(List L)
     }
     printf("]");
 }
-int NbElmt(List L)
+int NumberElmt(List L)
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
 {
     int cnt = 0;
     address P;
 
-    if (!IsEmpty(L))
+    if (!IsEmptyList(L))
     {
         P = First(L);
         while (P != Nil)
@@ -332,91 +338,6 @@ int NbElmt(List L)
     }
 
     return cnt;
-}
-
-/*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
-infotype Max(List L)
-/* Mengirimkan nilai Info(P) yang maksimum */
-{
-    infotype max_temp = Info(First(L));
-    address P = Next(First(L));
-    while (P != Nil)
-    {
-        if (Info(P) > max_temp)
-        {
-            max_temp = Info(P);
-        }
-        P = Next(P);
-    }
-
-    return max_temp;
-}
-
-address AdrMax(List L)
-/* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
-{
-    address PMax = First(L);
-    address P = Next(First(L));
-    while (P != Nil)
-    {
-        if (Info(P) > Info(PMax))
-        {
-            PMax = P;
-        }
-        P = Next(P);
-    }
-
-    return PMax;
-}
-
-infotype Min(List L)
-/* Mengirimkan nilai info(P) yang minimum */
-{
-    infotype min_temp = Info(First(L));
-    address P = Next(First(L));
-    while (P != Nil)
-    {
-        if (Info(P) < min_temp)
-        {
-            min_temp = Info(P);
-        }
-        P = Next(P);
-    }
-
-    return min_temp;
-}
-
-address AdrMin(List L)
-/* Mengirimkan address P, dengan info(P) yang bernilai minimum */
-{
-    address PMin = First(L);
-    address P = Next(First(L));
-    while (P != Nil)
-    {
-        if (Info(P) < Info(PMin))
-        {
-            PMin = P;
-        }
-        P = Next(P);
-    }
-
-    return PMin;
-}
-
-float Average(List L)
-/* Mengirimkan nilai rata-rata info(P) */
-{
-    infotype sum = 0;
-    int count = 0;
-    address P = First(L);
-
-    while (P != Nil)
-    {
-        sum += Info(P);
-        count++;
-        P = Next(P);
-    }
-    return sum * 1.0 / count;
 }
 
 /****************** PROSES TERHADAP LIST ******************/
@@ -430,7 +351,7 @@ void InversList(List *L)
     address Prec = Nil;
     address Succ;
 
-    if (!IsEmpty(*L))
+    if (!IsEmptyList(*L))
     {
         P = First(*L);
         while (P != Nil)
@@ -455,7 +376,7 @@ void Konkat1(List *L1, List *L2, List *L3)
     address Last1;
 
     CreateEmpty(L3);
-    if (IsEmpty(*L1))
+    if (IsEmptyList(*L1))
     {
         First(*L3) = First(*L2);
     }

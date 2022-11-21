@@ -6,13 +6,14 @@
 #ifndef listlinier_H
 #define listlinier_H
 
-#include "boolean.h"
+#include "../boolean.h"
 #include "stdio.h"
 #include "stdlib.h"
+#include "mesinkata.h"
 
 #define Nil NULL
 
-typedef int infotype;
+typedef Word infotype;
 typedef struct tElmtlist *address;
 typedef struct tElmtlist
 {
@@ -24,6 +25,12 @@ typedef struct
     address First;
 } List;
 
+typedef struct
+{
+    List Game[100];
+    int Neff;
+} GameScoreList;
+
 /* Definisi list : */
 /* List kosong : First(L) = Nil */
 /* Setiap elemen dengan address P dapat diacu Info(P), Next(P) */
@@ -34,13 +41,17 @@ typedef struct
 
 /* PROTOTYPE */
 /****************** TEST LIST KOSONG ******************/
-boolean IsEmpty(List L);
+boolean IsEmptyList(List L);
 /* Mengirim true jika list kosong */
 
 /****************** PEMBUATAN LIST KOSONG ******************/
 void CreateEmpty(List *L);
 /* I.S. sembarang             */
 /* F.S. Terbentuk list kosong */
+
+void CreateGameScore(GameScoreList *GL);
+/* I.S. sembarang                       */
+/* F.S. Terbentuk list skor game kosong */
 
 /****************** Manajemen Memori ******************/
 address Alokasi(infotype X);
@@ -124,20 +135,8 @@ void PrintInfo(List L);
 /* Contoh : jika ada tiga elemen bernilai 1, 20, 30 akan dicetak: [1,20,30] */
 /* Jika list kosong : menulis [] */
 /* Tidak ada tambahan karakter apa pun di awal, akhir, atau di tengah */
-int NbElmt(List L);
+int NumberElmt(List L);
 /* Mengirimkan banyaknya elemen list; mengirimkan 0 jika list kosong */
-
-/*** Prekondisi untuk Max/Min/rata-rata : List tidak kosong ***/
-infotype Max(List L);
-/* Mengirimkan nilai info(P) yang maksimum */
-address AdrMax(List L);
-/* Mengirimkan address P, dengan info(P) yang bernilai maksimum */
-infotype Min(List L);
-/* Mengirimkan nilai info(P) yang minimum */
-address AdrMin(List L);
-/* Mengirimkan address P, dengan info(P) yang bernilai minimum */
-float Average(List L);
-/* Mengirimkan nilai rata-rata info(P) */
 
 /****************** PROSES TERHADAP LIST ******************/
 
