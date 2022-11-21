@@ -23,6 +23,7 @@
 #include "./src/quit.h"
 #include "./src/help.h"
 #include "./src/history.h"
+#include "./src/resetHistory.h"
 
 void menuList(TabKata *listGame, Queue *queueGame, List *historyGame);
 /* Memilih menu BNMO

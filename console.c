@@ -30,6 +30,8 @@ void menuList(TabKata *listGame, Queue *queueGame, List *historyGame) {
         help();
     } else if (IsWordEq(toKata("HISTORY"), AccessCommand(currentWord, 0))) {
         history(*historyGame, AccessCommand(currentWord, 1));
+    } else if (IsWordEq(toKata("RESET HISTORY"), currentWord)) {
+        resetHistory(historyGame);
     } else {
         printf("Command tidak dikenali, silahkan masukkan command yang valid.\nGunakan HELP untuk menunjukan list command.\n\n");
     }

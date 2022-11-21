@@ -4,32 +4,19 @@
 #include "resetHistory.h"
 
 void resetHistory(List* historyGame) {
-    boolean valid = false;
-    Word command;
-
     if (!IsEmptyList(*historyGame)) {
         do {
             printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET HISTORY? (Y/N) ");
-            STARTINPUT();
-            if (!(WordCompare(currentWord, toKata("Y")) || WordCompare(currentWord, toKata("N")))) {
+            GetCommand();
+            if (currentWord.Length != 1 || !(IsWordEq(currentWord, toKata("Y")) || IsWordEq(currentWord, toKata("N")))) {
                 printf("\nPerintah tidak valid, silahkan masukan ulang perintah.");
                 sleep(1);
                 system("cls");
-            } else {
-                command = currentWord;
-                ADVWORD();
-                if (EndWord) {
-                    valid = true;
-                } else {
-                    printf("\nPerintah tidak valid, silahkan masukan ulang perintah.\n\n");
-                    sleep(1);
-                    system("cls");
-                }
             }
-        } while (!valid);
+        } while (currentWord.Length != 1 || !(IsWordEq(currentWord, toKata("Y")) || IsWordEq(currentWord, toKata("N"))));
 
-        if (WordCompare(command, toKata("Y"))) {
-            CreateEmpty(historyGame);
+        if (IsWordEq(currentWord, toKata("Y"))) {
+            CreateEmptyList(historyGame);
             if (IsEmptyList(*historyGame)) {
                 printf("\nHistory berhasil di-reset.\n\n");
             } else {
@@ -40,6 +27,6 @@ void resetHistory(List* historyGame) {
             history(*historyGame, toKata("100"));
         }
     } else {
-        printf("HIstory game sudah ksoong.\n\n");
+        printf("History game sudah kosong.\n\n");
     }
 }
