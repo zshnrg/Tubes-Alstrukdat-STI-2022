@@ -4,13 +4,13 @@
 int main() {
     TabKata listGame;
     Queue queueGame;
-    List historyGame;
+    Stack historyGame;
 
     stateBNMO = false;
 
     MakeEmpty(&listGame);
     CreateQueue(&queueGame);
-    CreateEmptyList(&historyGame);
+    CreateEmptyStack(&historyGame);
     system("cls");
     
     for (int i = 0; i < 9; i++) {

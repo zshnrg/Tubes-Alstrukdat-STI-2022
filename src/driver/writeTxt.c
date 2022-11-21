@@ -2,7 +2,7 @@
 #include "writeTxt.h"
 
 /* Implementasi writeTxtFile.h */
-void writeTxt(char* filetarget, TabKata listGame, List historyGame) {
+void writeTxt(char* filetarget, TabKata listGame, Stack historyGame) {
     FILE *file;
 
     file = fopen(filetarget, "w");
@@ -17,14 +17,14 @@ void writeTxt(char* filetarget, TabKata listGame, List historyGame) {
     }
 
     // Writing game history
-    int nHistory = NumberElmt(historyGame); 
+    int nHistory = NbElmtStack(historyGame); 
+    infotype temp;
     fprintf(file, "%d\n", nHistory);
-    address P = First(historyGame);
-    while (P != NULL) {
-        for (int j = 0; j < Info(P).Length; j++) {
-            fprintf(file, "%c", Info(P).TabWord[j]);
+    while (!IsEmptyStack(historyGame)) {
+        Pop(&historyGame, &temp);
+        for (int j = 0; j < temp.Length; j++) {
+            fprintf(file, "%c", temp.TabWord[j]);
         }
-        P = Next(P);
         fprintf(file, "\n");
     }
     fprintf(file, " ");

@@ -25,7 +25,7 @@
 #include "./src/history.h"
 #include "./src/resetHistory.h"
 
-void menuList(TabKata *listGame, Queue *queueGame, List *historyGame);
+void menuList(TabKata *listGame, Queue *queueGame, Stack *historyGame);
 /* Memilih menu BNMO
     I.S. listGame dan queueGame terdefinisi mungkin kosong
     F.S. Menu dijalankan sesuai dengan input user

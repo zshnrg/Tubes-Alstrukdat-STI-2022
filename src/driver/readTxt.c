@@ -3,7 +3,8 @@
 
 /* Implementasi readTxtFile.h */
 
-void readTxt(char* filesrc, TabKata* listGame, List* historyGame) {
+void readTxt(char* filesrc, TabKata* listGame, Stack* historyGame) {
+    Stack inv; CreateEmptyStack(&inv);
     char dir[50] = "./data/";
 
     int i = 0;
@@ -31,6 +32,7 @@ void readTxt(char* filesrc, TabKata* listGame, List* historyGame) {
 
         // History game
         ADVWORD();
+        infotype temp;
         if (currentChar != ' ') {
             int lines = 0;
             for (int i = 0; i < currentWord.Length; i++) {
@@ -39,7 +41,11 @@ void readTxt(char* filesrc, TabKata* listGame, List* historyGame) {
             }
             for (int i = 0; i < lines; i++) {
                 ADVWORD();
-                InsVLast(historyGame, currentWord);
+                Push(&inv, currentWord);
+            }
+            while (!IsEmptyStack(inv)) {
+                Pop(&inv, &temp);
+                Push(historyGame, temp);
             }
         }
     }

@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include "quit.h"
 
-void quit(TabKata listGame, List historyGame) {
+void quit(TabKata listGame, Stack historyGame) {
     do {
         printf("Apakah ingin melakukan save sebelum keluar? (YES/NO): ");
         GetCommand();

@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include "load.h"
 
-void load(TabKata *listGame, List* historyGame, Word fileName) {
+void load(TabKata *listGame, Stack* historyGame, Word fileName) {
     TabKata addedGame;
     MakeEmpty(&addedGame);
 

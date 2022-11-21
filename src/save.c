@@ -4,7 +4,7 @@
 
 /* Implementasi save.h */
 
-void save(TabKata listGame, List historyGame, Word fileName) {
+void save(TabKata listGame, Stack historyGame, Word fileName) {
     FILE* target;
     char dir[50] = "./data/";
     

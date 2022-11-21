@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include "./adt/queue.h"
-#include "./adt/listlinier.h"
+#include "./adt/stack.h"
 
 /* List game buatan */
 #include "./game/rng.h"
@@ -14,7 +14,7 @@
 void printLoading(Word gameName);
 /* Menampilkan ke layar proses loading game */
 
-void playGame(Queue* queueGame, List* historyGame);
+void playGame(Queue* queueGame, Stack* historyGame);
 /* Memainkan game yang ada pada defaultGame
 I.S. queueGame terdefinisi, mungkin kosong
 F.S. Game teratas dimainkan

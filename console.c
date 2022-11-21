@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "./console.h"
 
-void menuList(TabKata *listGame, Queue *queueGame, List *historyGame) {
+void menuList(TabKata *listGame, Queue *queueGame, Stack *historyGame) {
     printf("> ENTER COMMAND: ");
     GetCommand();
     system("cls");

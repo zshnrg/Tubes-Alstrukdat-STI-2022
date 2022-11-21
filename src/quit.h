@@ -7,7 +7,7 @@
 
 /* MODUL Save */
 
-void quit(TabKata listGame, List historyGame);
+void quit(TabKata listGame, Stack historyGame);
 /*  Keluar program BNMO.
     I.S. stateBNMO true.
     F.S. stateBNMO false.

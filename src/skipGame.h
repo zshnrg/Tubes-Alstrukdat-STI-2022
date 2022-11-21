@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include "./adt/queue.h"
 #include "./adt/mesinkata.h"
-#include "./adt/listlinier.h"
+#include "./adt/stack.h"
 
-void skipGame (Queue* queueGame, List* historyGame, Word command);
+void skipGame (Queue* queueGame, Stack* historyGame, Word command);
 /* Melewatkan permainan sebanyak n
 I.S. queueGame terdefinisi, mungkin kosong
 F.S. Memainkan game pada Top queueGame sekarang

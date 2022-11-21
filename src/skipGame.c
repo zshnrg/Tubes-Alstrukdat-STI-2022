@@ -7,7 +7,7 @@
 
 /* Implementasi skipGame.h */
 
-void skipGame (Queue* queueGame, List* historyGame, Word command) {
+void skipGame (Queue* queueGame, Stack* historyGame, Word command) {
     int n = 0, i;
     ElType dump;
     srand(time(NULL));
@@ -29,7 +29,7 @@ void skipGame (Queue* queueGame, List* historyGame, Word command) {
         if(!isEmpty(*queueGame)) {
             Word play;
             dequeue(queueGame, &play);
-            InsVLast(historyGame, play);
+            Push(historyGame, play);
 
             if (IsWordEq(play, toKata("RNG"))) {
                 printLoading(play);

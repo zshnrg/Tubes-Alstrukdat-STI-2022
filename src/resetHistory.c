@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include "resetHistory.h"
 
-void resetHistory(List* historyGame) {
-    if (!IsEmptyList(*historyGame)) {
+void resetHistory(Stack* historyGame) {
+    if (!IsEmptyStack(*historyGame)) {
         do {
             printf("APAKAH KAMU YAKIN INGIN MELAKUKAN RESET HISTORY? (Y/N) ");
             GetCommand();
@@ -16,8 +16,8 @@ void resetHistory(List* historyGame) {
         } while (currentWord.Length != 1 || !(IsWordEq(currentWord, toKata("Y")) || IsWordEq(currentWord, toKata("N"))));
 
         if (IsWordEq(currentWord, toKata("Y"))) {
-            CreateEmptyList(historyGame);
-            if (IsEmptyList(*historyGame)) {
+            CreateEmptyStack(historyGame);
+            if (IsEmptyStack(*historyGame)) {
                 printf("\nHistory berhasil di-reset.\n\n");
             } else {
                 printf("\nHistory gagal di-reset karena kesalahan sistem.\n\n");
