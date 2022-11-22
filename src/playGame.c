@@ -45,7 +45,7 @@ void playGame(Queue *queueGame, Stack* historyGame) {
             sleep(3);
         } else if (IsWordEq(play, toKata("SNAKE ON METEOR"))) {
             printLoading(play);
-
+            playSnakeOnMeteor();
             sleep(3);
         } else if (IsWordEq(play, toKata("ATC GAME"))) {
             printLoading(play);

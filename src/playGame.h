@@ -10,6 +10,7 @@
 #include "./game/dinerDash.h"
 #include "./game/atcGame.h"
 #include "./game/towerOfHanoi.h"
+#include "./game/snakeOnMeteor.h"
 
 void printLoading(Word gameName);
 /* Menampilkan ke layar proses loading game */
