@@ -10,7 +10,9 @@ void help() {
     printf("5.  QUEUE GAME\t\t Menambahkan game yang tersedia ke dalam antrean game.\n");
     printf("6.  PLAY GAME\t\t Memainkan game yang ada pada antrean.\n");
     printf("7.  SKIPGAME <n>\t Membuang sebangak n game pada antrean.\n");
-    printf("8.  QUIT \t\t Keluar dari BNMO.\n");
-    printf("9.  HELP \t\t Menambilkan list command yang tersedia.\n\n");
+    printf("8.  HISTORY <n> \t Menampilkan urutan permainan yang telah dimainkan.\n");
+    printf("9.  RESET HISTORY <n>\t Menghapus urutan permainan yang telah dimainkan.\n");
+    printf("10. QUIT \t\t Keluar dari BNMO.\n");
+    printf("11. HELP \t\t Menambilkan list command yang tersedia.\n\n");
     printf("==================================================================================\n\n");
 }
