@@ -4,9 +4,6 @@
 #include <time.h>
 #include "snakeOnMeteor.h"
 
-int main() {
-    playSnakeOnMeteor();
-}
 
 int playSnakeOnMeteor() {
     int score = 0, turn = 1;
