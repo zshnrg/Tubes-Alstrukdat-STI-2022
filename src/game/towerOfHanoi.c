@@ -3,9 +3,57 @@
 #include <unistd.h>
 #include "towerOfHanoi.h"
 
+int power(int x, int y) {
+    int result = 1;
+    for (int i = 0; i < y; i++) {
+        result = result * x;
+    }
+    return result;
+}
+
 int playTowerOfHanoi() {
-    int score = 10, turn = 1;
+    int nDisk = 5;
+    int score = 10, turn = 0;
     float minus = 1;
+
+
+    system("cls");
+    do {    
+        currentWord = toKata("START");
+        do {
+            printf("Jumlah piringan: %d\n", nDisk);
+            printf("\nSelamat datang di Tower of Hanoi! Gunakan perintah di bawah ini.\n");
+            printf("| CHANGE DISK\t Mengganti jumlah piringan\n");
+            printf("| START\t\t Memulai permainan\n\n");
+            if (!(IsWordEq(currentWord, toKata("CHANGE DISK")) || IsWordEq(currentWord, toKata("START")))) printf("Perintah tidak valid!\n");
+            printf("> ");
+            GetCommand();
+            system("cls");
+        } while (!(IsWordEq(currentWord, toKata("CHANGE DISK")) || IsWordEq(currentWord, toKata("START"))));
+
+        if (IsWordEq(currentWord, toKata("CHANGE DISK"))) {
+            int n = 1;
+            do {
+                system("cls");
+                printf("Jumlah piringan: %d\n\n", nDisk);
+                if (n < 1) printf("Jumlah piringan tidak valid!\n");
+                printf("Masukkan jumlah piringan baru: ");
+                GetCommand();
+                n = 0;
+                for (int i = 0; i < currentWord.Length; i ++) {
+                    n *= 10;
+                    n += currentWord.TabWord[i] - '0';
+                }
+            } while (n < 1);
+            nDisk = n;
+        }
+        system("cls");
+    } while (!IsWordEq(currentWord, toKata("START")));
+    system("cls");
+
+    printGuideToH();
+
+    int idealMove = power(2, nDisk) - 1;
 
     Stack T1, T2, T3;
     CreateEmptyStack(&T1);
@@ -13,7 +61,7 @@ int playTowerOfHanoi() {
     CreateEmptyStack(&T3);
 
     // Initialization
-    for (int i = 4; i >= 0; i--) {
+    for (int i = nDisk - 1; i >= 0; i--) {
         Word disk; disk.Length = 0;
         for (int j = 0; j < (i * 2) + 1; j  ++) {
             disk.TabWord[disk.Length] = '#';
@@ -22,13 +70,12 @@ int playTowerOfHanoi() {
         Push(&T1, disk);
     }
 
-    printGuideToH();
     
     Word Tin, Tout;
     boolean takeTurn;
-    while (!(NbElmtStack(T3) == 5)) {
+    while (!(NbElmtStack(T3) == nDisk)) {
         takeTurn = false;
-        printTower(T1, T2, T3);
+        printTower(T1, T2, T3, nDisk);
         printf("\nTIANG ASAL   : ");
         GetCommand();
         
@@ -60,8 +107,8 @@ int playTowerOfHanoi() {
                             takeTurn = moveDisk(&T3, &T2);
                         }
                     }
-                    if (turn > 31 && minus < 9) {
-                        minus = minus * 1.08;
+                    if (turn > idealMove && minus < 9) {
+                        minus = minus * (float) (0.24 / idealMove);
                     }
                     if (takeTurn) {
                         printf("\nMemindahkan piringan ke %c...", Tin.TabWord[0]);
@@ -77,10 +124,10 @@ int playTowerOfHanoi() {
         sleep(2);
         system("cls");
     }
-    if (turn > 31) {
+    if (turn > idealMove) {
         score = score - (int) minus;
     }
-    printTower(T1, T2, T3);
+    printTower(T1, T2, T3, nDisk);
     printf("\nKamu berhasil!\n\nSkor didapatkan: %d\n", score);
     return score;
 }
@@ -103,57 +150,79 @@ boolean moveDisk(Stack* Tout, Stack* Tin) {
     return true;
 }
 
-void printTower(Stack T1, Stack T2, Stack T3) {
+void printTower(Stack T1, Stack T2, Stack T3, int nDisk) {
+    int towerHeight = 3, towerWide = 5, baseWide = 5, diskRadius = 2;
+    if (nDisk > 3) {
+        towerHeight = nDisk;
+        baseWide = nDisk * 2 - 3;
+        towerWide = baseWide + 2;
+        diskRadius = nDisk - 1;
+    }
+
     infotype disk;
-    for (int i = 0; i < 5; i++) {
-        if (5 - i == NbElmtStack(T1)) {
+    for (int i = 0; i < towerHeight; i++) {
+        if (towerHeight - i == NbElmtStack(T1)) {
             Pop(&T1, &disk);
-            for (int j = disk.Length / 2; j < 4; j++) {
+            for (int j = disk.Length / 2; j < diskRadius; j++) {
                 printf(" ");
             }
             TulisWord(disk);
-            for (int j = disk.Length / 2; j < 4; j++) {
+            for (int j = disk.Length / 2; j < diskRadius; j++) {
                 printf(" ");
             }
         } else {
-            printf("    |    ");
+            for (int j = 0; j < towerWide; j++) {
+                if (j == towerWide / 2) printf("|");
+                else printf(" ");
+            }
         }
-        printf(" ");
-        if (5 - i == NbElmtStack(T2)) {
+        if (towerHeight - i == NbElmtStack(T2)) {
             Pop(&T2, &disk);
-            for (int j = disk.Length / 2; j < 4; j++) {
+            for (int j = disk.Length / 2; j < diskRadius; j++) {
                 printf(" ");
             }
             TulisWord(disk);
-            for (int j = disk.Length / 2; j < 4; j++) {
+            for (int j = disk.Length / 2; j < diskRadius; j++) {
                 printf(" ");
             }
         } else {
-            printf("    |    ");
+            for (int j = 0; j < towerWide; j++) {
+                if (j == towerWide / 2) printf("|");
+                else printf(" ");
+            }
         }
-        printf(" ");
-        if (5 - i == NbElmtStack(T3)) {
+        if (towerHeight - i == NbElmtStack(T3)) {
             Pop(&T3, &disk);
-            for (int j = disk.Length / 2; j < 4; j++) {
+            for (int j = disk.Length / 2; j < diskRadius; j++) {
                 printf(" ");
             }
             TulisWord(disk);
-            for (int j = disk.Length / 2; j < 4; j++) {
+            for (int j = disk.Length / 2; j < diskRadius; j++) {
                 printf(" ");
             }
         } else {
-            printf("    |    ");
+            for (int j = 0; j < towerWide; j++) {
+                if (j == towerWide / 2) printf("|");
+                else printf(" ");
+            }
         }
-        printf(" \n");
+        printf("\n");
     }
     for (int i = 0; i < 3; i++) {
-        printf(" /=====\\  ");
+        for (int j = 0; j < towerWide; j ++) {
+            if ((towerWide - baseWide) / 2 < j && towerWide - ((towerWide - baseWide) / 2) - 1 > j) printf("=");
+            else if (j == (towerWide - baseWide) / 2) printf("[");
+            else if (towerWide - ((towerWide - baseWide) / 2) - 1 == j) printf("]");
+            else printf(" ");
+        }
     }
-    printf(" \n");
+    printf("\n");
     for (int i = 0; i < 3; i++) {
-        printf("    %c     ", 'A' + i);
+        for (int j = 0; j < towerWide / 2; j++) printf(" ");
+        printf("%c", 'A' + i);
+        for (int j = 0; j < towerWide / 2; j++) printf(" ");
     }
-    printf(" \n");
+    printf("\n");
 }
 
 void printGuideToH() {
