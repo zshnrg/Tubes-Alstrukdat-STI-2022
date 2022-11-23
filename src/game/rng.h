@@ -3,7 +3,12 @@
 
 #include "../adt/mesinkata.h"
 
-void rngPlay();
-/* Memainkan game RNG */
+int rngPlay();
+/* Memainkan game RNG dan mengembalikan nilai skor */
+
+void printGuideRnG();
+/* Mencetak petunjuk permainan ke layar
+   I.S. sembarang
+   F.S. petunjuk permainan ditampilkan pada layar */
 
 #endif
