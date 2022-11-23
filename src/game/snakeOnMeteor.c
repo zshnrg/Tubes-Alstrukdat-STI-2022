@@ -26,7 +26,7 @@ int playSnakeOnMeteor() {
     printGuideSoM();
 
 
-    currentWord = toKata("w");
+    currentWord = toKata("W");
     do {
         if (isPointEqual(Info(First(snake)), Food)) {
             Food = generateFood(snake, Obs1, Obs2, Meteor, Crater);
@@ -38,7 +38,7 @@ int playSnakeOnMeteor() {
                 printf("Peta Permainan\n");
                 printMap(snake, Obs1, Obs2, Food, Meteor, Crater);
                 if (isHit) printf("Anda terkena meteor! \n");
-                else if (turn > 1) printf("Anda beruntung tidak terkena meteor! Silahkan lanjutkan permainan\n");
+                else if (turn > 2) printf("Anda beruntung tidak terkena meteor! Silahkan lanjutkan permainan\n");
                 
                 printf("\nTURN %d\n", turn);
                 if (isCmdValid(currentWord)) {
@@ -54,11 +54,10 @@ int playSnakeOnMeteor() {
         First(snakeCopy) = First(snake);
 
         if (turn > 1) {
-            if (turn > 2) {
-                Crater = Meteor;
-            }
-            Meteor = generateMeteor(Obs1, Obs2, Food);
+            Crater = Meteor;
         }
+        Meteor = generateMeteor(Obs1, Obs2, Food);
+        
         turn++;
 
         isHit = isMeteorHit(&snake, Meteor);
