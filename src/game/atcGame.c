@@ -10,7 +10,7 @@ boolean isOver;
 //     playAtc();
 // }
 
-void playAtc() {
+int playAtc() {
     boolean isOver = false;
     srand(time(NULL));
 
@@ -104,6 +104,8 @@ void playAtc() {
     }
     sleep(5);
     system("cls");
+    printf("\nGame over! Skor akhir %d\n\n", score);
+    return score;
 }
 
 void createPesawat (Queue *Pesawat, int ID, char color) {

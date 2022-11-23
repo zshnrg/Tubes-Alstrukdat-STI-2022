@@ -6,7 +6,7 @@
 
 #define UNDEF -999
 
-void dinerDashPlay () {
+int dinerDashPlay () {
     int served = 0, score = 0, m = 2;
     Makanan done;
     ListMakanan pesanan, dimasak, ready;
@@ -52,6 +52,7 @@ void dinerDashPlay () {
     }
     system("cls");
     printf("Game over! Skor akhir: %d\n\n", score);
+    return score;
 }
 
 void createEmpty(ListMakanan *l) {

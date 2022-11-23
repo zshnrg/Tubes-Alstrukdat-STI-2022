@@ -15,7 +15,7 @@ typedef struct {
     int NEff;
 } ListMakanan;
 
-void dinerDashPlay();
+int dinerDashPlay();
 /* Menjalankan game Diner DASH 
    I.S. sembarang
    F.S. Diner DASH selesai dijalankan */
