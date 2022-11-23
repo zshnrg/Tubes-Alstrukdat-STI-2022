@@ -128,7 +128,7 @@ int playTowerOfHanoi() {
         score = score - (int) minus;
     }
     printTower(T1, T2, T3, nDisk);
-    printf("\nKamu berhasil!\n\nSkor didapatkan: %d\n", score);
+    printf("\nKamu berhasil!\n\nSkor didapatkan: %d\n\n", score);
     return score;
 }
 
