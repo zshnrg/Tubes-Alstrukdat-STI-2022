@@ -18,12 +18,7 @@ int dinerDashPlay () {
     insertMakanan(&pesanan, createMakanan(1));
 
     system("cls");
-    printf("[===================== Selamat Datang di =====================]\n");
-    printf("                                                            _\n  _____  _                   _____            _            / )\n |  __ \\(_)                 |  __ \\          | |     |||| / /\n | |  | |_ _ __   ___ _ __  | |  | | __ _ ___| |__   ||||/ /\n | |  | | | '_ \\ / _ \\ '__| | |  | |/ _` / __| '_ \\  \\__(_/\n | |__| | | | | |  __/ |    | |__| | (_| \\__ \\ | | |  ||//\n |_____/|_|_| |_|\\___|_|    |_____/ \\__,_|___/_| |_|  ||/\n                                                     (|| \n                                                      \"\"");
-    printf("\n[=============================================================]\n\n> Loading ");
-    for (int i = 0; i < 3; i++) {
-        printf("."); sleep(1);
-    }
+    printGuideDinerDash();
 
     while (served < 15 && pesanan.NEff <= 6) {
         if (m > 2) {
@@ -31,6 +26,7 @@ int dinerDashPlay () {
                 cook(&dimasak, getFood(pesanan, getFoodId(AccessCommand(currentWord, 1))));
             } else if (IsWordEq(AccessCommand(currentWord, 0), toKata("SERVE"))) {
                 score += serve(&pesanan, &ready).Harga;
+                served++;
             }
             
             updateCooking(&dimasak, &ready);
@@ -240,4 +236,15 @@ void cetakMakananReady(ListMakanan ready) {
         }
     }
     printf("\n");
+}
+
+void printGuideDinerDash() {
+    for (int i = 8; i > 0; i--) {
+        printf("====================== Selamat Datang di ======================\n");
+        printf("                                                            _\n  _____  _                   _____            _            / )\n |  __ \\(_)                 |  __ \\          | |     |||| / /\n | |  | |_ _ __   ___ _ __  | |  | | __ _ ___| |__   ||||/ /\n | |  | | | '_ \\ / _ \\ '__| | |  | |/ _` / __| '_ \\  \\__(_/\n | |__| | | | | |  __/ |    | |__| | (_| \\__ \\ | | |  ||//\n |_____/|_|_| |_|\\___|_|    |_____/ \\__,_|___/_| |_|  ||/\n                                                     (|| \n                                                      \"\"");
+        printf("\n====================== Panduan Permainan ======================\n\n1. DinerDash merupakan permainan di mana kamu memasak dan\n   menyajikan makanan.\n2. Pada awal permainan akan ada 3 pesanan dalam antrian.\n3. Kamu dapat memasak makanan dengan menjalankan perintah\n   < COOK M_ >. Makanan kemudian akan dimasak sesuai dengan\n   durasi yang ditampilkan.\n4. Durasi memasak makanan akan berkurang tiap putarannya.\n5. Kamu hanya bisa memasak makanan sebanyak lima makanan dalam\n   satu waktu.\n6. Ketika makanan selesai dimasak, kamu dapat menyajikan\n   makanan dengan perintah < SERVE M_ >.\n7. Hati-hati! Makanan yang siap disajikan memiliki ketahanan\n   tertentu yang akan semakin berkurang tiap putarannya.\n   Makanan yang rusak harus dimasak ulang.\n8. Makanan harus disajikan secara berurut sesuai dengan antrian\n   pesanan.\n9. Permainan akan berakhir apabila antrian melebihi 7 atau kamu\n   berhasil menyajikan 15 makanan\n\n===============================================================\n\nPermainan akan dimulai dalam %d ...", i);
+        sleep(1);
+        system("cls");
+    }
+    
 }

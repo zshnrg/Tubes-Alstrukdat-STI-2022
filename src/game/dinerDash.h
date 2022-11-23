@@ -87,4 +87,9 @@ void cetakMakananReady(ListMakanan ready);
    I.S. list ready terdefinisi mungkin kosong
    F.S. tabel ready ditampilkan di layar */
 
+void printGuideDinerDash();
+/* Mencetak panduan permainan
+   I.S. sembarang
+   F.S. panduan permainan tercetak pada layar */
+
 #endif
