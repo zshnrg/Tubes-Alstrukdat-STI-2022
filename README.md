@@ -7,7 +7,7 @@ Repository ini mungkin akan diupdate secara berkala untuk menambahkan game buata
 1. Clone repository ini pada komputer Anda dengan mengetikkan command berikut pada powershell.
 > git clone https://github.com/zshnrg/TubesAlstrukdatSTI21.git
 2. Gunakan command "make" pada terminal yang direktorinya sudah pada folder ini (menggunakan Makefile)
-3. Apabila command "make" tidak bisa digunakan, coppy perintah compile yang ada pada Makefile
+3. Apabila command "make" tidak bisa digunakan, copy perintah compile yang ada pada Makefile
 4. Untuk menjalankan BNMO, buka file BNMO.exe atau ketikkan "./BNMO" pada terminal
 5. Selamat menikmati 🥂
 
