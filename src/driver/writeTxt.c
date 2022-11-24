@@ -2,7 +2,7 @@
 #include "writeTxt.h"
 
 /* Implementasi writeTxtFile.h */
-void writeTxt(char* filetarget, TabKata listGame, Stack historyGame) {
+void writeTxt(char* filetarget, TabKata listGame, Stack historyGame, Scoreboard *SB) {
     FILE *file;
 
     file = fopen(filetarget, "w");
@@ -27,6 +27,18 @@ void writeTxt(char* filetarget, TabKata listGame, Stack historyGame) {
         }
         fprintf(file, "\n");
     }
+
+    // Writing Scoreboard
+    for (int i = 0; i < listGame.Neff; i++) {
+        fprintf(file, "%d\n", SB[i].Nama.Count);
+        for (int j = 0; j < SB[i].Nama.Count; j++) {
+            for (int k = 0; k < SB[i].Nama.Elements[j].Length; k++) {
+                fprintf(file, "%c", SB[i].Nama.Elements[j].TabWord[k]);
+            }
+            fprintf(file, " %d\n", Value(SB[i].Score, SB[i].Nama.Elements[j]));
+        }
+    }
+
     fprintf(file, " ");
 
     fclose(file);

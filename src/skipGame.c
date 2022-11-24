@@ -7,7 +7,8 @@
 
 /* Implementasi skipGame.h */
 
-void skipGame (Queue* queueGame, Stack* historyGame, Word command) {
+void skipGame (TabKata listGame, Queue* queueGame, Stack* historyGame, Scoreboard *SB, Word command) {
+    int score;
     int n = 0, i;
     ElType dump;
     srand(time(NULL));
@@ -33,32 +34,55 @@ void skipGame (Queue* queueGame, Stack* historyGame, Word command) {
 
             if (IsWordEq(play, toKata("RNG"))) {
                 printLoading(play);
-                rngPlay();
+                score = rngPlay();
                 sleep(3);
             } else if (IsWordEq(play, toKata("Diner DASH"))) {
                 printLoading(play);
-                dinerDashPlay();
+                score = dinerDashPlay();
                 sleep(3);
             } else if (IsWordEq(play, toKata("HANGMAN"))) {
                 printLoading(play);
-                playHangman();
+                score = playHangman();
                 sleep(3);
             } else if (IsWordEq(play, toKata("TOWER OF HANOI"))) {
                 printLoading(play);
-                playTowerOfHanoi();
+                score = playTowerOfHanoi();
                 sleep(3);
             } else if (IsWordEq(play, toKata("SNAKE ON METEOR"))) {
                 printLoading(play);
-                playSnakeOnMeteor();
+                score = playSnakeOnMeteor();
                 sleep(3);
             } else if (IsWordEq(play, toKata("ATC GAME"))) {
                 printLoading(play);
-                playAtc();
+                score = playAtc();
                 sleep(3);
             } else {
                 printLoading(play);
-                printf("Game over! Skor akhir: %d\n\n", rand());
+                score = rand() % 1000;
+                printf("Game over! Skor akhir: %d\n\n", score);
             }
+            
+            int Idx = 0;
+            for (int i = 0; i < listGame.Neff; i++) {
+                if (IsWordEq(listGame.TK[i], play)) Idx = i;
+            }
+
+            boolean showScore = false;
+            do {
+                if (showScore) {
+                    printf("Skor kamu: %d\n\n", score);
+                    if (IsMemberSet(SB[Idx].Nama, currentWord)) printf("Nama yang kamu masukkan sudah ada.\n");
+                } 
+                printf("> Masukan nama: ");
+                GetCommand();
+                system("cls");
+                showScore = true;
+            } while ((IsMemberSet(SB[Idx].Nama, currentWord)));
+            InsertSet(&(SB[Idx].Nama), currentWord);
+            Insert(&(SB[Idx].Score), currentWord, score);
+            sortSet(&(SB[Idx]));
+            printf("Berhasil menambakan hasil permainan ke Scoreboard.\n\n");
+            
         } else {
             printf("Tidak ada permainan lagi dalam daftar Game-mu.\n\n");
         }

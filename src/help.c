@@ -12,6 +12,8 @@ void help() {
     printf("7.  SKIPGAME <n>\t Membuang sebangak n game pada antrean.\n");
     printf("8.  HISTORY <n> \t Menampilkan urutan permainan yang telah dimainkan.\n");
     printf("9.  RESET HISTORY <n>\t Menghapus urutan permainan yang telah dimainkan.\n");
+    printf("9.  SCOREBOARD\t\t Menampilkan urutan skor tiap permainan.\n");
+    printf("9.  RESET SCOREBOARD\t Menghapus urutan urutan skor permainan.\n");
     printf("10. QUIT \t\t Keluar dari BNMO.\n");
     printf("11. HELP \t\t Menambilkan list command yang tersedia.\n\n");
     printf("==================================================================================\n\n");

@@ -5,6 +5,7 @@ int main() {
     TabKata listGame;
     Queue queueGame;
     Stack historyGame;
+    Scoreboard SB[100];
 
     stateBNMO = false;
 
@@ -33,14 +34,14 @@ int main() {
             }
         } while (!IsWordEq(toKata("START"), currentWord) && !IsWordEq(toKata("LOAD"), AccessCommand(currentWord, 0)));
 
-        if (IsWordEq(toKata("START"), currentWord)) start(&listGame, &historyGame);
-        else load(&listGame, &historyGame, AccessCommand(currentWord, 1));
+        if (IsWordEq(toKata("START"), currentWord)) start(&listGame, &historyGame, SB);
+        else load(&listGame, &historyGame, AccessCommand(currentWord, 1), SB);
     }
     sleep(1);
 
     if (stateBNMO) {
         while (stateBNMO) {
-            menuList(&listGame, &queueGame, &historyGame);
+            menuList(&listGame, &queueGame, &historyGame, SB);
         }
     } else {
         printf("BNMO gagal dijalankan.\n");

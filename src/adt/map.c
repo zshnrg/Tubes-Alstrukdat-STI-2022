@@ -32,7 +32,7 @@ valuetype Value(Map M, keytype k)
     addr idx = 0, iterator;
 
     while (!found && idx < M.Count) {
-        if (M.Elements[idx].Key == k) {
+        if (IsWordEq(M.Elements[idx].Key, k)) {
             found = true;
         }
         else {
@@ -43,7 +43,7 @@ valuetype Value(Map M, keytype k)
     return M.Elements[idx].Value;
 }
 
-void InsertMap(Map *M, keytype k, valuetype v)
+void Insert(Map *M, keytype k, valuetype v)
 /* Menambahkan Elmt sebagai elemen Map M. */
 /* I.S. M mungkin kosong, M tidak penuh
         M mungkin sudah beranggotakan v dengan key k */
@@ -58,7 +58,7 @@ void InsertMap(Map *M, keytype k, valuetype v)
     M->Count++;
 }
 
-void DeleteMap(Map *M, keytype k)
+void Delete(Map *M, keytype k)
 /* Menghapus Elmt dari Map M. */
 /* I.S. M tidak kosong
         element dengan key k mungkin anggota / bukan anggota dari M */
@@ -72,7 +72,7 @@ void DeleteMap(Map *M, keytype k)
     }
 
     while (!found && (idx < M->Count)) {
-        if (M->Elements[idx].Key == k) {
+        if (IsWordEq(M->Elements[idx].Key, k)) {
             found = true;
         }
         else {
@@ -95,7 +95,7 @@ boolean IsMemberMap(Map M, keytype k)
     addr idx = 0, iterator;
 
     while (!found && idx < M.Count) {
-        if (M.Elements[idx].Key == k) {
+        if (IsWordEq(M.Elements[idx].Key, k)) {
             found = true;
         }
         else {
