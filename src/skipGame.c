@@ -41,7 +41,7 @@ void skipGame (Queue* queueGame, Stack* historyGame, Word command) {
                 sleep(3);
             } else if (IsWordEq(play, toKata("HANGMAN"))) {
                 printLoading(play);
-                
+                playHangman();
                 sleep(3);
             } else if (IsWordEq(play, toKata("TOWER OF HANOI"))) {
                 printLoading(play);

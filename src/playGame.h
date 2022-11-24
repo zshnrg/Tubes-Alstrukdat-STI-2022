@@ -11,6 +11,7 @@
 #include "./game/atcGame.h"
 #include "./game/towerOfHanoi.h"
 #include "./game/snakeOnMeteor.h"
+#include "./game/hangman.h"
 
 void printLoading(Word gameName);
 /* Menampilkan ke layar proses loading game */

@@ -10,7 +10,7 @@ void menuList(TabKata *listGame, Queue *queueGame, Stack *historyGame) {
 
     if (IsWordEq(toKata("START"), currentWord) || IsWordEq(toKata("LOAD"), currentWord)) {
         printf("BNMO sudah dijalankan. Masukkan command HELP untuk bantuan\n\n");
-    } else if (IsWordEq(toKata("SAVE"), AccessCommand(currentWord, 0))) {
+    } else if (IsWordEq(toKata("SAVE"), AccessCommand(currentWord, 0)) && currentWord.Length > 5) {
         save(*listGame, *historyGame, AccessCommand(currentWord, 1));
     } else if (IsWordEq(toKata("CREATE GAME"), currentWord)) {
         createGame(listGame);
@@ -28,7 +28,7 @@ void menuList(TabKata *listGame, Queue *queueGame, Stack *historyGame) {
         quit(*listGame, *historyGame);
     } else if (IsWordEq(toKata("HELP"), currentWord)) {
         help();
-    } else if (IsWordEq(toKata("HISTORY"), AccessCommand(currentWord, 0))) {
+    } else if (IsWordEq(toKata("HISTORY"), AccessCommand(currentWord, 0)) && currentWord.Length > 8) {
         history(*historyGame, AccessCommand(currentWord, 1));
     } else if (IsWordEq(toKata("RESET HISTORY"), currentWord)) {
         resetHistory(historyGame);
