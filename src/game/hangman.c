@@ -107,7 +107,11 @@ int playHangman() {
     printf("============");
     printHangman(live);
     printf("============\n\n");
-    printf("Permainan berakhir! Kata yang seharusnya kamu tebak adalah "); TulisWord(Answer);
+    if (played.Neff > 0) {
+        printf("Permainan berakhir! Kata yang seharusnya kamu tebak adalah ");
+        TulisWord(Answer);
+    }
+    else printf("Permainan berakhir! Semua kata dalam kamus telah kamu tebak");
     printf("\nSkor kamu: %d\n\n", score);
     sleep(3);
 
@@ -162,7 +166,11 @@ boolean isGuessed(Word Answer, Word Guess) {
             if (Answer.TabWord[i] == Guess.TabWord[j]) correct++;
         }
     }
-    return correct == Answer.Length;
+    int countNonChar = 0;
+    for (int i = 0; i < Answer.Length; i++) {
+        if (!((Answer.TabWord[i] - 'A' >= 0 && Answer.TabWord[i] - 'A' < 26) || (Answer.TabWord[i] - 'a' >= 0 && Answer.TabWord[i] - 'a' < 26))) countNonChar++;
+    }
+    return correct == Answer.Length - countNonChar;
 }
 
 boolean isMenuValid(Word Comm) {

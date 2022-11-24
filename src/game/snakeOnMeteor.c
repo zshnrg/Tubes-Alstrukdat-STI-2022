@@ -64,7 +64,8 @@ int playSnakeOnMeteor() {
         isEndGame = isCollide(snake, Obs1, Obs2) || IsEmptyList(snake);
     } while (!isEndGame);
 
-    score = NumberElmt(snake);
+    score = NumberElmt(snakeCopy) * 2;
+    if (IsEmptyList(snake)) score -= 2;
     system("cls");
     
     printf("Peta Permainan\n");

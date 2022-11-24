@@ -107,8 +107,8 @@ int playTowerOfHanoi() {
                             takeTurn = moveDisk(&T3, &T2);
                         }
                     }
-                    if (turn > idealMove && minus < 9) {
-                        minus = minus * (float) (0.24 / idealMove);
+                    if (turn > idealMove && minus < 9 && takeTurn) {
+                        minus = minus * (float) (1 + (0.48 / nDisk));
                     }
                     if (takeTurn) {
                         printf("\nMemindahkan piringan ke %c...", Tin.TabWord[0]);
