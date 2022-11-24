@@ -82,7 +82,7 @@ int playSnakeOnMeteor() {
 
 void generateSnake(List *Snake) {
     CreateEmptyList(Snake);
-    for (int i = 2; i >= 0; i--) {
+    for (int i = (int) (MapSize / 2); i >= 0; i--) {
         InsVLast(Snake, createPoint(i, (int) (MapSize / 2)));
     }
 }
@@ -131,10 +131,10 @@ void growSnake(List* Snake) {
     Point tail;
     address found;
     while (n < 4 && !add) {
-        if (n % 4 == 0) tail = createPoint(Info(P).x - 1, Info(P).y);
-        if (n % 4 == 1) tail = createPoint(Info(P).x, Info(P).y + 1);
-        if (n % 4 == 2) tail = createPoint(Info(P).x + 1, Info(P).y);
-        if (n % 4 == 3) tail = createPoint(Info(P).x, Info(P).y - 1);
+        if (n == 0) tail = createPoint(Info(P).x - 1, Info(P).y);
+        if (n == 1) tail = createPoint(Info(P).x, Info(P).y - 1);
+        if (n == 2) tail = createPoint(Info(P).x, Info(P).y + 1);
+        if (n == 3) tail = createPoint(Info(P).x + 1, Info(P).y);
         found = Search(*Snake, tail);
         if (found == NULL) {
             InsVLast(Snake, tail);
