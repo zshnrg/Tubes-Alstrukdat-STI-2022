@@ -14,6 +14,7 @@
 #include "./game/towerOfHanoi.h"
 #include "./game/snakeOnMeteor.h"
 #include "./game/hangman.h"
+#include "./game/theGlassGame.h"
 
 void printLoading(Word gameName);
 /* Menampilkan ke layar proses loading game */

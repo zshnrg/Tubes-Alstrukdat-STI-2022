@@ -28,32 +28,29 @@ void playGame(TabKata listGame, Queue *queueGame, Stack* historyGame, Scoreboard
         dequeue(queueGame, &play);
         Push(historyGame, play);
 
+        printLoading(play);
         if (IsWordEq(play, toKata("RNG"))) {
-            printLoading(play);
             score = rngPlay();
             sleep(3);
         } else if (IsWordEq(play, toKata("Diner DASH"))) {
-            printLoading(play);
             score = dinerDashPlay();
             sleep(3);
         } else if (IsWordEq(play, toKata("HANGMAN"))) {
-            printLoading(play);
             score = playHangman();
             sleep(3);
         } else if (IsWordEq(play, toKata("TOWER OF HANOI"))) {
-            printLoading(play);
             score = playTowerOfHanoi();
             sleep(3);
         } else if (IsWordEq(play, toKata("SNAKE ON METEOR"))) {
-            printLoading(play);
             score = playSnakeOnMeteor();
             sleep(3);
         } else if (IsWordEq(play, toKata("ATC GAME"))) {
-            printLoading(play);
             score = playAtc();
             sleep(3);
+        } else if (IsWordEq(play, toKata("THE GLASS GAME"))) {
+            score = playTheGlassGame();
+            sleep(3);
         } else {
-            printLoading(play);
             score = rand() % 1000;
             printf("Game over! Skor akhir: %d\n\n", score);
         }

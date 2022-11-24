@@ -14,7 +14,7 @@ void deleteGame(TabKata *listGame, Queue queueGame) {
         comm += currentWord.TabWord[i] - '0';
     }
 
-    if (comm > 6 && !IsMemberQ(queueGame, (*listGame).TK[comm - 1])) {
+    if (comm > 7 && !IsMemberQ(queueGame, (*listGame).TK[comm - 1])) {
         for (int i = comm; i < (*listGame).Neff; i++) {
             SetEl(listGame, i - i, GetElmt(*listGame, i));
         }
