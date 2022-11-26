@@ -73,7 +73,8 @@ int playTowerOfHanoi() {
     
     Word Tin, Tout;
     boolean takeTurn;
-    while (!(NbElmtStack(T3) == nDisk)) {
+    boolean isQuit = false;
+    while (!(NbElmtStack(T3) == nDisk) && !isQuit) {
         takeTurn = false;
         printTower(T1, T2, T3, nDisk);
         printf("\nTIANG ASAL   : ");
@@ -115,9 +116,15 @@ int playTowerOfHanoi() {
                         turn++;
                     }
                 }
+            } else if (IsWordEq(currentWord, toKata("Q"))) {
+                printf("\nBerhasil keluar permainan.");
+                isQuit = true;
             } else {
                 printf("\nMasukan tiang tidak valid.");
             }
+        } else if (IsWordEq(currentWord, toKata("Q"))) {
+            printf("\nBerhasil keluar permainan.");
+            isQuit = true;
         } else {
             printf("\nMasukan tiang tidak valid.");
         }
@@ -127,8 +134,10 @@ int playTowerOfHanoi() {
     if (turn > idealMove) {
         score = score - (int) minus;
     }
+    if (isQuit) score = 0;
     printTower(T1, T2, T3, nDisk);
-    printf("\nKamu berhasil!\n\nSkor didapatkan: %d\n\n", score);
+    if (!isQuit) printf("\nKamu berhasil!\n\nSkor didapatkan: %d\n\n", score);
+    else printf("\nBoo! Kamu gagal menyelesaikan permanan >:(.\n Skor akhir: %d\n\n", score);
     return score;
 }
 

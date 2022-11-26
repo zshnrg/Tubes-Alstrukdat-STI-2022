@@ -51,7 +51,7 @@ int playSnakeOnMeteor() {
         } while (!isMoveValid(currentWord, snake, Meteor, true));
 
         moveSnake(&snake, currentWord);
-        First(snakeCopy) = First(snake);
+        if (!IsEmptyList(snake)) First(snakeCopy) = First(snake);
 
         if (turn > 1) {
             Crater = Meteor;
@@ -142,7 +142,7 @@ void growSnake(List* Snake) {
         }
         n++;
     }
-    if (!add) InsVLast(Snake, tail);
+    if (!add) CreateEmptyList(Snake);
     
 }
 
