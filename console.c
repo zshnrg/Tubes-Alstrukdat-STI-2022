@@ -17,7 +17,7 @@ void menuList(TabKata *listGame, Queue *queueGame, Stack *historyGame, Scoreboar
     } else if (IsWordEq(toKata("LIST GAME"), currentWord)) {
         listGamePrint(*listGame);
     } else if (IsWordEq(toKata("DELETE GAME"), currentWord)) {
-        deleteGame(listGame, *queueGame, historyGame);
+        deleteGame(listGame, *queueGame, historyGame, SB);
     } else if (IsWordEq(toKata("QUEUE GAME"), currentWord)) {
         queueGameList(*listGame, queueGame);
     } else if (IsWordEq(toKata("PLAY GAME"), currentWord)) {

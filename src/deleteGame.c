@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "deleteGame.h"
 
-void deleteGame(TabKata *listGame, Queue queueGame, Stack *historyGame) {
+void deleteGame(TabKata *listGame, Queue queueGame, Stack *historyGame, Scoreboard *SB) {
     int comm = 0;
 
     printf("Berikut ini adalah daftar game yang tersedia\n");
@@ -17,6 +17,7 @@ void deleteGame(TabKata *listGame, Queue queueGame, Stack *historyGame) {
     if (comm > 7 && !IsMemberQ(queueGame, (*listGame).TK[comm - 1])) {
         
         Stack temp;
+        CreateEmptyStack(&temp);
         infotype trf;
         while (!IsEmptyStack(*historyGame)) {
             Pop(historyGame, &trf);
@@ -24,7 +25,12 @@ void deleteGame(TabKata *listGame, Queue queueGame, Stack *historyGame) {
         }
         while (!IsEmptyStack(temp)) {
             Pop(&temp, &trf);
-            Push(&temp, trf);
+            Push(historyGame, trf);
+        }
+
+        while (SB[comm - 1].Nama.Count != 0) {
+            Delete(&(SB[comm - 1].Score), SB[comm - 1].Nama.Elements[0]);
+            DeleteSet(&(SB[comm - 1].Nama), SB[comm - 1].Nama.Elements[0]);
         }
 
         for (int i = comm; i < (*listGame).Neff; i++) {
