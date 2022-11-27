@@ -5,26 +5,24 @@
 #include "../adt/listlinier.h"
 #include "../adt/mesinkata.h"
 
-#define MapSize 5
-
 int playSnakeOnMeteor();
 /* Memainkan game Snake on Meteor dan mengembalikan skor game */
 
-void generateSnake(List *Snake);
+void generateSnake(List *Snake, int mapSize);
 /* Membuat snake dengan panjang 2 badan
    I.S. sembarang
    F.S. snake berhasil digenerate */
 
-Point generateFood(List Snake, Point Obstacle1, Point Obstacle2, Point Meteor, Point Crater);
+Point generateFood(List Snake, Point *Obs, Point Meteor, Point Crater, int mapSize);
 /* Membuat makanan di luar tubuh snake */
 
-Point generateMeteor(Point Obstacle1, Point Obstacle2, Point Food);
+Point generateMeteor(Point *Obs, Point Food, int mapSize);
 /* Membuat meteor sembarang */
 
-Point generateObstacle(List Snake);
+void generateObstacle(Point *Obs, List Snake, int mapSize);
 /* Membuat obstacle random */
 
-void growSnake(List* Snake);
+void growSnake(List* Snake, int mapSize);
 /* Menumbukan badan snake
    I.S. sembarang
    F.S. panjang tubuh snake bertambah
@@ -32,12 +30,12 @@ void growSnake(List* Snake);
         - jika tidak bisa bertambah pada ordinat sebelum tail
         - jika tidak bisa bertambah pada ordinat setelah tail */
 
-void moveSnake(List *Snake, Word comm);
+void moveSnake(List *Snake, Word comm, int mapSize);
 /* Mengubah posisi snake
    I.S. sembarang, command pasti valid
    F.S. posisi snake berubah */
 
-boolean isCollide(List Snake, Point Obstacle1, Point Obstacle2);
+boolean isCollide(List Snake, Point *Obs, int mapSize);
 /* Mengembalikan nilai true apabila ular menabrak obstacle atau badannya sendiri */
 
 boolean isMeteorHit(List *Snake, Point Meteor);
@@ -47,10 +45,10 @@ boolean isMeteorHit(List *Snake, Point Meteor);
 boolean isCmdValid(Word comm);
 /* Mengembalikan nilai true apabila command valid */
 
-boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent);
+boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int mapSize);
 /* Mengembalikan nilai true apabila ular bisa bergerak (tidak menabrak bekas meteor) */
 
-void printMap(List Snake, Point Obs1, Point Obs2, Point Food, Point Meteor, Point Crater);
+void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize);
 /* Menampilkan status peta permainan ke layar
    I.S. sembarang
    F.S. Peta ditampilkan ke layar */
