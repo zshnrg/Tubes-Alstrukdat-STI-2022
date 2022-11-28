@@ -41,7 +41,7 @@ int playSnakeOnMeteor() {
     } while (!IsWordEq(currentWord, toKata("START")));
     system("cls");
 
-    printf("Membuat permainan, mohon tunggu ...");
+    printf("Membuat permainan, mohon tunggu ...\n\n");
 
     // Game
     int score = 0, turn = 1;
@@ -174,7 +174,6 @@ void generateObstacle(Point *Obs, List Snake, int mapSize) {
         } while (P != NULL || !unique);
         Obs[obsCount] = O;
         obsCount++;
-        sleep(2);
     }
 }
 
@@ -345,7 +344,7 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
 }
 
 void printGuideSoM() {
-    for (int i = 8; i > 0; i--) {
+    for (int i = 5; i > 0; i--) {
         printf("\n _______               __                                _______         __                    \n|     __|.-----.---.-.|  |--.-----.    .-----.-----.    |   |   |.-----.|  |_.-----.-----.----.\n|__     ||     |  _  ||    <|  -__|    |  _  |     |    |       ||  -__||   _|  -__|  _  |   _|\n|_______||__|__|___._||__|__|_____|    |_____|__|__|    |__|_|__||_____||____|_____|_____|__|  \n                                                                                              \n===================================== Petunjuk Permainan =====================================\n\n1. Gunakan perintah W/A/S/D untuk menggerakkan ular.\n2. Arahkan ular untuk bisa mengambil makanan yang berwarna kuning.\n2. Dalam setiap putaran akan ada sebuah meteor yang jatuh secara acak menyebar pada peta.\n4. Meteor yang mengenai tubuh ular akan menyebabkan tubuh ular memendek satu petak.\n5. Apabila meteor mengenai kepala ular, maka ular akan langsung mati.\n6. Setelah meteor jatuh, jejak bekas meteor akan menjadi kawah yang tidak bisa dilewati oleh\n   ular selama satu putaran.\n7. Selain terkena meteor, ular juga dapat mati apabila menabrak obstacle atau tubuhnya sendiri.\n8. Selamat bermain!\n\n==============================================================================================\n\nPermainan akan dimulai dalam %d ...", i);
         sleep(1);
         system("cls");

@@ -3,6 +3,10 @@
 #include <unistd.h>
 #include "towerOfHanoi.h"
 
+int main () {
+    playTowerOfHanoi();
+}
+
 int power(int x, int y) {
     int result = 1;
     for (int i = 0; i < y; i++) {
@@ -46,6 +50,7 @@ int playTowerOfHanoi() {
                 }
             } while (n < 1);
             nDisk = n;
+            score = nDisk * 2;
         }
         system("cls");
     } while (!IsWordEq(currentWord, toKata("START")));
@@ -108,7 +113,7 @@ int playTowerOfHanoi() {
                             takeTurn = moveDisk(&T3, &T2);
                         }
                     }
-                    if (turn > idealMove && minus < 9 && takeTurn) {
+                    if (turn > idealMove && minus < score - 1 && takeTurn) {
                         minus = minus * (float) (1 + (0.48 / nDisk));
                     }
                     if (takeTurn) {
@@ -137,7 +142,7 @@ int playTowerOfHanoi() {
     if (isQuit) score = 0;
     printTower(T1, T2, T3, nDisk);
     if (!isQuit) printf("\nKamu berhasil!\n\nSkor didapatkan: %d\n\n", score);
-    else printf("\nBoo! Kamu gagal menyelesaikan permanan >:(.\n Skor akhir: %d\n\n", score);
+    else printf("\nBoo! Kamu gagal menyelesaikan permanan >:(.\nSkor akhir: %d\n\n", score);
     return score;
 }
 
