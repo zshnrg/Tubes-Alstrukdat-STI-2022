@@ -219,19 +219,8 @@ void moveSnake(List *Snake, Word comm, int mapSize) {
 boolean isCollide(List Snake, Point *Obs, int mapSize) {
     address P = First(Snake);
     if (P != NULL) {
-        boolean isObs = false;
         for (int i = 0; i < (int) (mapSize * mapSize / 5 - 3); i++) {
-            if (isPointEqual(Info(P), Obs[i])) isObs = true;
-        }
-        if (isObs) {
-            return true;
-        } else {
-            while (Next(P) != NULL) {
-                P = Next(P);
-                if (isPointEqual(Info(P), Info(First(Snake)))) {
-                    return true;
-                }
-            }
+            if (isPointEqual(Info(P), Obs[i])) return true;
         }
     }
     return false;
@@ -242,14 +231,9 @@ boolean isMeteorHit(List *Snake, Point Meteor) {
         CreateEmptyList(Snake);
         return true;
     } else {
-        address P = First(*Snake);
-        infotypeList dump;
-        while (P != NULL) {
-            if (isPointEqual(Info(P), Meteor)) {
-                DelVLast(Snake, &dump);
-                return true;
-            }
-            P = Next(P);
+        address P = Search(*Snake, Meteor);
+        if (P != NULL) {
+            DelP(Snake, Meteor);
         }
     }
     return false;
@@ -261,36 +245,40 @@ boolean isCmdValid(Word comm) {
 
 boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int mapSize) {
     address P = First(Snake);
-    address B = Next(P);
+    Point new;
     if (IsWordEq(comm, toKata("W"))) {
-        if ((Info(P).x == Info(B).x) && ((Info(P).y - 1 + mapSize) % mapSize == Info(B).y)) {
+        new = createPoint(Info(P).x, (Info(P).y - 1 + mapSize) % mapSize);
+        if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
             return false;
-        } else if ((Info(P).x == Crater.x) && ((Info(P).y - 1 + mapSize) % mapSize == Crater.y)) {
+        } else if (isPointEqual(new, Crater)) {
             if (!silent) printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut. ");
             return false;
         }
     } else if (IsWordEq(comm, toKata("A"))) {
-        if (((Info(P).x - 1 + mapSize) % mapSize == Info(B).x) && (Info(P).y == Info(B).y)) {
+        Point new = createPoint((Info(P).x - 1 + mapSize) % mapSize, Info(P).y);
+        if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
             return false;
-        } else if (((Info(P).x - 1 + mapSize) % mapSize == Crater.x) && (Info(P).y == Crater.y)) {
+        } else if (isPointEqual(new, Crater)) {
             if (!silent) printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut. ");
             return false;
         }
     } else if (IsWordEq(comm, toKata("S"))) {
-        if ((Info(P).x == Info(B).x) && ((Info(P).y + 1) % mapSize == Info(B).y)) {
+        Point new = createPoint(Info(P).x, (Info(P).y + 1) % mapSize);
+        if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
             return false;
-        } else if ((Info(P).x == Crater.x) && ((Info(P).y + 1) % mapSize == Crater.y)) {
+        } else if (isPointEqual(new, Crater)) {
             if (!silent) printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut. ");
             return false;
         }
     } else {
-        if (((Info(P).x + 1) % mapSize == Info(B).x) && (Info(P).y == Info(B).y)) {
+        Point new = createPoint((Info(P).x + 1) % mapSize, Info(P).y);
+        if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
             return false;
-        } else if (((Info(P).x + 1) % mapSize == Crater.x) && (Info(P).y == Crater.y)) {
+        } else if (isPointEqual(new, Crater)) {
             if (!silent) printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut. ");
             return false;
         }
