@@ -80,8 +80,8 @@ boolean isEndWord() {
 }
 
 void GetCommand() {
+    currentWord.Length = 0;
     STARTWORD(stdin);
-    
 }
 
 Word AccessCommand(Word comm, int Idx) {
