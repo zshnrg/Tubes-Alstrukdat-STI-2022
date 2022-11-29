@@ -1,9 +1,0 @@
-list linier:
-- snake on meteor
-map:
-- scoreboard nama - skor
-set:
-- menyimpan nama di setiap game
-stack:
-- tower of hanoi
-- history game
