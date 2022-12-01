@@ -129,7 +129,7 @@ int playTowerOfHanoi() {
         } else {
             printf("\nMasukan tiang tidak valid.");
         }
-        sleep(2);
+        fflush(stdout); sleep(2);
         clear();
     }
     if (turn > idealMove) {
@@ -238,7 +238,7 @@ void printTower(Stack T1, Stack T2, Stack T3, int nDisk) {
 void printGuideToH() {
     for (int i = 8; i > 0; i--) {
         printf(" _______                                        ___      _______                     __ \n|_     _|.-----.--.--.--.-----.----.    .-----.'  _|    |   |   |.---.-.-----.-----.|__|\n  |   |  |  _  |  |  |  |  -__|   _|    |  _  |   _|    |       ||  _  |     |  _  ||  |\n  |___|  |_____|________|_____|__|      |_____|__|      |___|___||___._|__|__|_____||__|\n\n================================== Petunjuk Permainan ==================================\n\n1. Permainan berakhir jika semua piringan berhasil dipindah ke tiang C.\n2. Hanya satu piringan yang dapat dipindahkan dalam satu putaran.\n3. Setiap putaran terdiri dari mengambil piringan bagian atas dari salah satu tumpukan\n   dan meletakkannya di atas tumpukan lainnya. Dengan kata lain, sebuah piringan hanya\n   dapat dipindahkan jika itu adalah piringan paling atas di tumpukan.\n4. Piringan yang lebih besar tidak boleh ditempatkan di atas piringan yang lebih kecil.\n\n========================================================================================\n\nPermainan akan dimulai dalam %d ...", i);
-        sleep(1);
+        fflush(stdout); sleep(1);
         clear();
     }
 }

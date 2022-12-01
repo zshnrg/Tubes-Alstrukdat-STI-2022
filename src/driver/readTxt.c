@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <unistd.h>
 #include "readTxt.h"
 
 /* Implementasi readTxtFile.h */

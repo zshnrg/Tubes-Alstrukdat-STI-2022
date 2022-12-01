@@ -41,7 +41,7 @@ int rngPlay() {
 void printGuideRnG() {
     for (int i = 8; i > 0; i--) {
         printf("\n ______         _______      _______                                     \n|   __ \\.-----.|     __|    |     __|.--.--.-----.-----.-----.-----.----.\n|      <|     ||    |  |    |    |  ||  |  |  -__|__ --|__ --|  -__|   _|\n|___|__||__|__||_______|    |_______||_____|_____|_____|_____|_____|__|  \n                                                                        \n========================== Petunjuk Permainan ==========================\n\n1. Pada permainan ini kamu diminta untuk menebak sebuah angka yang\n   diciptakan secara acak.\n2. Angka yang perlu ditebak merupakan bilangan bulat antara 1-100.\n3. Sistem akan memberi tau apakah angka tebakanmu lebih besar atau lebih\n   Kecil dari angka sebenarnya.\n4. Permainan akan berakhir ketika kamu berhasil menebak angka sebenarnya.\n\n========================================================================\n\nPermainan akan dimulai dalam %d ...", i);
-        sleep(1);
+        fflush(stdout); sleep(1);
         clear();
     }
 }

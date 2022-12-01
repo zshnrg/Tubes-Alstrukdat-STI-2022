@@ -16,7 +16,7 @@ void quit(TabKata listGame, Stack historyGame, Scoreboard *SB) {
     } else {printf("\n");}
     printf("Anda keluar dari game BNMO.\nBye bye ");
     for (int i = 0; i < 3; i++) {
-        printf("."); sleep(1);
+        printf("."); fflush(stdout); sleep(1);
     }
     stateBNMO = false;
 }

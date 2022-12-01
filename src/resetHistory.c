@@ -10,6 +10,7 @@ void resetHistory(Stack* historyGame) {
             GetCommand();
             if (currentWord.Length != 1 || !(IsWordEq(currentWord, toKata("Y")) || IsWordEq(currentWord, toKata("N")))) {
                 printf("\nPerintah tidak valid, silahkan masukan ulang perintah.");
+                fflush(stdout);
                 sleep(1);
                 clear();
             }

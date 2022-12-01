@@ -12,7 +12,7 @@ int playTheGlassGame() {
     for (int i = 8; i > 0; i--) {
         clear();
         printf("\n ___    ___           _______               __     __      _______                       \n/   \\  |   |   /\\    |     __|.-----.--.--.|__|.--|  |    |     __|.---.-.--------.-----.\n[   ]  |   |  /  \\   |__     ||  _  |  |  ||  ||  _  |    |    |  ||  _  |        |  -__|\n\\___/  |___| /____\\  |_______||__   |_____||__||_____|    |_______||___._|__|__|__|_____|\n                                 |__|\n\n================================== Petunjuk Permainan ==================================\n\n1. Kamu telah dijebak oleh para penjahat karena ditawari uang dengan jumlah yang sangat\n   besar dengan syarat bermain game! Namun, ternyata permainan yang diberikan sangatlah\n   mematikan.\n2. Kamu sedang berada dalam akhir-akhir permainan Squid Game. Tugasmu adalah melewati\n   lantai kaca. Lantai kaca ini terbagi menjadi dua dan salah satunya sangatlah rapuh.\n3. Lantai kaca yang kamu pilih berpotensi untuk pecah dan membuatmu terjatuh.\n4. Setiap kali kamu terjatuh, kamu akan dibawa kembali ke awal stage dan nyawamu akan\n   berkurang. Ingat, nyawamu terbatas!\n5. Kumpulkan poin sebanyak banyaknya dengan pergi hingga titik paling jauh.\n6. Permainan akan berakhir ketika semua nyawamu habis.\n\n========================================================================================\n\nPermainan akan dimulai dalam %d ...", i);
-        sleep(1);
+        fflush(stdout); sleep(1);
     } 
 
     BinTree Glass;
@@ -55,7 +55,7 @@ int playTheGlassGame() {
                 printf("\nKamu terjatuh!");
                 printf("\nLEFT/RIGHT > ");
                 TulisWord(currentWord);
-                sleep(2);
+                fflush(stdout); sleep(2);
             }
             if (max < addscore) max = addscore;
         } while (lives > 0 && moves < stage * 3);
@@ -63,7 +63,7 @@ int playTheGlassGame() {
         if (lives > 0) {
             stage++;
             printf("Selamat! kamu berhasil melewati babak ini.\nSkor kamu sementara adalah %d\n\nSiap-siap untuk menuju babak berikutnya...", score);
-            sleep(3);
+            fflush(stdout); sleep(3);
         }
     } while (lives > 0);
     printf("\n\nPermainan berakhir! Skor akhir kamu: %d\n\n", score);

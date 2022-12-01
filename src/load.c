@@ -25,5 +25,5 @@ void load(TabKata *listGame, Stack* historyGame, Word fileName, Scoreboard *SB) 
     } else {
         printf("Save file gagal dibaca.\n\n");
     }
-    sleep(2);
+    fflush(stdout);
 }

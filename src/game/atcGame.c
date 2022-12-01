@@ -84,7 +84,7 @@ int playAtc() {
         }
 
         if (L.NEff < 30) diff = diff * 1.2;
-        else diff = diff * 1.05;
+        else if (L.NEff < 50) diff = diff * 1.05;
     }
     printf("\n\n============================================================");
     printf("\nGame over! Skor akhir %d\n", score);
@@ -102,6 +102,7 @@ int playAtc() {
             printf(" ");
         }
     }
+    fflush(stdout);
     sleep(5);
     clear();
     printf("\nGame over! Skor akhir %d\n\n", score);
@@ -146,7 +147,7 @@ void printLangit(Langit L) {
                 if (temp.TabWord[0] == 'M') {
                     printf("\033[1;31m"); 
                 } else {
-                    printf("\033[1;35m");
+                    printf("\033[1;34m");
                 }
                 printf("=[|=<");
                 printf("\033[0m");
@@ -188,7 +189,7 @@ void printGuide() {
         printf("==================================================================\n");
         printf("1. Permainan ini merupakan simulasi dari Air Traffic Control.\n2. Tugasmu adalah menjaga agar pesawat tidak bertubrukan saat ingin mendarat.\n3. Setiap satu putaran, setiap pesawat akan semakin dekat ke Bandara masing-masing\n4. Gunakan command <ID Pesawat> untuk mempercepat pesawat mendarat\n5. Gunakan command SKIP untuk melewati satu putaran\n6. Pastikan agar pesawat dengan warna sama tidak mendarat bersamaan.\n7. Selamat bermain!\n\n");
         printf("Game akan dimulai dalam %d ...", i);
-        sleep(1);
+        fflush(stdout); sleep(1);
     }
 }
 

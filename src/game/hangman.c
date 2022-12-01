@@ -19,17 +19,18 @@ int playHangman() {
     do {
         currentWord = toKata("START");
         do {
+            clear();
             printf("Selamat datang di Hangman! Gunakan command di bawah ini untuk memulai\n\n");
             printf("  START\t\t\tMemulai permainan Hangman\n  LOAD <file.txt>\tMemuat kamus baru dari file\n  SHOW DICTIONARY\tMenampilkan kata-kata yang dimuat\n  EDIT DICTIONARY\tMenambah atau menghapus kata pada kamus\n\n");
-            if (!isMenuValid) printf("Menu tidak valid! Masukkan perintah lain\n");
+            if (!isMenuValid(currentWord)) printf("Menu tidak valid! Masukkan perintah lain\n");
             printf("> ");
             GetCommand();
-            clear();
         } while (!isMenuValid(currentWord));
+        clear();
         
         if (IsWordEq(AccessCommand(currentWord, 0), toKata("LOAD"))) {
             loadKamus(&K, AccessCommand(currentWord, 1), &def);
-            sleep(2);
+            fflush(stdout); sleep(2);
             clear();
         } else if (IsWordEq(currentWord, toKata("SHOW DICTIONARY"))) {
             currentWord = toKata("BACK");
@@ -56,7 +57,7 @@ int playHangman() {
                 } else if (IsWordEq(toKata("DELETE"), AccessCommand(currentWord, 0))) {
                     delKataInKamus(&K, AccessCommand(currentWord, 1));
                 }
-                sleep(1);
+                fflush(stdout); sleep(1);
                 clear();
             } while (!IsWordEq(currentWord, toKata("DONE")));
         }
@@ -87,11 +88,11 @@ int playHangman() {
             }
             if (!correct) {
                 printf("\nKamu gagal menebak! Kini nyawamu berkurang\n");
-                sleep(3);
+                fflush(stdout); sleep(3);
                 live--;
             } else {
                 printf("\nBerhasil menebak satu huruf!\n");
-                sleep(3);
+                fflush(stdout); sleep(3);
             }
         } while (live > 0 && !isGuessed(Answer, Guess));
         if (isGuessed(Answer, Guess)) {
@@ -99,7 +100,7 @@ int playHangman() {
             printf("\n\nKamu berhasil menebak "); TulisWord(Answer); printf(".\nSkor kamu bertambah +%d", Answer.Length);
             score += Answer.Length;
             count++;
-            sleep(3);
+            fflush(stdout); sleep(3);
         }
     }
 
@@ -113,7 +114,7 @@ int playHangman() {
     }
     else printf("Permainan berakhir! Semua kata dalam kamus telah kamu tebak");
     printf("\nSkor kamu: %d\n\n", score);
-    sleep(3);
+    fflush(stdout); sleep(3);
 
     return score;
 }
@@ -141,21 +142,21 @@ void loadKamus(Kamus *K, Word file, Word *saveName) {
 boolean isGuessValid(Word Comm, Word Guess) {
     if (Comm.Length > 1) {
         printf("\nMasukan harus berupa sebuah karakter huruf!\n");
-        sleep(3);
+        fflush(stdout); sleep(3);
         return false;
     }
     if ((Comm.TabWord[0] - 'A' >= 0 && Comm.TabWord[0] - 'A' < 26) || (Comm.TabWord[0] - 'a' >= 0 && Comm.TabWord[0] - 'a' < 26)) {
         for (int i = 0; i < Guess.Length; i++) {
             if (Guess.TabWord[i] - 'A' == Comm.TabWord[0] - 'A' || Guess.TabWord[i] - 'A' == Comm.TabWord[0] - 'a') {
                 printf("Huruf %c sudah pernah ditebak!", Comm.TabWord[0]);
-                sleep(3);
+                fflush(stdout); sleep(3);
                 return false;
             }
         }
         return true;
     }
     printf("\nMasukan harus berupa sebuah karakter huruf, tidak boleh karakter lain!\n");
-    sleep(3);
+    fflush(stdout); sleep(3);
     return false;
 }
 
@@ -265,7 +266,7 @@ void printHangman(int stage) {
 void printGuideHangman() {
     for (int i = 8; i > 0; i--) {
         printf("\n    _______                                         \n   |   |   |.---.-.-----.-----.--------.---.-.-----.\n   |       ||  _  |     |  _  |        |  _  |     |\n   |___|___||___._|__|__|___  |__|__|__|___._|__|__|\n                        |_____|                     \n\n================= Petunjuk Permainan =================\n\n1. Permainan ini mengharuskan kamu untuk menebak kata\n   dengan menebak hurufnya satu per satu.\n2. Kamu memiliki 10 kesempatan untuk menebak huruf.\n3. Sebelum kamu bermain kamu dapat memilih kamus kata\n   yang ingin digunakan. Selain itu, kamu juga dapat\n   menambahkan/menghapus kata yang ingin dimainkan.\n\n======================================================\n\nPermainan akan dimulai dalam %d ...", i);
-        sleep(1);
+        fflush(stdout); sleep(1);
         clear();
     }
 }
