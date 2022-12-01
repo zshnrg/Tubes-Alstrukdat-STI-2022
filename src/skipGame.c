@@ -65,16 +65,24 @@ void skipGame (TabKata listGame, Queue* queueGame, Stack* historyGame, Scoreboar
             }
 
             boolean showScore = false;
+            boolean isNameValid;
             do {
                 if (showScore) {
                     printf("Skor kamu: %d\n\n", score);
                     if (IsMemberSet(SB[Idx].Nama, currentWord)) printf("Nama yang kamu masukkan sudah ada.\n");
+                    if (!isNameValid) printf("Nama tidak boleh mengandung karakter <spasi>.\n");
                 } 
                 printf("> Masukan nama: ");
                 GetCommand();
+
+                isNameValid = currentWord.Length > 0;
+                for (int i = 0; i < currentWord.Length; i++) {
+                    if (currentWord.TabWord[i] == ' ') isNameValid = false;
+                }
+
                 clear();
                 showScore = true;
-            } while ((IsMemberSet(SB[Idx].Nama, currentWord)));
+            } while ((IsMemberSet(SB[Idx].Nama, currentWord)) || !isNameValid);
             InsertSet(&(SB[Idx].Nama), currentWord);
             Insert(&(SB[Idx].Score), currentWord, score);
             sortSet(&(SB[Idx]));

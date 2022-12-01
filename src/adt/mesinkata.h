@@ -58,6 +58,8 @@ void TulisWord(Word kata);
 
 boolean IsWordEq (Word kata1, Word kata2);
 
+boolean IsWordNumber (Word kata);
+
 Word toKata(char *str); 
 /*  Fungsi yang menerima sebuah paramater str bertipe string
     Kemudian mengembalikan elemen bertipe Word yang merupakan hasil transformasi string str */

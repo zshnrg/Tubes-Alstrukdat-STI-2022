@@ -123,6 +123,13 @@ boolean IsWordEq (Word kata1, Word kata2) {
     return true;
 }
 
+boolean IsWordNumber (Word kata) {
+    for (int i = 0; i < kata.Length; i++) {
+        if (kata.TabWord[i] - '0' < 0 || kata.TabWord[i] - '0' > 9) return false;
+    }
+    return kata.Length > 0;
+}
+
 Word toKata(char *str) {
 /*  Fungsi yang menerima sebuah paramater str bertipe string
     Kemudian mengembalikan elemen bertipe Word yang merupakan hasil transformasi string str */

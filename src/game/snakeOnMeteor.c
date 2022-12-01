@@ -63,7 +63,7 @@ int playSnakeOnMeteor() {
     printGuideSoM();
 
 
-    currentWord = toKata("D");
+    boolean comm;
     do {
         if (isPointEqual(teleport(Info(First(snake)), mapSize), Food)) {
             Food = generateFood(snake, Obs, Meteor, Crater, mapSize);
@@ -71,6 +71,7 @@ int playSnakeOnMeteor() {
             growSnake(&snake, mapSize);
         }
         do {
+            comm = false;
             do {
                 clear();
                 printf("Peta Permainan\n");
@@ -83,12 +84,15 @@ int playSnakeOnMeteor() {
                 else if (turn > 2) printf("Anda beruntung tidak terkena meteor! Silahkan lanjutkan permainan\n");
                 
                 printf("\nTURN %d\n", turn);
-                if (isCmdValid(currentWord)) {
-                    if (!isMoveValid(currentWord, snake, Meteor, false, mapSize)) printf("Silahkan masukkan command lainnya\n");
+                if (comm) {
+                    if (isCmdValid(currentWord)) {
+                        if (!isMoveValid(currentWord, snake, Meteor, false, mapSize)) printf("Silahkan masukkan command lainnya\n");
+                    }
+                    else printf("Command tidak valid! Silahkan input command menggunakan huruf W/A/S/D\n");
                 }
-                if (!isCmdValid(currentWord)) printf("Command tidak valid! Silahkan input command menggunakan huruf W/A/S/D\n");
                 printf("Silahkan masukkan command anda: ");
                 GetCommand();
+                comm = true;
             } while (!isCmdValid(currentWord));
         } while (!isMoveValid(currentWord, snake, Meteor, true, mapSize));
 
@@ -137,13 +141,19 @@ void generateSnake(List *Snake, int mapSize) {
 Point generateFood(List Snake, Point *Obs, Point Meteor, Point Crater, int mapSize) {
     Point F;
     address P;
+    boolean found;
     boolean unique;
     srand(time(NULL));
     do {
         unique = true;
         srand(rand());
         F = createPoint(rand() % mapSize, rand() % mapSize);
-        P = Search(Snake, F);
+        found = false;
+        P = First(Snake);
+        while (!found && P != NULL) {
+            if (isPointEqual(F, teleport(Info(P), mapSize))) found = true;
+            if (!found) P = Next(P);
+        }
         for (int i = 0; i < (int) (mapSize * mapSize / 5 - 3); i++) {
             if (isPointEqual(Obs[i], F)) unique = false;
         }
@@ -264,7 +274,7 @@ boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int map
     DelLast(&Snake, &dump);
     Point new;
     if (IsWordEq(comm, toKata("W"))) {
-        new = createPoint(Info(P).x, (Info(P).y - 1 + mapSize) % mapSize);
+        new = createPoint(Info(P).x, Info(P).y - 1);
         if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
             InsertLast(&Snake, dump);
@@ -275,7 +285,7 @@ boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int map
             return false;
         }
     } else if (IsWordEq(comm, toKata("A"))) {
-        Point new = createPoint((Info(P).x - 1 + mapSize) % mapSize, Info(P).y);
+        Point new = createPoint(Info(P).x - 1, Info(P).y);
         if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
             InsertLast(&Snake, dump);
@@ -286,7 +296,7 @@ boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int map
             return false;
         }
     } else if (IsWordEq(comm, toKata("S"))) {
-        Point new = createPoint(Info(P).x, (Info(P).y + 1) % mapSize);
+        Point new = createPoint(Info(P).x, Info(P).y + 1);
         if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
             InsertLast(&Snake, dump);
@@ -297,7 +307,7 @@ boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int map
             return false;
         }
     } else {
-        Point new = createPoint((Info(P).x + 1) % mapSize, Info(P).y);
+        Point new = createPoint(Info(P).x + 1, Info(P).y);
         if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
             InsertLast(&Snake, dump);
@@ -313,7 +323,16 @@ boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int map
 }
 
 Point teleport(Point P, int mapSize) {
-    return createPoint((P.x + mapSize * 100) % mapSize, (P.y + mapSize * 100) % mapSize);
+    int x = P.x;
+    int y = P.y;
+
+    while (x < 0) x += mapSize;
+    while (y < 0) y += mapSize;
+
+    x = x % mapSize;
+    y = y % mapSize;
+
+    return createPoint(x, y);
 }
 
 void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize) {
@@ -584,7 +603,7 @@ void printBasicMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crate
 
 void printGuideSoM() {
     for (int i = 5; i > 0; i--) {
-        printf("\n _______               __                                _______         __                    \n|     __|.-----.---.-.|  |--.-----.    .-----.-----.    |   |   |.-----.|  |_.-----.-----.----.\n|__     ||     |  _  ||    <|  -__|    |  _  |     |    |       ||  -__||   _|  -__|  _  |   _|\n|_______||__|__|___._||__|__|_____|    |_____|__|__|    |__|_|__||_____||____|_____|_____|__|  \n                                                                                              \n===================================== Petunjuk Permainan =====================================\n\n1. Gunakan perintah W/A/S/D untuk menggerakkan ular.\n2. Arahkan ular untuk bisa mengambil makanan yang berwarna kuning.\n2. Dalam setiap putaran akan ada sebuah meteor yang jatuh secara acak menyebar pada peta.\n4. Meteor yang mengenai tubuh ular akan menyebabkan tubuh ular memendek satu petak.\n5. Apabila meteor mengenai kepala ular, maka ular akan langsung mati.\n6. Setelah meteor jatuh, jejak bekas meteor akan menjadi kawah yang tidak bisa dilewati oleh\n   ular selama satu putaran.\n7. Selain terkena meteor, ular juga dapat mati apabila menabrak obstacle atau tubuhnya sendiri.\n8. Selamat bermain!\n\n==============================================================================================\n\nPermainan akan dimulai dalam %d ...", i);
+        printf("\n _______               __                                _______         __                    \n|     __|.-----.---.-.|  |--.-----.    .-----.-----.    |   |   |.-----.|  |_.-----.-----.----.\n|__     ||     |  _  ||    <|  -__|    |  _  |     |    |       ||  -__||   _|  -__|  _  |   _|\n|_______||__|__|___._||__|__|_____|    |_____|__|__|    |__|_|__||_____||____|_____|_____|__|  \n                                                                                              \n===================================== Petunjuk Permainan =====================================\n\n1. Gunakan perintah W/A/S/D untuk menggerakkan ular.\n2. Arahkan ular untuk bisa mengambil makanan yang berwarna kuning.\n2. Dalam setiap putaran akan ada sebuah meteor yang jatuh secara acak menyebar pada peta.\n4. Meteor yang mengenai tubuh ular akan menyebabkan tubuh ular memendek satu petak.\n5. Apabila meteor mengenai kepala ular, maka ular akan langsung mati.\n6. Setelah meteor jatuh, jejak bekas meteor akan menjadi kawah yang tidak bisa dilewati oleh\n   ular selama satu putaran.\n7. Selain terkena meteor, ular juga dapat mati apabila menabrak obstacle.\n8. Selamat bermain!\n\n==============================================================================================\n\nPermainan akan dimulai dalam %d ...", i);
         fflush(stdout); sleep(1);
         clear();
     }

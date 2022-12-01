@@ -15,13 +15,17 @@ void queueGameList(TabKata listGame, Queue *queueGame) {
         GetCommand();
         
         comm = 0;
-        for (int i = 0; i < currentWord.Length; i++) {
-            comm = comm * 10;
-            comm += currentWord.TabWord[i] -'0';
-        }
+        if (IsWordNumber(currentWord)) {
+            for (int i = 0; i < currentWord.Length; i++) {
+                comm = comm * 10;
+                comm += currentWord.TabWord[i] -'0';
+            }
 
-        if (comm < 1 || comm > listGame.Neff) {
-            printf("Nomor permainan tidak valid, silahkan masukkan nomor game pada list.\n");
+            if (comm < 1 || comm > listGame.Neff) {
+                printf("Nomor permainan tidak valid, silahkan masukkan nomor game pada list.\n");
+            }
+        } else {
+            printf("Masukan harus berupa angka.\n");
         }
     } while (comm < 1 || comm > listGame.Neff);
 
