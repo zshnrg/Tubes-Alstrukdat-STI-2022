@@ -4,8 +4,57 @@
 #include <time.h>
 #include "snakeOnMeteor.h"
 
+int main() {
+    playSnakeOnMeteor();
+}
+void printMapStd(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize) {
+    boolean isSnake;
+    printf("o"); for (int o = 0; o < mapSize; o++) printf("-"); printf("o\n");
+    for (int i = 0; i < mapSize; i++) {
+        printf("|");
+        for (int j = 0; j < mapSize; j++) {
+            boolean isObstacle = false;
+            for (int k = 0; k < (int) (mapSize * mapSize / 5 - 3); k++) {
+                if (isPointEqual(createPoint(j, i), Obs[k])) isObstacle = true;
+            }
+            if (isObstacle) {
+                printf("#");
+            } else if (isPointEqual(createPoint(j, i), Food)) {
+                printf("\033[1;33m");
+                printf("o");
+                printf("\033[0m");
+            } else if (isPointEqual(createPoint(j, i), Meteor)) {
+                printf("\033[1;31m");
+                printf("0");
+                printf("\033[0m");
+            } else if (isPointEqual(createPoint(j, i), Crater)) {
+                printf("\033[1;37m");
+                printf("o");
+                printf("\033[0m");
+            } else {
+                isSnake = false;
+                printf("\033[1;32m");
+                address P = First(Snake);
+                while (P != NULL) {
+                    if (isPointEqual(createPoint(j, i), Info(P))) {
+                        if (P == First(Snake)) printf("0");
+                        else printf("O");
+                        isSnake = true;
+                    }
+                    P = Next(P);
+                }
+                printf("\033[0m");
+                if (!isSnake) printf(" ");
+            }
+        }
+        printf("|\n");
+    }
+    printf("o"); for (int o = 0; o < mapSize; o++) printf("-"); printf("o\n");
+}
+
 int playSnakeOnMeteor() {
     int mapSize = 5;
+    reset();
 
     system("cls");
     do {    
@@ -59,10 +108,10 @@ int playSnakeOnMeteor() {
     Food = generateFood(snake, Obs, Meteor, Crater, mapSize);
 
     system("cls");
-    printGuideSoM();
+    // printGuideSoM();
 
 
-    currentWord = toKata("W");
+    currentWord = toKata("D");
     do {
         if (isPointEqual(Info(First(snake)), Food)) {
             Food = generateFood(snake, Obs, Meteor, Crater, mapSize);
@@ -73,6 +122,7 @@ int playSnakeOnMeteor() {
             do {
                 system("cls");
                 printf("Peta Permainan\n");
+                printMapStd(snake, Obs, Food, Meteor, Crater, mapSize);
                 printMap(snake, Obs, Food, Meteor, Crater, mapSize);
                 if (isHit) printf("Anda terkena meteor! \n");
                 else if (turn > 2) printf("Anda beruntung tidak terkena meteor! Silahkan lanjutkan permainan\n");
@@ -106,6 +156,7 @@ int playSnakeOnMeteor() {
     system("cls");
     
     printf("Peta Permainan\n");
+    printMapStd(snakeCopy, Obs, Food, Meteor, Crater, mapSize);
     printMap(snakeCopy, Obs, Food, Meteor, Crater, mapSize);
     if (isHit) printf("Kepala snake terkena meteor!\n\n");
     else printf("Snake menabrak!\n\n");
@@ -119,9 +170,9 @@ int playSnakeOnMeteor() {
 
 void generateSnake(List *Snake, int mapSize) {
     CreateEmptyList(Snake);
-    for (int i = (int) (mapSize / 2); i >= (int) (mapSize / 2) - 2; i--) {
-        InsVLast(Snake, createPoint(i, (int) (mapSize / 2)));
-    }
+    InsVFirst(Snake, createPoint(rand() % (mapSize - 2) + 2, rand() % mapSize));
+    growSnake(Snake, mapSize);
+    growSnake(Snake, mapSize);
 }
 
 Point generateFood(List Snake, Point *Obs, Point Meteor, Point Crater, int mapSize) {
@@ -288,47 +339,221 @@ boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int map
 
 void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize) {
     boolean isSnake;
-    printf("o"); for (int o = 0; o < mapSize; o++) printf("-"); printf("o\n");
-    for (int i = 0; i < mapSize; i++) {
-        printf("|");
-        for (int j = 0; j < mapSize; j++) {
-            boolean isObstacle = false;
-            for (int k = 0; k < (int) (mapSize * mapSize / 5 - 3); k++) {
-                if (isPointEqual(createPoint(j, i), Obs[k])) isObstacle = true;
-            }
-            if (isObstacle) {
-                printf("#");
-            } else if (isPointEqual(createPoint(j, i), Food)) {
-                printf("\033[1;33m");
-                printf("o");
-                printf("\033[0m");
-            } else if (isPointEqual(createPoint(j, i), Meteor)) {
-                printf("\033[1;31m");
-                printf("0");
-                printf("\033[0m");
-            } else if (isPointEqual(createPoint(j, i), Crater)) {
-                printf("\033[1;37m");
-                printf("o");
-                printf("\033[0m");
-            } else {
-                isSnake = false;
-                printf("\033[1;32m");
-                address P = First(Snake);
-                while (P != NULL) {
-                    if (isPointEqual(createPoint(j, i), Info(P))) {
-                        if (P == First(Snake)) printf("0");
-                        else printf("O");
-                        isSnake = true;
-                    }
-                    P = Next(P);
-                }
-                printf("\033[0m");
-                if (!isSnake) printf(" ");
+    for (int row = 0; row < mapSize; row++) {
+        // Top border
+        if (row == 0) {
+            printf("\xda");
+            for (int col = 0; col < mapSize; col++) {
+                if (col == mapSize - 1) printf("\xc4\xc4\xc4\xc4\xc4\xc4\xbf\n");
+                else printf("\xc4\xc4\xc4\xc4\xc4\xc4\xc2");
             }
         }
-        printf("|\n");
+        else {
+            printf("\xc3");
+            for (int col = 0; col < mapSize; col++) {
+                if (col == mapSize - 1) printf("\xc4\xc4\xc4\xc4\xc4\xc4\xb4\n");
+                else printf("\xc4\xc4\xc4\xc4\xc4\xc4\xc5");
+            }
+        }
+        // Cell content
+        for (int line = 0; line < 3; line++) {
+            for (int col = 0; col < mapSize; col++) {
+                printf("\xb3");
+                boolean isObstacle = false;
+                for (int k = 0; k < (int) (mapSize * mapSize / 5 - 3); k++) {
+                    if (isPointEqual(createPoint(col, row), Obs[k])) isObstacle = true;
+                }
+                if (isObstacle) {
+                    if (line == 0) printf("\xdb\xdb\xb2\xb2\xb1\xb1");
+                    else if (line == 1) printf("\xb1\xb1\xdb\xdb\xb2\xb2");
+                    else printf("\xb2\xb2\xb1\xb1\xdb\xdb");
+                } else if (isPointEqual(createPoint(col, row), Food)) {
+                    yellow();
+                    if (line == 0) printf("      ");
+                    else if (line == 1) printf("  \xdb\xdb  ");
+                    else printf("      ");
+                } else if (isPointEqual(createPoint(col, row), Meteor)) {
+                    red();
+                    if (line == 0) printf("\xd9 \xdc\xdc \xc0");
+                    else if (line == 1) printf(" \xdb\xdb\xdb\xdb ");
+                    else printf("\xbf \xdf\xdf \xda");
+                } else if (isPointEqual(createPoint(col, row), Crater)) {
+                    if (line == 0) printf("\xd9 \xc2\xc2 \xc0");
+                    else if (line == 1) printf(" \xc3\xc5\xc5\xb4 ");
+                    else printf("\xbf \xc1\xc1 \xda");
+                } else {
+                    boolean isSnake = false;
+                    address target = First(Snake);
+                    while (target != NULL && !isSnake) {
+                        if (isPointEqual(createPoint(col, row), Info(target))) isSnake = true;
+                        if (!isSnake) target = Next(target);
+                    }
+                    if (isSnake) {
+                        green();
+                        address next = Next(target);
+                        address before;
+                        if (target != First(Snake)) {
+                            before = First(Snake);
+                            while (Next(before) != target && before != NULL) {
+                                before = Next(before);
+                            }
+                        }
+
+                        if (target == First(Snake)) {
+                            if (next != NULL) {
+                                if (Info(next).x == Info(target).x) {
+                                    if (Info(next).y < Info(target).y) {
+                                        if (line == 2) printf(" \xdf\xdb\xdb\xdf ");
+                                        else if (line == 0) printf("  \xdb\xdb  ");
+                                    } else {
+                                        if (line == 0) printf(" \xdc\xdb\xdb\xdc ");
+                                        else if (line == 2) printf("  \xdb\xdb  ");
+                                    }
+                                    if (line == 1) printf(" \xdb\xdb\xdb\xdb ");
+                                } else if (Info(next).y == Info(target).y) {
+                                    if (Info(next).x < Info(target).x) {
+                                        if (line == 2) printf("  \xdf\xdf\xdf ");
+                                        else if (line == 0) printf("  \xdc\xdc\xdc ");
+                                    } else {
+                                        if (line == 2) printf(" \xdf\xdf\xdf  ");
+                                        else if (line == 0) printf(" \xdc\xdc\xdc  ");
+                                    }
+                                    if (line == 1) printf("\xdb\xdb\xdb\xdb\xdb\xdb");
+                                } else if (Info(next).y < Info(target).y) {
+                                    if (Info(next).x < Info(target).x) {
+                                        if (line == 0) printf("\xdb\xdb\xdc\xdc  ");
+                                        else if (line == 1) printf(" \xdb\xdb\xdb\xdb\xdc");
+                                        else printf("  \xdf\xdb\xdb\xdf");
+                                    } else {
+                                        if (line == 0) printf("  \xdc\xdc\xdb\xdb");
+                                        else if (line == 1) printf("\xdc\xdb\xdb\xdb\xdb ");
+                                        else printf("\xdf\xdb\xdb\xdf  ");
+                                    }
+                                } else {
+                                    if (Info(next).x < Info(target).x) {
+                                        if (line == 0) printf("  \xdc\xdc\xdb\xdb");
+                                        else if (line == 1) printf(" \xdb\xdb\xdb\xdb\xdf");
+                                        else printf("\xdb\xdb\xdc\xdc  ");
+                                    } else {
+                                        if (line == 0) printf("\xdc\xdc\xdb\xdb  ");
+                                        else if (line == 1) printf("\xdf\xdb\xdb\xdb\xdb ");
+                                        else printf("  \xdc\xdc\xdb\xdb");
+                                    }
+                                }
+                            } else {
+                                if (line == 0) printf("  \xdc\xdc  ");
+                                else if (line == 1) printf(" \xdb\xdb\xdb\xdb ");
+                                else printf("  \xdf\xdf  ");
+                            }
+                        } else if (next != NULL) {
+                            if (line == 0) {
+                                if (Info(before).y < Info(target).y || Info(next).y < Info(target).y) {
+                                    if ((Info(before).x < Info(target).x && Info(before).y < Info(target).y) || (Info(next).x < Info(target).x && Info(next).y < Info(target).y)) printf("\xdb\xdb");
+                                    else printf("  ");
+
+                                    if (Info(before).x == Info(target).x || Info(next).x == Info(target).x) printf("\xdb\xdb");
+                                    else if (Info(before).x < Info(target).x || Info(next).x < Info(target).x) printf("\xdc ");
+                                    else if (Info(before).x > Info(target).x || Info(next).x > Info(target).x) printf(" \xdc");
+                                    else printf("  ");
+
+                                    if ((Info(before).x > Info(target).x && Info(before).y < Info(target).y) || (Info(next).x > Info(target).x && Info(next).y < Info(target).y)) printf("\xdb\xdb");
+                                    else printf("  ");
+                                } else {
+                                    printf("      ");
+                                }
+                            } else if (line == 1) {
+                                if (Info(before).x < Info(target).x || Info(next).x < Info(target).x) {
+                                    if (Info(before).y == Info(target).y || Info(next).y == Info(target).y) printf("\xdb\xdb");
+                                    else if (Info(before).x < Info(target).x && Info(next).x < Info(target).x) printf(" \xdb");
+                                    else if (Info(before).y < Info(target).y || Info(next).y < Info(target).y) printf(" \xdf");
+                                    else printf(" \xdc");
+                                } else {
+                                    printf("  ");
+                                }
+
+                                printf("\xdb\xdb");
+
+                                if (Info(before).x > Info(target).x || Info(next).x > Info(target).x) {
+                                    if (Info(before).y == Info(target).y || Info(next).y == Info(target).y) printf("\xdb\xdb");
+                                    else if (Info(before).x > Info(target).x && Info(next).x > Info(target).x) printf("\xdb ");
+                                    else if (Info(before).y < Info(target).y || Info(next).y < Info(target).y) printf("\xdf ");
+                                    else printf("\xdc ");
+                                } else {
+                                    printf("  ");
+                                }
+                            } else {
+                                if (Info(before).y > Info(target).y || Info(next).y > Info(target).y) {
+                                    if ((Info(before).x < Info(target).x && Info(before).y > Info(target).y) || (Info(next).x < Info(target).x && Info(next).y > Info(target).y)) printf("\xdb\xdb");
+                                    else printf("  ");
+
+                                    if (Info(before).x == Info(target).x || Info(next).x == Info(target).x) printf("\xdb\xdb");
+                                    else if (Info(before).x < Info(target).x || Info(next).x < Info(target).x) {
+                                        printf("\xdc");
+                                        if (Info(before).x > Info(target).x || Info(next).x > Info(target).x) printf("\xdc");
+                                        else printf(" ");
+                                    }
+                                    else if (Info(before).x > Info(target).x || Info(next).x > Info(target).x) printf(" \xdc");
+                                    else printf("  ");
+
+                                    if ((Info(before).x > Info(target).x && Info(before).y > Info(target).y) || (Info(next).x > Info(target).x && Info(next).y > Info(target).y)) printf("\xdb\xdb");
+                                    else printf("  ");
+                                } else {
+                                    printf("      ");
+                                }
+                            }
+                        } else {
+                            if (Info(before).x == Info(target).x) {
+                                
+                                if (Info(before).y < Info(target).y) {
+                                    if (line == 0) printf("  \xdb\xdb  ");
+                                    else if (line == 1) printf("  \xde\xdd  ");
+                                    else printf("      ");
+                                } else {
+                                    if (line == 0) printf("      ");
+                                    else if (line == 1) printf("  \xde\xdd  ");
+                                    else printf("  \xdb\xdb  ");
+                                }
+                            } else if (Info(before).y == Info(target).y) {
+                                if (line == 1) {
+                                    if (Info(before).x < Info(target).x) printf("\xdb\xdb\xfe\xfe  ");
+                                    else printf("  \xfe\xfe\xdb\xdb");
+                                } else printf("      ");
+                            } else if (Info(before).y < Info(target).y) {
+                                if (Info(before).x < Info(target).x) {
+                                    if (line == 0) printf("\xdb\xdb\xdc   ");
+                                    if (line == 1) printf(" \xdf\xdb   ");
+                                } else {
+                                    if (line == 0) printf("   \xdc\xdb\xdb");
+                                    if (line == 1) printf("   \xdb\xdf ");
+                                }
+                                if (line == 2) printf("      ");
+                            } else {
+                                if (Info(before).x < Info(target).x) {
+                                    if (line == 2) printf("\xdb\xdb\xdf   ");
+                                    if (line == 1) printf(" \xdc\xdb   ");
+                                } else {
+                                    if (line == 2) printf("   \xdf\xdb\xdb");
+                                    if (line == 1) printf("   \xdb\xdc ");
+                                }
+                                if (line == 0) printf("      ");
+                            }
+                        }
+                    } else {
+                        printf("      ");
+                    }
+                }
+                reset();
+            }
+            printf("\xb3\n");
+        }
+        
     }
-    printf("o"); for (int o = 0; o < mapSize; o++) printf("-"); printf("o\n");
+    // Bottom border
+    printf("\xc0");
+    for (int col = 0; col < mapSize; col++) {
+        if (col == mapSize - 1) printf("\xc4\xc4\xc4\xc4\xc4\xc4\xd9\n");
+        else printf("\xc4\xc4\xc4\xc4\xc4\xc4\xc1");
+    }
 }
 
 void printGuideSoM() {

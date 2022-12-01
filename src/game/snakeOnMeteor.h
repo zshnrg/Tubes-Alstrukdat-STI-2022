@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "../adt/listlinier.h"
 #include "../adt/mesinkata.h"
+#include "../function.h"
 
 int playSnakeOnMeteor();
 /* Memainkan game Snake on Meteor dan mengembalikan skor game */
