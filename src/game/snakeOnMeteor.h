@@ -39,7 +39,7 @@ void moveSnake(List *Snake, Word comm, int mapSize);
 boolean isCollide(List Snake, Point *Obs, int mapSize);
 /* Mengembalikan nilai true apabila ular menabrak obstacle atau badannya sendiri */
 
-boolean isMeteorHit(List *Snake, Point Meteor);
+boolean isMeteorHit(List *Snake, Point Meteor, int mapSize);
 /* Mengembalikan nilai true jika meteor mengenai kepala ular
    Jika meteor mengenai badan, maka badan akan berkurang 1 */
 
@@ -48,6 +48,9 @@ boolean isCmdValid(Word comm);
 
 boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int mapSize);
 /* Mengembalikan nilai true apabila ular bisa bergerak (tidak menabrak bekas meteor) */
+
+Point teleport(Point P, int mapSize);
+/* Mengubah titik menjadi di dalam peta */
 
 void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize);
 /* Menampilkan status peta permainan ke layar

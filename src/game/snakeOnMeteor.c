@@ -4,54 +4,6 @@
 #include <time.h>
 #include "snakeOnMeteor.h"
 
-int main() {
-    playSnakeOnMeteor();
-}
-void printMapStd(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize) {
-    boolean isSnake;
-    printf("o"); for (int o = 0; o < mapSize; o++) printf("-"); printf("o\n");
-    for (int i = 0; i < mapSize; i++) {
-        printf("|");
-        for (int j = 0; j < mapSize; j++) {
-            boolean isObstacle = false;
-            for (int k = 0; k < (int) (mapSize * mapSize / 5 - 3); k++) {
-                if (isPointEqual(createPoint(j, i), Obs[k])) isObstacle = true;
-            }
-            if (isObstacle) {
-                printf("#");
-            } else if (isPointEqual(createPoint(j, i), Food)) {
-                printf("\033[1;33m");
-                printf("o");
-                printf("\033[0m");
-            } else if (isPointEqual(createPoint(j, i), Meteor)) {
-                printf("\033[1;31m");
-                printf("0");
-                printf("\033[0m");
-            } else if (isPointEqual(createPoint(j, i), Crater)) {
-                printf("\033[1;37m");
-                printf("o");
-                printf("\033[0m");
-            } else {
-                isSnake = false;
-                printf("\033[1;32m");
-                address P = First(Snake);
-                while (P != NULL) {
-                    if (isPointEqual(createPoint(j, i), Info(P))) {
-                        if (P == First(Snake)) printf("0");
-                        else printf("O");
-                        isSnake = true;
-                    }
-                    P = Next(P);
-                }
-                printf("\033[0m");
-                if (!isSnake) printf(" ");
-            }
-        }
-        printf("|\n");
-    }
-    printf("o"); for (int o = 0; o < mapSize; o++) printf("-"); printf("o\n");
-}
-
 int playSnakeOnMeteor() {
     int mapSize = 5;
     reset();
@@ -108,12 +60,12 @@ int playSnakeOnMeteor() {
     Food = generateFood(snake, Obs, Meteor, Crater, mapSize);
 
     system("cls");
-    // printGuideSoM();
+    printGuideSoM();
 
 
     currentWord = toKata("D");
     do {
-        if (isPointEqual(Info(First(snake)), Food)) {
+        if (isPointEqual(teleport(Info(First(snake)), mapSize), Food)) {
             Food = generateFood(snake, Obs, Meteor, Crater, mapSize);
             First(snakeCopy) = First(snake);
             growSnake(&snake, mapSize);
@@ -122,7 +74,6 @@ int playSnakeOnMeteor() {
             do {
                 system("cls");
                 printf("Peta Permainan\n");
-                printMapStd(snake, Obs, Food, Meteor, Crater, mapSize);
                 printMap(snake, Obs, Food, Meteor, Crater, mapSize);
                 if (isHit) printf("Anda terkena meteor! \n");
                 else if (turn > 2) printf("Anda beruntung tidak terkena meteor! Silahkan lanjutkan permainan\n");
@@ -147,7 +98,7 @@ int playSnakeOnMeteor() {
         
         turn++;
 
-        isHit = isMeteorHit(&snake, Meteor);
+        isHit = isMeteorHit(&snake, Meteor, mapSize);
         isEndGame = isCollide(snake, Obs, mapSize) || IsEmptyList(snake);
     } while (!isEndGame);
 
@@ -156,7 +107,6 @@ int playSnakeOnMeteor() {
     system("cls");
     
     printf("Peta Permainan\n");
-    printMapStd(snakeCopy, Obs, Food, Meteor, Crater, mapSize);
     printMap(snakeCopy, Obs, Food, Meteor, Crater, mapSize);
     if (isHit) printf("Kepala snake terkena meteor!\n\n");
     else printf("Snake menabrak!\n\n");
@@ -169,6 +119,7 @@ int playSnakeOnMeteor() {
 }
 
 void generateSnake(List *Snake, int mapSize) {
+    srand(time(NULL));
     CreateEmptyList(Snake);
     InsVFirst(Snake, createPoint(rand() % (mapSize - 2) + 2, rand() % mapSize));
     growSnake(Snake, mapSize);
@@ -195,7 +146,6 @@ Point generateFood(List Snake, Point *Obs, Point Meteor, Point Crater, int mapSi
 Point generateMeteor(Point *Obs, Point Food, int mapSize) {
     Point M;
     boolean unique;
-    srand(time(NULL));
     do {
         unique = true;
         srand(rand());
@@ -238,10 +188,10 @@ void growSnake(List* Snake, int mapSize) {
     Point tail;
     address found;
     while (n < 4 && !add) {
-        if (n == 0) tail = createPoint((Info(P).x - 1 + mapSize) % mapSize, Info(P).y);
-        if (n == 1) tail = createPoint(Info(P).x, (Info(P).y - 1 + mapSize) % mapSize);
-        if (n == 2) tail = createPoint(Info(P).x, (Info(P).y + 1) % mapSize);
-        if (n == 3) tail = createPoint((Info(P).x + 1) % mapSize, Info(P).y);
+        if (n == 0) tail = createPoint(Info(P).x - 1, Info(P).y);
+        if (n == 1) tail = createPoint(Info(P).x, Info(P).y - 1);
+        if (n == 2) tail = createPoint(Info(P).x, Info(P).y + 1);
+        if (n == 3) tail = createPoint(Info(P).x + 1, Info(P).y);
         found = Search(*Snake, tail);
         if (found == NULL) {
             InsVLast(Snake, tail);
@@ -255,13 +205,13 @@ void growSnake(List* Snake, int mapSize) {
 void moveSnake(List *Snake, Word comm, int mapSize) {
     address P = First(*Snake);
     if (IsWordEq(comm, toKata("W"))) {
-        InsVFirst(Snake, createPoint(Info(P).x, (Info(P).y - 1 + mapSize) % mapSize));
+        InsVFirst(Snake, createPoint(Info(P).x, Info(P).y - 1));
     } else if (IsWordEq(comm, toKata("A"))) {
-        InsVFirst(Snake, createPoint((Info(P).x - 1 + mapSize) % mapSize, Info(P).y));
+        InsVFirst(Snake, createPoint(Info(P).x - 1, Info(P).y));
     } else if (IsWordEq(comm, toKata("S"))) {
-        InsVFirst(Snake, createPoint(Info(P).x, (Info(P).y + 1 + mapSize) % mapSize));
+        InsVFirst(Snake, createPoint(Info(P).x, Info(P).y + 1));
     } else {
-        InsVFirst(Snake, createPoint((Info(P).x + 1 + mapSize) % mapSize, Info(P).y));
+        InsVFirst(Snake, createPoint(Info(P).x + 1, Info(P).y));
     }
     infotypeList dump;
     DelVLast(Snake, &dump);
@@ -271,20 +221,26 @@ boolean isCollide(List Snake, Point *Obs, int mapSize) {
     address P = First(Snake);
     if (P != NULL) {
         for (int i = 0; i < (int) (mapSize * mapSize / 5 - 3); i++) {
-            if (isPointEqual(Info(P), Obs[i])) return true;
+            if (isPointEqual(teleport(Info(P), mapSize), Obs[i])) return true;
         }
     }
     return false;
 }
 
-boolean isMeteorHit(List *Snake, Point Meteor) {
-    if (isPointEqual(Info(First(*Snake)), Meteor)) {
+boolean isMeteorHit(List *Snake, Point Meteor, int mapSize) {
+    if (isPointEqual(teleport(Info(First(*Snake)), mapSize), Meteor)) {
         CreateEmptyList(Snake);
         return true;
     } else {
-        address P = Search(*Snake, Meteor);
+        address P = First(*Snake);
+        boolean found = false;
+        while (P != NULL && !found) {
+            if (isPointEqual(teleport(Info(P), mapSize), Meteor)) found = true;
+            if (!found) P = Next(P);
+        }
         if (P != NULL) {
-            DelP(Snake, Meteor);
+            DelP(Snake, Info(P));
+            return true;
         }
     }
     return false;
@@ -296,45 +252,60 @@ boolean isCmdValid(Word comm) {
 
 boolean isMoveValid(Word comm, List Snake, Point Crater, boolean silent, int mapSize) {
     address P = First(Snake);
+    address dump;
+    DelLast(&Snake, &dump);
     Point new;
     if (IsWordEq(comm, toKata("W"))) {
         new = createPoint(Info(P).x, (Info(P).y - 1 + mapSize) % mapSize);
         if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
+            InsertLast(&Snake, dump);
             return false;
-        } else if (isPointEqual(new, Crater)) {
+        } else if (isPointEqual(teleport(new, mapSize), Crater)) {
             if (!silent) printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut. ");
+            InsertLast(&Snake, dump);
             return false;
         }
     } else if (IsWordEq(comm, toKata("A"))) {
         Point new = createPoint((Info(P).x - 1 + mapSize) % mapSize, Info(P).y);
         if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
+            InsertLast(&Snake, dump);
             return false;
-        } else if (isPointEqual(new, Crater)) {
+        } else if (isPointEqual(teleport(new, mapSize), Crater)) {
             if (!silent) printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut. ");
+            InsertLast(&Snake, dump);
             return false;
         }
     } else if (IsWordEq(comm, toKata("S"))) {
         Point new = createPoint(Info(P).x, (Info(P).y + 1) % mapSize);
         if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
+            InsertLast(&Snake, dump);
             return false;
-        } else if (isPointEqual(new, Crater)) {
+        } else if (isPointEqual(teleport(new, mapSize), Crater)) {
             if (!silent) printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut. ");
+            InsertLast(&Snake, dump);
             return false;
         }
     } else {
         Point new = createPoint((Info(P).x + 1) % mapSize, Info(P).y);
         if (Search(Snake, new) != NULL) {
             if (!silent) printf("Anda tidak dapat bergerak ke tubuh anda sendiri!  ");
+            InsertLast(&Snake, dump);
             return false;
-        } else if (isPointEqual(new, Crater)) {
+        } else if (isPointEqual(teleport(new, mapSize), Crater)) {
             if (!silent) printf("Meteor masih panas! Anda belum dapat kembali ke titik tersebut. ");
+            InsertLast(&Snake, dump);
             return false;
         }
     } 
+    InsertLast(&Snake, dump);
     return true;
+}
+
+Point teleport(Point P, int mapSize) {
+    return createPoint((P.x + mapSize * 100) % mapSize, (P.y + mapSize * 100) % mapSize);
 }
 
 void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize) {
@@ -385,7 +356,7 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
                     boolean isSnake = false;
                     address target = First(Snake);
                     while (target != NULL && !isSnake) {
-                        if (isPointEqual(createPoint(col, row), Info(target))) isSnake = true;
+                        if (isPointEqual(createPoint(col, row), teleport(Info(target), mapSize))) isSnake = true;
                         if (!isSnake) target = Next(target);
                     }
                     if (isSnake) {
@@ -431,13 +402,13 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
                                     }
                                 } else {
                                     if (Info(next).x < Info(target).x) {
-                                        if (line == 0) printf("  \xdc\xdc\xdb\xdb");
+                                        if (line == 0) printf("  \xdc\xdb\xdb\xdc");
                                         else if (line == 1) printf(" \xdb\xdb\xdb\xdb\xdf");
-                                        else printf("\xdb\xdb\xdc\xdc  ");
+                                        else printf("\xdb\xdb\xdf\xdf  ");
                                     } else {
-                                        if (line == 0) printf("\xdc\xdc\xdb\xdb  ");
+                                        if (line == 0) printf("\xdc\xdb\xdb\xdc  ");
                                         else if (line == 1) printf("\xdf\xdb\xdb\xdb\xdb ");
-                                        else printf("  \xdc\xdc\xdb\xdb");
+                                        else printf("  \xdf\xdf\xdb\xdb");
                                     }
                                 }
                             } else {
@@ -451,9 +422,13 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
                                     if ((Info(before).x < Info(target).x && Info(before).y < Info(target).y) || (Info(next).x < Info(target).x && Info(next).y < Info(target).y)) printf("\xdb\xdb");
                                     else printf("  ");
 
-                                    if (Info(before).x == Info(target).x || Info(next).x == Info(target).x) printf("\xdb\xdb");
-                                    else if (Info(before).x < Info(target).x || Info(next).x < Info(target).x) printf("\xdc ");
-                                    else if (Info(before).x > Info(target).x || Info(next).x > Info(target).x) printf(" \xdc");
+                                    if ((Info(before).x == Info(target).x && Info(before).y < Info(target).y) || (Info(next).x == Info(target).x && Info(next).y < Info(target).y)) printf("\xdb\xdb");
+                                    else if ((Info(before).x < Info(target).x && Info(before).y < Info(target).y) || (Info(next).x < Info(target).x && Info(next).y < Info(target).y)) {
+                                        printf("\xdc");
+                                        if ((Info(before).x > Info(target).x && Info(before).y < Info(target).y) || (Info(next).x > Info(target).x && Info(next).y < Info(target).y)) printf("\xdc");
+                                        else printf(" ");
+                                    }
+                                    else if ((Info(before).x > Info(target).x && Info(before).y < Info(target).y) || (Info(next).x > Info(target).x && Info(next).y < Info(target).y)) printf(" \xdc");
                                     else printf("  ");
 
                                     if ((Info(before).x > Info(target).x && Info(before).y < Info(target).y) || (Info(next).x > Info(target).x && Info(next).y < Info(target).y)) printf("\xdb\xdb");
@@ -463,9 +438,9 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
                                 }
                             } else if (line == 1) {
                                 if (Info(before).x < Info(target).x || Info(next).x < Info(target).x) {
-                                    if (Info(before).y == Info(target).y || Info(next).y == Info(target).y) printf("\xdb\xdb");
+                                    if ((Info(before).y == Info(target).y && Info(before).x < Info(target).x) || (Info(next).y == Info(target).y && Info(next).x < Info(target).x)) printf("\xdb\xdb");
                                     else if (Info(before).x < Info(target).x && Info(next).x < Info(target).x) printf(" \xdb");
-                                    else if (Info(before).y < Info(target).y || Info(next).y < Info(target).y) printf(" \xdf");
+                                    else if ((Info(before).y < Info(target).y && Info(before).x < Info(target).x) || (Info(next).y < Info(target).y && Info(next).x < Info(target).x)) printf(" \xdf");
                                     else printf(" \xdc");
                                 } else {
                                     printf("  ");
@@ -474,9 +449,9 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
                                 printf("\xdb\xdb");
 
                                 if (Info(before).x > Info(target).x || Info(next).x > Info(target).x) {
-                                    if (Info(before).y == Info(target).y || Info(next).y == Info(target).y) printf("\xdb\xdb");
+                                    if ((Info(before).y == Info(target).y && Info(before).x > Info(target).x) || (Info(next).y == Info(target).y && Info(next).x > Info(target).x)) printf("\xdb\xdb");
                                     else if (Info(before).x > Info(target).x && Info(next).x > Info(target).x) printf("\xdb ");
-                                    else if (Info(before).y < Info(target).y || Info(next).y < Info(target).y) printf("\xdf ");
+                                    else if ((Info(before).y < Info(target).y && Info(before).x > Info(target).x) || (Info(next).y < Info(target).y && Info(next).x > Info(target).x)) printf("\xdf ");
                                     else printf("\xdc ");
                                 } else {
                                     printf("  ");
@@ -486,13 +461,13 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
                                     if ((Info(before).x < Info(target).x && Info(before).y > Info(target).y) || (Info(next).x < Info(target).x && Info(next).y > Info(target).y)) printf("\xdb\xdb");
                                     else printf("  ");
 
-                                    if (Info(before).x == Info(target).x || Info(next).x == Info(target).x) printf("\xdb\xdb");
-                                    else if (Info(before).x < Info(target).x || Info(next).x < Info(target).x) {
-                                        printf("\xdc");
-                                        if (Info(before).x > Info(target).x || Info(next).x > Info(target).x) printf("\xdc");
+                                    if ((Info(before).x == Info(target).x && Info(before).y > Info(target).y) || (Info(next).x == Info(target).x && Info(next).y > Info(target).y)) printf("\xdb\xdb");
+                                    else if ((Info(before).x < Info(target).x && Info(before).y > Info(target).y) || (Info(next).x < Info(target).x && Info(next).y > Info(target).y)) {
+                                        printf("\xdf");
+                                        if ((Info(before).x > Info(target).x && Info(before).y > Info(target).y) || (Info(next).x > Info(target).x && Info(next).y > Info(target).y)) printf("\xdf");
                                         else printf(" ");
                                     }
-                                    else if (Info(before).x > Info(target).x || Info(next).x > Info(target).x) printf(" \xdc");
+                                    else if ((Info(before).x > Info(target).x && Info(before).y > Info(target).y) || (Info(next).x > Info(target).x && Info(next).y > Info(target).y)) printf(" \xdf");
                                     else printf("  ");
 
                                     if ((Info(before).x > Info(target).x && Info(before).y > Info(target).y) || (Info(next).x > Info(target).x && Info(next).y > Info(target).y)) printf("\xdb\xdb");
