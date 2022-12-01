@@ -3,7 +3,7 @@
 #include "createGame.h"
 
 void createGame(TabKata *listGame) {
-    system("cls");
+    clear();
     printf("Masukkan nama game yang akan ditambahkan: ");
     GetCommand();
     if (!IsMember(*listGame, currentWord)) {

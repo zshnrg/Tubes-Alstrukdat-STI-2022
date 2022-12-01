@@ -2,6 +2,7 @@
 #define RNG_GAME_H
 
 #include "../adt/mesinkata.h"
+#include "../function.h"
 
 int rngPlay();
 /* Memainkan game RNG dan mengembalikan nilai skor */

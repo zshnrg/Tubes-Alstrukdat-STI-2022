@@ -72,7 +72,7 @@ void skipGame (TabKata listGame, Queue* queueGame, Stack* historyGame, Scoreboar
                 } 
                 printf("> Masukan nama: ");
                 GetCommand();
-                system("cls");
+                clear();
                 showScore = true;
             } while ((IsMemberSet(SB[Idx].Nama, currentWord)));
             InsertSet(&(SB[Idx].Nama), currentWord);

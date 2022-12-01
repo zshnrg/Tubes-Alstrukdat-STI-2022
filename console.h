@@ -26,6 +26,7 @@
 #include "./src/resetHistory.h"
 #include "./src/scoreboard.h"
 #include "./src/resetScoreboard.h"
+#include "./src/function.h"
 
 void menuList(TabKata *listGame, Queue *queueGame, Stack *historyGame, Scoreboard *SB);
 /* Memilih menu BNMO

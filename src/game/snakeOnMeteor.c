@@ -8,7 +8,7 @@ int playSnakeOnMeteor() {
     int mapSize = 5;
     reset();
 
-    system("cls");
+    clear();
     do {    
         currentWord = toKata("START");
         do {
@@ -19,13 +19,13 @@ int playSnakeOnMeteor() {
             if (!(IsWordEq(currentWord, toKata("CHANGE MAP")) || IsWordEq(currentWord, toKata("START")))) printf("Perintah tidak valid!\n");
             printf("> ");
             GetCommand();
-            system("cls");
+            clear();
         } while (!(IsWordEq(currentWord, toKata("CHANGE MAP")) || IsWordEq(currentWord, toKata("START"))));
 
         if (IsWordEq(currentWord, toKata("CHANGE MAP"))) {
             int n = 5;
             do {
-                system("cls");
+                clear();
                 printf("Lebar peta: %d x %d\n\n", mapSize, mapSize);
                 if (n < 5) printf("Lebar peta tidak valid! Minimal lebar peta adalah 5\n");
                 printf("Masukkan lebar peta baru: ");
@@ -38,9 +38,9 @@ int playSnakeOnMeteor() {
             } while (n < 5);
             mapSize = n;
         }
-        system("cls");
+        clear();
     } while (!IsWordEq(currentWord, toKata("START")));
-    system("cls");
+    clear();
 
     printf("Membuat permainan, mohon tunggu ...\n\n");
 
@@ -59,7 +59,7 @@ int playSnakeOnMeteor() {
     setPointNull(&Crater);
     Food = generateFood(snake, Obs, Meteor, Crater, mapSize);
 
-    system("cls");
+    clear();
     printGuideSoM();
 
 
@@ -72,7 +72,7 @@ int playSnakeOnMeteor() {
         }
         do {
             do {
-                system("cls");
+                clear();
                 printf("Peta Permainan\n");
                 printMap(snake, Obs, Food, Meteor, Crater, mapSize);
                 if (isHit) printf("Anda terkena meteor! \n");
@@ -104,7 +104,7 @@ int playSnakeOnMeteor() {
 
     score = NumberElmt(snakeCopy) * 2;
     if (IsEmptyList(snake)) score -= 2;
-    system("cls");
+    clear();
     
     printf("Peta Permainan\n");
     printMap(snakeCopy, Obs, Food, Meteor, Crater, mapSize);
@@ -112,7 +112,7 @@ int playSnakeOnMeteor() {
     else printf("Snake menabrak!\n\n");
     sleep(2);
 
-    system("cls");
+    clear();
     printf("Game berakhir. Skor: %d\n\n", score);
 
     return score;
@@ -535,6 +535,6 @@ void printGuideSoM() {
     for (int i = 5; i > 0; i--) {
         printf("\n _______               __                                _______         __                    \n|     __|.-----.---.-.|  |--.-----.    .-----.-----.    |   |   |.-----.|  |_.-----.-----.----.\n|__     ||     |  _  ||    <|  -__|    |  _  |     |    |       ||  -__||   _|  -__|  _  |   _|\n|_______||__|__|___._||__|__|_____|    |_____|__|__|    |__|_|__||_____||____|_____|_____|__|  \n                                                                                              \n===================================== Petunjuk Permainan =====================================\n\n1. Gunakan perintah W/A/S/D untuk menggerakkan ular.\n2. Arahkan ular untuk bisa mengambil makanan yang berwarna kuning.\n2. Dalam setiap putaran akan ada sebuah meteor yang jatuh secara acak menyebar pada peta.\n4. Meteor yang mengenai tubuh ular akan menyebabkan tubuh ular memendek satu petak.\n5. Apabila meteor mengenai kepala ular, maka ular akan langsung mati.\n6. Setelah meteor jatuh, jejak bekas meteor akan menjadi kawah yang tidak bisa dilewati oleh\n   ular selama satu putaran.\n7. Selain terkena meteor, ular juga dapat mati apabila menabrak obstacle atau tubuhnya sendiri.\n8. Selamat bermain!\n\n==============================================================================================\n\nPermainan akan dimulai dalam %d ...", i);
         sleep(1);
-        system("cls");
+        clear();
     }
 }

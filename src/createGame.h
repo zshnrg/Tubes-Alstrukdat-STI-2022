@@ -2,6 +2,7 @@
 #define CREATE_GAME_H
 
 #include "./adt/array.h"
+#include "function.h"
 
 void createGame(TabKata *listGame);
 /* Menambahkan game yang bisa dimainkan

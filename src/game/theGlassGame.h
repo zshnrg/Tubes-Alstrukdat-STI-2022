@@ -5,6 +5,7 @@
 #include "../adt/boolean.h"
 #include "../adt/bintree.h"
 #include "../adt/mesinkata.h"
+#include "../function.h"
 
 int playTheGlassGame();
 /* Memainkan permainan The Glass Game dan mengembalikan nilai skor */

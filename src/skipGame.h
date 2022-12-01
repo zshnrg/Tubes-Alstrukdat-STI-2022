@@ -7,6 +7,7 @@
 #include "./adt/mesinkata.h"
 #include "./adt/stack.h"
 #include "./adt/scoreboardtype.h"
+#include "function.h"
 
 void skipGame (TabKata listGame, Queue* queueGame, Stack* historyGame, Scoreboard *SB, Word command);
 /* Melewatkan permainan sebanyak n

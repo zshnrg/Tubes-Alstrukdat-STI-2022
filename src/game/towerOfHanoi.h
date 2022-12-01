@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "../adt/stack.h"
 #include "../adt/boolean.h"
+#include "../function.h"
 
 int playTowerOfHanoi();
 /* Memainkan game tower of hanoi dan mengembalikan skor permainan */

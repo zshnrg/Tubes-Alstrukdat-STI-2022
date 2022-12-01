@@ -5,7 +5,7 @@
 void menuList(TabKata *listGame, Queue *queueGame, Stack *historyGame, Scoreboard *SB) {
     printf("> ENTER COMMAND: ");
     GetCommand();
-    system("cls");
+    clear();
 
 
     if (IsWordEq(toKata("START"), currentWord) || IsWordEq(toKata("LOAD"), currentWord)) {

@@ -2,6 +2,7 @@
 #define DINER_DASH_H
 
 #include "../adt/mesinkata.h"
+#include "../function.h"
 
 typedef struct {
     int ID;

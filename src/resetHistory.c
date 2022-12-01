@@ -11,7 +11,7 @@ void resetHistory(Stack* historyGame) {
             if (currentWord.Length != 1 || !(IsWordEq(currentWord, toKata("Y")) || IsWordEq(currentWord, toKata("N")))) {
                 printf("\nPerintah tidak valid, silahkan masukan ulang perintah.");
                 sleep(1);
-                system("cls");
+                clear();
             }
         } while (currentWord.Length != 1 || !(IsWordEq(currentWord, toKata("Y")) || IsWordEq(currentWord, toKata("N"))));
 

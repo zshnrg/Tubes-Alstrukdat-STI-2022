@@ -5,7 +5,7 @@
 void resetScoreboard(TabKata listGame, Scoreboard *SB) {
     int n = 0;
     do {
-        system("cls");
+        clear();
         printf("DAFTAR SCOREBOARD\n\n");
         for (int i = 0; i <= listGame.Neff; i++) {
             printf("  %d. ", i);
@@ -49,10 +49,10 @@ void resetScoreboard(TabKata listGame, Scoreboard *SB) {
                 DeleteSet(&(SB[n - 1].Nama), SB[n - 1].Nama.Elements[0]);
             }
         }
-        system("cls");
+        clear();
         printf("Scoreboard berhasil di-reset.\n\n");
     } else {
-        system("cls");
+        clear();
         printf("Scoreboard tidak jadi di-reset.\n\n");
     }
 }

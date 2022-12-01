@@ -5,6 +5,7 @@
 #include "../adt/dictionary.h"
 #include "../driver/readDictionary.h"
 #include "../driver/writeDictionary.h"
+#include "../function.h"
 
 int playHangman();
 /* Memulai game Hangman dan mengembalikan nilai skor */

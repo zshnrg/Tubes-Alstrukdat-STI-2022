@@ -6,6 +6,7 @@
 #include "./adt/stack.h"
 #include "./adt/array.h"
 #include "./adt/scoreboardtype.h"
+#include "function.h"
 
 /* List game buatan */
 #include "./game/rng.h"

@@ -6,6 +6,7 @@
 #include "history.h"
 #include "./adt/stack.h"
 #include "./adt/mesinkata.h"
+#include "function.h"
 
 void resetHistory(Stack* historyGame);
 /* Menghapus history

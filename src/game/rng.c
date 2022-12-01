@@ -5,7 +5,7 @@
 #include "rng.h"
 
 int rngPlay() {
-    system("cls");
+    clear();
     srand(time(NULL));
 
     printGuideRnG();
@@ -23,13 +23,13 @@ int rngPlay() {
             n = n * 10;
             n += currentWord.TabWord[i] - '0';
         }
-        system("cls");
+        clear();
         if (n > X) {
             printf("Tebakan salah! X lebih kecil dari %d\n", n);
         } else if (n < X) {
             printf("Tebakan salah! X lebih besar dari %d\n", n);
         } else {
-            system("cls");
+            clear();
             printf("Selamat tebakanmu benar!\nX adalah %d.\n\n", n);
         }
         if (score > 10) score--;
@@ -42,6 +42,6 @@ void printGuideRnG() {
     for (int i = 8; i > 0; i--) {
         printf("\n ______         _______      _______                                     \n|   __ \\.-----.|     __|    |     __|.--.--.-----.-----.-----.-----.----.\n|      <|     ||    |  |    |    |  ||  |  |  -__|__ --|__ --|  -__|   _|\n|___|__||__|__||_______|    |_______||_____|_____|_____|_____|_____|__|  \n                                                                        \n========================== Petunjuk Permainan ==========================\n\n1. Pada permainan ini kamu diminta untuk menebak sebuah angka yang\n   diciptakan secara acak.\n2. Angka yang perlu ditebak merupakan bilangan bulat antara 1-100.\n3. Sistem akan memberi tau apakah angka tebakanmu lebih besar atau lebih\n   Kecil dari angka sebenarnya.\n4. Permainan akan berakhir ketika kamu berhasil menebak angka sebenarnya.\n\n========================================================================\n\nPermainan akan dimulai dalam %d ...", i);
         sleep(1);
-        system("cls");
+        clear();
     }
 }

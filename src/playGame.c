@@ -9,7 +9,7 @@ void printLoading(Word gameName) {
     for (int i = 0; i < 3; i++) {
         printf("."); sleep(1);
     }
-    system("cls");
+    clear();
 }
 
 // Game yang diload dan game yang dibuat akan dipisah karena perlu ada penanganan game yang sedang maintenance (game yang bukan game RNG, Dine Dash, atau game buatan)
@@ -68,7 +68,7 @@ void playGame(TabKata listGame, Queue *queueGame, Stack* historyGame, Scoreboard
             } 
             printf("> Masukan nama: ");
             GetCommand();
-            system("cls");
+            clear();
             showScore = true;
         } while ((IsMemberSet(SB[Idx].Nama, currentWord)));
         InsertSet(&(SB[Idx].Nama), currentWord);

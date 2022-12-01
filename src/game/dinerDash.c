@@ -17,7 +17,7 @@ int dinerDashPlay () {
     insertMakanan(&pesanan, createMakanan(0));
     insertMakanan(&pesanan, createMakanan(1));
 
-    system("cls");
+    clear();
     printGuideDinerDash();
 
     while (served < 15 && pesanan.NEff <= 6) {
@@ -31,7 +31,7 @@ int dinerDashPlay () {
             
             updateCooking(&dimasak, &ready);
         }
-        sleep(2); system("cls"); 
+        sleep(2); clear(); 
 
         insertMakanan(&pesanan, createMakanan(m));
         printf("SALDO: %d\n\n", score);
@@ -46,7 +46,7 @@ int dinerDashPlay () {
         } while (!isCommandValid(currentWord, pesanan, dimasak, ready));
         m++;
     }
-    system("cls");
+    clear();
     printf("Game over! Skor akhir: %d\n\n", score);
     return score;
 }
@@ -244,7 +244,7 @@ void printGuideDinerDash() {
         printf("                                                            _\n  _____  _                   _____            _            / )\n |  __ \\(_)                 |  __ \\          | |     |||| / /\n | |  | |_ _ __   ___ _ __  | |  | | __ _ ___| |__   ||||/ /\n | |  | | | '_ \\ / _ \\ '__| | |  | |/ _` / __| '_ \\  \\__(_/\n | |__| | | | | |  __/ |    | |__| | (_| \\__ \\ | | |  ||//\n |_____/|_|_| |_|\\___|_|    |_____/ \\__,_|___/_| |_|  ||/\n                                                     (|| \n                                                      \"\"");
         printf("\n====================== Panduan Permainan ======================\n\n1. DinerDash merupakan permainan di mana kamu memasak dan\n   menyajikan makanan.\n2. Pada awal permainan akan ada 3 pesanan dalam antrian.\n3. Kamu dapat memasak makanan dengan menjalankan perintah\n   < COOK M_ >. Makanan kemudian akan dimasak sesuai dengan\n   durasi yang ditampilkan.\n4. Durasi memasak makanan akan berkurang tiap putarannya.\n5. Kamu hanya bisa memasak makanan sebanyak lima makanan dalam\n   satu waktu.\n6. Ketika makanan selesai dimasak, kamu dapat menyajikan\n   makanan dengan perintah < SERVE M_ >.\n7. Hati-hati! Makanan yang siap disajikan memiliki ketahanan\n   tertentu yang akan semakin berkurang tiap putarannya.\n   Makanan yang rusak harus dimasak ulang.\n8. Makanan harus disajikan secara berurut sesuai dengan antrian\n   pesanan.\n9. Permainan akan berakhir apabila antrian melebihi 7 atau kamu\n   berhasil menyajikan 15 makanan\n\n===============================================================\n\nPermainan akan dimulai dalam %d ...", i);
         sleep(1);
-        system("cls");
+        clear();
     }
     
 }

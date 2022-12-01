@@ -13,7 +13,7 @@ int playHangman() {
     createEmptyKamus(&K);
 
     readDictionary("default.txt", &K);
-    system("cls");
+    clear();
     printGuideHangman();
 
     do {
@@ -24,13 +24,13 @@ int playHangman() {
             if (!isMenuValid) printf("Menu tidak valid! Masukkan perintah lain\n");
             printf("> ");
             GetCommand();
-            system("cls");
+            clear();
         } while (!isMenuValid(currentWord));
         
         if (IsWordEq(AccessCommand(currentWord, 0), toKata("LOAD"))) {
             loadKamus(&K, AccessCommand(currentWord, 1), &def);
             sleep(2);
-            system("cls");
+            clear();
         } else if (IsWordEq(currentWord, toKata("SHOW DICTIONARY"))) {
             currentWord = toKata("BACK");
             do {
@@ -38,7 +38,7 @@ int playHangman() {
                 if (!IsWordEq(currentWord, toKata("BACK"))) printf("\nPerintah tidak valid.");
                 printf("\nGunakan perintah BACK untuk kembali\n> ");
                 GetCommand();
-                system("cls");
+                clear();
             } while (!IsWordEq(currentWord, toKata("BACK")));
         } else if (IsWordEq(currentWord, toKata("EDIT DICTIONARY"))) {
             currentWord = toKata("DONE");
@@ -57,7 +57,7 @@ int playHangman() {
                     delKataInKamus(&K, AccessCommand(currentWord, 1));
                 }
                 sleep(1);
-                system("cls");
+                clear();
             } while (!IsWordEq(currentWord, toKata("DONE")));
         }
     } while (!IsWordEq(currentWord, toKata("START")));
@@ -103,7 +103,7 @@ int playHangman() {
         }
     }
 
-    system("cls");
+    clear();
     printf("============");
     printHangman(live);
     printf("============\n\n");
@@ -266,12 +266,12 @@ void printGuideHangman() {
     for (int i = 8; i > 0; i--) {
         printf("\n    _______                                         \n   |   |   |.---.-.-----.-----.--------.---.-.-----.\n   |       ||  _  |     |  _  |        |  _  |     |\n   |___|___||___._|__|__|___  |__|__|__|___._|__|__|\n                        |_____|                     \n\n================= Petunjuk Permainan =================\n\n1. Permainan ini mengharuskan kamu untuk menebak kata\n   dengan menebak hurufnya satu per satu.\n2. Kamu memiliki 10 kesempatan untuk menebak huruf.\n3. Sebelum kamu bermain kamu dapat memilih kamus kata\n   yang ingin digunakan. Selain itu, kamu juga dapat\n   menambahkan/menghapus kata yang ingin dimainkan.\n\n======================================================\n\nPermainan akan dimulai dalam %d ...", i);
         sleep(1);
-        system("cls");
+        clear();
     }
 }
 
 void printStatusHangman(int wordCount, int live, Word Guess, Word Answer) {
-    system("cls");
+    clear();
     printf("Kata ke-%d\n============", wordCount);
     printHangman(live);
     printf("\n============\nKesempatan: %d\n\n[ ", live);

@@ -5,6 +5,7 @@
 #include "../ADT/queue.h"
 #include "../ADT/mesinkata.h"
 #include "../ADT/array.h"
+#include "../function.h"
 
 typedef struct {
     Queue Pesawat[100];
