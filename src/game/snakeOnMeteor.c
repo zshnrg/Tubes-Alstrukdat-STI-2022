@@ -74,7 +74,11 @@ int playSnakeOnMeteor() {
             do {
                 clear();
                 printf("Peta Permainan\n");
-                printMap(snake, Obs, Food, Meteor, Crater, mapSize);
+                #if defined (_WIN32)
+                    printMap(snake, Obs, Food, Meteor, Crater, mapSize);
+                #else
+                    printBasicMap(snake, Obs, Food, Meteor, Crater, mapSize);
+                #endif
                 if (isHit) printf("Anda terkena meteor! \n");
                 else if (turn > 2) printf("Anda beruntung tidak terkena meteor! Silahkan lanjutkan permainan\n");
                 
@@ -107,7 +111,11 @@ int playSnakeOnMeteor() {
     clear();
     
     printf("Peta Permainan\n");
-    printMap(snakeCopy, Obs, Food, Meteor, Crater, mapSize);
+    #if defined (_WIN32)
+        printMap(snakeCopy, Obs, Food, Meteor, Crater, mapSize);
+    #else
+        printBasicMap(snakeCopy, Obs, Food, Meteor, Crater, mapSize);
+    #endif
     if (isHit) printf("Kepala snake terkena meteor!\n\n");
     else printf("Snake menabrak!\n\n");
     fflush(stdout); sleep(2);
@@ -529,6 +537,49 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
         if (col == mapSize - 1) printf("\xc4\xc4\xc4\xc4\xc4\xc4\xd9\n");
         else printf("\xc4\xc4\xc4\xc4\xc4\xc4\xc1");
     }
+}
+
+void printBasicMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize) {
+    boolean isSnake;
+    printf("o"); for (int o = 0; o < mapSize; o++) printf("-"); printf("o\n");
+    for (int i = 0; i < mapSize; i++) {
+        printf("|");
+        for (int j = 0; j < mapSize; j++) {
+            boolean isObstacle = false;
+            for (int k = 0; k < (int) (mapSize * mapSize / 5 - 3); k++) {
+                if (isPointEqual(createPoint(j, i), Obs[k])) isObstacle = true;
+            }
+            if (isObstacle) {
+                printf("#");
+            } else if (isPointEqual(createPoint(j, i), Food)) {
+                yellow();
+                printf("o");
+            } else if (isPointEqual(createPoint(j, i), Meteor)) {
+                red();
+                printf("0");
+            } else if (isPointEqual(createPoint(j, i), Crater)) {
+                white();
+                printf("o");
+            } else {
+                isSnake = false;
+                green();
+                address P = First(Snake);
+                while (P != NULL) {
+                    if (isPointEqual(createPoint(j, i), teleport(Info(P), mapSize))) {
+                        if (P == First(Snake)) printf("0");
+                        else printf("O");
+                        isSnake = true;
+                    }
+                    P = Next(P);
+                }
+                reset();
+                if (!isSnake) printf(" ");
+            }
+            reset();
+        }
+        printf("|\n");
+    }
+    printf("o"); for (int o = 0; o < mapSize; o++) printf("-"); printf("o\n");
 }
 
 void printGuideSoM() {

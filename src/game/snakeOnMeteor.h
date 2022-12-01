@@ -57,6 +57,11 @@ void printMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, in
    I.S. sembarang
    F.S. Peta ditampilkan ke layar */
 
+void printBasicMap(List Snake, Point *Obs, Point Food, Point Meteor, Point Crater, int mapSize);
+/* Menampilkan status peta permainan ke layar
+   I.S. sembarang
+   F.S. Peta ditampilkan ke layar */
+
 void printGuideSoM();
 /* Mencetak panduan permainan
    I.S. sembarang
