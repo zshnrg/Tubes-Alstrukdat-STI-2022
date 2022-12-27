@@ -22,4 +22,6 @@ gcc -o BNMO src/adt/array.c src/adt/queue.c src/adt/mesinkarakter.c src/adt/mesi
 ```
 5. Selamat menikmati 🥂
 
+
+Side note: Bagian driver seharusnya dibuat untuk masing-masing ADT yang digunakan (dibuat untuk menguji apakah ADT bisa digunakan), tapi karena mager jadi ga dibuat hehe.
 P.S. Tubes ini dibuat public setelah deadline tubes, jadi dipastikan aman dari plagiarisme :D. Kalo ada game dengan code yang sama di repo ini berarti itu gamenya emang buatan saya :>
