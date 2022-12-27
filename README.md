@@ -22,4 +22,4 @@ gcc -o BNMO src/adt/array.c src/adt/queue.c src/adt/mesinkarakter.c src/adt/mesi
 ```
 5. Selamat menikmati 🥂
 
-P.S. Tubes ini dibuat public setelah deadline tubes, jadi dipastikan aman dari plagiarisme :D
+P.S. Tubes ini dibuat public setelah deadline tubes, jadi dipastikan aman dari plagiarisme :D. Kalo ada game dengan code yang sama di repo ini berarti itu gamenya emang buatan saya :>
